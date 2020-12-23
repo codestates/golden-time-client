@@ -6,6 +6,6 @@ export default class extends React.Component {
     super(props);
   }
   render() {
-
+    return (<span>a</span>);
   }
 }
