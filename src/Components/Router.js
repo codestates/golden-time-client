@@ -1,17 +1,19 @@
 import React from "react";
 import {
-  BrowserRouter as Router,
+  BrowserRouter,
   Route,
   Redirect,
   Switch
 } from "react-router-dom";
-import Home from "Routes/Home";
-import Signup from "Routes/Signup";
-import UserInfo from "Routes/UserInfo";
-import GoodsDetail from "Routes/GoodsDetail";
-import GoodsEdit from "Routes/GoodsEdit";
-import GoodsPost from "Routes/GoodsPost";
-import Temp from "Components/Temp";
+import Home from "../Routes/Home";
+import Signup from "../Routes/Signup";
+import UserInfo from "../Routes/UserInfo";
+import GoodsDetail from "../Routes/GoodsDetail";
+import GoodsEdit from "../Routes/GoodsEdit";
+import GoodsPost from "../Routes/GoodsPost";
+import Navi from "./Navi";
+import Temp from "./Temp";
+import axios from "axios";
 
 class Router extends React.Component {
   constructor(props) {
@@ -43,38 +45,40 @@ class Router extends React.Component {
   }
 
   render() {
-    <Router>
-      <>
-        <Header />
-        <Switch>
-          <Route
-            path='/'
-            render={() => (<Temp />)}
-          />
-          <Route
-            path='/user/signup'
-            render={() => (<Temp />)}
-          />
-          <Route
-            path='/user/userinfo'
-            render={() => (<Temp />)}
-          />
-          <Route
-            path='/goods/detail/:id'
-            render={() => (<Temp />)}
-          />
-          <Route
-            path='/goods/edit/:id'
-            render={() => (<Temp />)}
-          />
-          <Route
-            path='/goods/post/:id'
-            render={() => (<Temp />)}
-          />
-          <Redirect from="*" to="/" />
-        </Switch>
-      </>
-    </Router>
+    return (
+      <BrowserRouter>
+        <>
+          <Navi />
+          <Switch>
+            <Route
+              path='/'
+              render={() => (<Temp />)}
+            />
+            <Route
+              path='/user/signup'
+              render={() => (<Temp />)}
+            />
+            <Route
+              path='/user/userinfo'
+              render={() => (<Temp />)}
+            />
+            <Route
+              path='/goods/detail/:id'
+              render={() => (<Temp />)}
+            />
+            <Route
+              path='/goods/edit/:id'
+              render={() => (<Temp />)}
+            />
+            <Route
+              path='/goods/post/:id'
+              render={() => (<Temp />)}
+            />
+            <Redirect from="*" to="/" />
+          </Switch>
+        </>
+      </BrowserRouter>
+    )
   }
 }
 
