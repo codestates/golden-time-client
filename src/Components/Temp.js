@@ -1,3 +1,4 @@
-export default () => (
-  <span> temp</span>
-);
+export default (props) => {
+  console.log(props);
+  return (<span>test</span>)
+}

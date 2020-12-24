@@ -20,8 +20,10 @@ class Router extends React.Component {
     super(props);
     this.state = {
       isLogin: false,
-      accessToken: null
+      accessToken: null,
+      search: null
     }
+    this.handleInputValue = this.handleInputValue.bind(this);
   }
 
   async getAccessToken(authorizationCode) {
@@ -44,15 +46,21 @@ class Router extends React.Component {
     }
   }
 
+  handleInputValue(input) {
+    this.setState({
+      search: input
+    })
+  }
+
   render() {
     return (
       <BrowserRouter>
         <>
-          <Navi />
+          <Navi handleInputValue={this.handleInputValue} />
           <Switch>
             <Route
               path='/'
-              render={() => (<Temp />)}
+              render={() => <Temp title={this.state.search} />}
             />
             <Route
               path='/user/signup'

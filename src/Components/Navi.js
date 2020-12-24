@@ -44,8 +44,8 @@ class Navi extends React.Component {
     this.setState({ [key]: e.target.value });
   };
 
-  handleIsModal = (input) => {
-    this.setState({ isModal: input });
+  handleIsModal = () => {
+    this.setState(state => ({ isModal: !state.isModal }));
   }
 
   render() {
@@ -80,7 +80,7 @@ class Navi extends React.Component {
             </Link>
           </Item>
             : <Item>
-              <button type="button" onClick={this.handleIsModal.bind(this, this.state.isModal ? false : true)}>
+              <button type="button" onClick={this.handleIsModal}>
                 로그인
             </button>
               {this.state.isModal ? <Login /> : <></>}
