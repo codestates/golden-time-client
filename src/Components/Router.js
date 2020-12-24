@@ -14,7 +14,7 @@ class Router extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isLogin: false,
+			isLogin: true,
 			accessToken: null,
 			search: null,
 			currentLocation: null
@@ -122,7 +122,7 @@ class Router extends React.Component {
 					<Switch>
 						<Route
 							exact path='/'
-							render={() => <Temp title={this.state.search} />}
+							render={() => <Home title={this.state.search} />}
 						/>
 						<Route
 							path='/user/signup'

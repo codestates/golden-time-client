@@ -1,34 +1,69 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
+import { FaSearch } from "react-icons/fa";
 import styled from "styled-components";
 import Login from "./Login";
 import axios from "axios";
 
-const Header = styled.header`
-	color: white;
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 50px;
-	display: flex;
-	align-items: center;
-	background-color: rgba(20, 20, 20, 0.8);
-	z-index: 10;
-	box-shadow: 0px 1px 5px 2px rgba(0, 0, 0, 0.8);
+const Container = styled.header`
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: 100px;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
 `;
 
-const List = styled.ul`
-	display: flex;
-`;
-
-const Item = styled.li`
-	width: 80px;
-	height: 50px;
+const Home = styled.div`
+  width:250px;
+  padding-right: 1rem;
+  font-family: 'Bangers';
+	font-size: 50px;
 	text-align: center;
-	border-bottom: 3px solid
-		${props => (props.current ? '#3498db' : 'transparent')};
-	transition: border-bottom 0.5s ease-in-out;
+`;
+
+const Input = styled.input`
+  background-color:rgb(244,244,244);
+  border-radius:20px;
+	width: 80%;
+	height: 50px;
+  border:0;
+`;
+
+const Icon = styled.div`
+  width: 50px;
+  height: 50px;
+	display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Location = styled.div`
+  width: 300px;
+	font-size: 15px;
+	display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const LocationName = styled.div`
+  font-size: 20px;
+  font-weight:800;
+`;
+
+const Item = styled.div`
+  cursor: pointer;
+	width: 100px;
+  height: 50px;
+  font-size: 15px;
+	display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 class Navi extends React.Component {
@@ -63,67 +98,46 @@ class Navi extends React.Component {
 
   render() {
     return (
-      <Header>
-        <List>
-          <Item>
-            <span> Golden Time </span>
-          </Item>
+      <Container>
+        <Link to="/">
+          <Home onClick={this.handleHome}>
+            Golden Time
+          </Home>
+        </Link>
 
-          <Item>
-            <Link to="/">
-              <button type="button" onClick={this.handleHome}>
-                Home
-              </button>
-            </Link>
-          </Item>
+        <Input className="searchInput" type='text' value={this.state.search} onChange={this.handleInputValue("search")} />
 
-          <Item>
-            <input className="searchInput" type='text' value={this.state.search} onChange={this.handleInputValue("search")}></input>
-          </Item>
+        <Link to="/">
+          <Icon onClick={this.handleSearch}>
+            <FaSearch size="25" color='gray' />
+          </Icon>
+        </Link>
 
-          <Item>
-            <Link to="/">
-              <button type="button" onClick={this.handleSearch}>
-                Search
-              </button>
-            </Link>
-          </Item>
+        {this.props.currentLocation ? <Location>현재 위치는{'\u00A0'}<LocationName>{this.props.currentLocation}</LocationName>{'\u00A0'}입니다.</Location> :
+          <Location>위치 정보를 확인하는 중입니다.</Location>
+        }
 
-          <Item>
-            {this.props.currentLocation ? <span>현재 위치는 {this.props.currentLocation} 입니다.</span> :
-              <span>위치 정보를 확인하는 중입니다.</span>}
-          </Item>
-
-          {this.props.isLogin ?
+        {
+          this.props.isLogin ?
             <>
-              <Item>
-                <Link to="/user/userinfo">
-                  <button type="button">
-                    My page
-                  </button>
-                </Link>
-              </Item>
+              <Link to="/user/userinfo">
+                <Item>개인 페이지</Item>
+              </Link>
 
-              <Item>
-                <Link to="/">
-                  <button type="button" onClick={this.props.handleLogout}>
-                    Logout
-              </button>
-                </Link>
-              </Item>
+              <Link to="/">
+                <Item onClick={this.props.handleLogout}>로그아웃</Item>
+              </Link>
             </>
-            : <Item>
-              <button type="button" onClick={this.handleIsModal}>
-                Login
-              </button>
+            : <>
+              <Item onClick={this.handleIsModal}>로그인</Item>
               {this.state.isModal ? <Login
                 isOpen={true}
                 close={this.handleIsModal.bind(this)}
                 handleLocalLogin={this.props.handleLocalLogin}
               /> : <></>}
-            </Item>}
-        </List>
-      </Header>
+            </>
+        }
+      </Container >
     )
   }
 }
