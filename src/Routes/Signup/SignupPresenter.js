@@ -7,6 +7,7 @@ const Container = styled.div`
 `;
 
 const RegistArea = styled.div`
+	padding: 5rem 0 0 0;
 	width: 30rem;
 	height: 50rem;
 	text-align: center;

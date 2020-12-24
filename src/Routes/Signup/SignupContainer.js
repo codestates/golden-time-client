@@ -23,7 +23,7 @@ class SignupContainer extends React.Component {
 
 	handleSubmit = async () => {
 		const { email, password, nick } = this.state;
-		const signUpUrl = 'http://localhost:4000/api/auth/signup';
+		const signUpUrl = 'http://localhost:4000/auth/signup';
 
 		if (!isEmail(this.state.email)) {
 			this.setState({
