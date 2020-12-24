@@ -11,85 +11,95 @@ import Temp from './Temp';
 import axios from 'axios';
 
 class Router extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isLogin: false,
-      accessToken: null,
-      search: null
-    }
-    this.handleInputValue = this.handleInputValue.bind(this);
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			isLogin: false,
+			accessToken: null,
+			search: null,
+		};
+		this.handleInputValue = this.handleInputValue.bind(this);
+	}
 
-  componentDidMount() {
-    const url = new URL(window.location.href);
-    const authorizationCode = url.searchParams.get('code');
-    console.log(url.search);
-    console.log(String(url.search).includes('google'));
+	componentDidMount() {
+		const url = new URL(window.location.href);
+		const authorizationCode = url.searchParams.get('code');
+		if (authorizationCode) {
+			if (String(url.search).includes('google')) {
+				this.handleGoogleLogin(authorizationCode);
+			} else {
+				this.handleKakaoLogin(authorizationCode);
+			}
+		}
+	}
 
-    if (authorizationCode) {
-      this.getAccessToken(authorizationCode);
-    }
-  }
+	handleLocalLogin = token => {
+		this.setState({ isLogin: true, accessToken: token });
+	};
 
-  handleLocalLogin = token => {
-    this.setState({ isLogin: true, accessToken: token });
-  };
+	async handleGoogleLogin(authorizationCode) {
+		try {
+			const response = await axios.post('http://localhost:4000/auth/google', {
+				authorizationCode,
+			});
+			if (response.access_token) {
+				this.setState({
+					isLogin: true,
+					accessToken: response.access_token,
+				});
+			}
+		} catch (err) {
+			throw err;
+		}
+	}
 
-  async getAccessToken(authorizationCode) {
-    const resultCallback = await axios.post('http://localhost:8080/callback', {
-      authorizationCode,
-    });
-    if (resultCallback.data.accessToken) {
-      this.setState({
-        isLogin: true,
-        accessToken: resultCallback.data.accessToken,
-      });
-    }
-  }
+	async handleKakaoLogin(authorizationCode) {
+		try {
+			const response = await axios.post('http://localhost:4000/auth/kakao', {
+				authorizationCode,
+			});
+			if (response.access_token) {
+				this.setState({
+					isLogin: true,
+					accessToken: response.access_token,
+				});
+			}
+		} catch (err) {
+			throw err;
+		}
+	}
 
-  handleInputValue(input) {
-    this.setState({
-      search: input
-    })
-  }
+	handleInputValue(input) {
+		this.setState({
+			search: input,
+		});
+	}
 
-  render() {
-    return (
-      <BrowserRouter>
-        <>
-          <Navi handleInputValue={this.handleInputValue} />
-          <Switch>
-            <Route
-              path='/'
-              exact render={() => <Temp title={this.state.search} />}
-            />
-            <Route
-              path='/user/signup'
-              render={() => (<Signup />)}
-            />
-            <Route
-              path='/user/userinfo'
-              render={() => (<Temp />)}
-            />
-            <Route
-              path='/goods/detail/:id'
-              render={() => (<Temp />)}
-            />
-            <Route
-              path='/goods/edit/:id'
-              render={() => (<Temp />)}
-            />
-            <Route
-              path='/goods/post/:id'
-              render={() => (<Temp />)}
-            />
-            <Redirect from="*" to="/" />
-          </Switch>
-        </>
-      </BrowserRouter>
-    )
-  }
+	render() {
+		return (
+			<BrowserRouter>
+				<>
+					<Navi
+						handleInputValue={this.handleInputValue}
+						handleLocalLogin={this.handleLocalLogin.bind(this)}
+					/>
+					<Switch>
+						<Route
+							path='/'
+							exact
+							render={() => <Temp title={this.state.search} />}
+						/>
+						<Route path='/user/signup' render={() => <Signup />} />
+						<Route path='/user/userinfo' render={() => <Temp />} />
+						<Route path='/goods/detail/:id' render={() => <Temp />} />
+						<Route path='/goods/edit/:id' render={() => <Temp />} />
+						<Route path='/goods/post/:id' render={() => <Temp />} />
+						<Redirect from='*' to='/' />
+					</Switch>
+				</>
+			</BrowserRouter>
+		);
+	}
 }
 
 export default Router;
