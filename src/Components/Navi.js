@@ -83,7 +83,7 @@ class Navi extends React.Component {
               <button type="button" onClick={this.handleIsModal}>
                 로그인
             </button>
-              {this.state.isModal ? <Login /> : <></>}
+              {this.state.isModal ? <Login isOpen={true} close={this.handleIsModal.bind(this)} /> : <></>}
             </Item>}
         </List>
       </Header>
