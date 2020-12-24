@@ -32,7 +32,7 @@ const InputTitle = styled.div`
 
 const Email = styled.input.attrs({
 	type: 'email',
-	placeholder: '예) goldentime.gmail.com',
+	placeholder: '예) goldentime@gmail.com',
 })`
 	padding: 7px 0 8px;
 	width: 100%;
