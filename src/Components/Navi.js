@@ -31,7 +31,6 @@ const Item = styled.li`
   transition: border-bottom 0.5s ease-in-out;
 `;
 
-
 class Navi extends React.Component {
   constructor(props) {
     super(props);
@@ -132,7 +131,7 @@ class Navi extends React.Component {
           {this.state.isLogin ?
             <>
               <Item>
-                <Link to="/userinfo">
+                <Link to="/user/userinfo">
                   <button type="button">
                     My page
                   </button>

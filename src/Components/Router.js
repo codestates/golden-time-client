@@ -78,7 +78,7 @@ class Router extends React.Component {
               render={() => (<Signup />)}
             />
             <Route
-              path='/userinfo'
+              path='user/userinfo'
               render={() => (<Temp />)}
             />
             <Route
@@ -93,7 +93,7 @@ class Router extends React.Component {
               path='/goods/post/:id'
               render={() => (<Temp />)}
             />
-            <Redirect from="*" to="/" />
+            {/* <Redirect from="*" to="/" /> */}
           </Switch>
         </>
       </BrowserRouter>
