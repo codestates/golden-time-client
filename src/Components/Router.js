@@ -16,9 +16,12 @@ class Router extends React.Component {
     this.state = {
       isLogin: false,
       accessToken: null,
-      search: null
+      search: null,
+      currentLocation: null
     }
-    this.handleInputValue = this.handleInputValue.bind(this);
+    this.handleSearchValue = this.handleSearchValue.bind(this);
+    this.handleLocationValue = this.handleLocationValue.bind(this);
+    this.handleTokenValue = this.handleTokenValue.bind(this);
   }
 
   componentDidMount() {
@@ -48,28 +51,34 @@ class Router extends React.Component {
     }
   }
 
-  handleInputValue(input) {
-    this.setState({
-      search: input
-    })
+  handleSearchValue(input) {
+    this.setState({ search: input });
+  }
+
+  handleLocationValue(input) {
+    this.setState({ currentLocation: input });
+  }
+
+  handleTokenValue() {
+    this.setState({ isLogin: false, accessToken: null });
   }
 
   render() {
     return (
       <BrowserRouter>
         <>
-          <Navi handleInputValue={this.handleInputValue} />
+          <Navi handleSearchValue={this.handleSearchValue} handleLocationValue={this.handleLocationValue} handleTokenValue={this.handleTokenValue} />
           <Switch>
             <Route
-              path='/'
-              exact render={() => <Temp title={this.state.search} />}
+              exact path='/'
+              render={() => <Temp title={this.state.search} />}
             />
             <Route
               path='/user/signup'
               render={() => (<Signup />)}
             />
             <Route
-              path='/user/userinfo'
+              path='/userinfo'
               render={() => (<Temp />)}
             />
             <Route
