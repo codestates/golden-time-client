@@ -11,57 +11,85 @@ import Temp from './Temp';
 import axios from 'axios';
 
 class Router extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			isLogin: false,
-			accessToken: null,
-		};
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLogin: false,
+      accessToken: null,
+      search: null
+    }
+    this.handleInputValue = this.handleInputValue.bind(this);
+  }
 
-	handleLocalLogin = token => {
-		this.setState({ isLogin: true, accessToken: token });
-	};
+  componentDidMount() {
+    const url = new URL(window.location.href);
+    const authorizationCode = url.searchParams.get('code');
+    console.log(url.search);
+    console.log(String(url.search).includes('google'));
 
-	async getAccessToken(authorizationCode) {
-		const resultCallback = await axios.post('http://localhost:8080/callback', {
-			authorizationCode,
-		});
-		if (resultCallback.data.accessToken) {
-			this.setState({
-				isLogin: true,
-				accessToken: resultCallback.data.accessToken,
-			});
-		}
-	}
+    if (authorizationCode) {
+      this.getAccessToken(authorizationCode);
+    }
+  }
 
-	componentDidMount() {
-		const url = new URL(window.location.href);
-		const authorizationCode = url.searchParams.get('code');
+  handleLocalLogin = token => {
+    this.setState({ isLogin: true, accessToken: token });
+  };
 
-		if (authorizationCode) {
-			this.getAccessToken(authorizationCode);
-		}
-	}
+  async getAccessToken(authorizationCode) {
+    const resultCallback = await axios.post('http://localhost:8080/callback', {
+      authorizationCode,
+    });
+    if (resultCallback.data.accessToken) {
+      this.setState({
+        isLogin: true,
+        accessToken: resultCallback.data.accessToken,
+      });
+    }
+  }
 
-	render() {
-		return (
-			<BrowserRouter>
-				<>
-					<Navi handleLocalLogin />
-					<Switch>
-						<Route path='/' exact render={() => <Temp />} />
-						<Route path='/user/signup' render={() => <Signup />} />
-						<Route path='/user/userinfo' render={() => <Temp />} />
-						<Route path='/goods/detail/:id' render={() => <Temp />} />
-						<Route path='/goods/edit/:id' render={() => <Temp />} />
-						<Route path='/goods/post/:id' render={() => <Temp />} />
-						<Redirect from='*' to='/' />
-					</Switch>
-				</>
-			</BrowserRouter>
-		);
-	}
+  handleInputValue(input) {
+    this.setState({
+      search: input
+    })
+  }
+
+  render() {
+    return (
+      <BrowserRouter>
+        <>
+          <Navi handleInputValue={this.handleInputValue} />
+          <Switch>
+            <Route
+              path='/'
+              exact render={() => <Temp title={this.state.search} />}
+            />
+            <Route
+              path='/user/signup'
+              render={() => (<Signup />)}
+            />
+            <Route
+              path='/user/userinfo'
+              render={() => (<Temp />)}
+            />
+            <Route
+              path='/goods/detail/:id'
+              render={() => (<Temp />)}
+            />
+            <Route
+              path='/goods/edit/:id'
+              render={() => (<Temp />)}
+            />
+            <Route
+              path='/goods/post/:id'
+              render={() => (<Temp />)}
+            />
+            <Redirect from="*" to="/" />
+          </Switch>
+        </>
+      </BrowserRouter>
+    )
+  }
 }
 
 export default Router;

@@ -55,8 +55,8 @@ const InputBox = styled.div`
 `;
 
 const Email = styled.input.attrs({
-	type: 'email',
-	placeholder: 'Email',
+  type: 'email',
+  placeholder: 'Email',
 })`
 	padding: 7px 0 8px;
 	width: 100%;
@@ -72,8 +72,8 @@ const Email = styled.input.attrs({
 `;
 
 const Password = styled.input.attrs({
-	type: 'password',
-	placeholder: 'Password',
+  type: 'password',
+  placeholder: 'Password',
 })`
 	padding: 7px 0 8px;
 	width: 100%;
@@ -95,10 +95,7 @@ const ErrorMessageArea = styled.div`
 	font-size: 0.8rem;
 `;
 
-const Button = styled.input.attrs({
-	type: 'button',
-	value: 'Login',
-})`
+const Button = styled.button`
 	width: 100%;
 	font-size: 16px;
 	line-height: 24px;
@@ -149,107 +146,107 @@ const SignUpLink = styled(Link)`
 `;
 
 class Login extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			email: '',
-			password: '',
-			errorMessage: '',
-		};
-	}
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      errorMessage: '',
+    };
+  }
 
-	handleInputValue = key => e => {
-		this.setState({ [key]: e.target.value });
-	};
+  handleInputValue = key => e => {
+    this.setState({ [key]: e.target.value });
+  };
 
-	handleLocalLogin = async () => {
-		const { email, password } = this.state;
-		const localLoginUrl = 'http://localhost:4000//api/auth/signin';
+  handleLocalLogin = async () => {
+    const { email, password } = this.state;
+    const localLoginUrl = 'http://localhost:4000//api/auth/signin';
 
-		if (!email.length || !password.length) {
-			this.setState({
-				...this.state,
-				errorMessage: '모든 항목을 입력해주세요.',
-			});
-			return;
-		}
-		try {
-			const response = await axios.post(
-				localLoginUrl,
-				{
-					email,
-					password,
-				},
-				{
-					withCredentials: true,
-				}
-			);
-		} catch (err) {
-			this.setState({
-				...this.state,
-				errorMessage: '아이디 혹은 비밀번호가 잘못 입력되었습니다.',
-			});
-		}
-	};
+    if (!email.length || !password.length) {
+      this.setState({
+        ...this.state,
+        errorMessage: '모든 항목을 입력해주세요.',
+      });
+      return;
+    }
+    try {
+      const response = await axios.post(
+        localLoginUrl,
+        {
+          email,
+          password,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+    } catch (err) {
+      this.setState({
+        ...this.state,
+        errorMessage: '아이디 혹은 비밀번호가 잘못 입력되었습니다.',
+      });
+    }
+  };
 
-	handleGoogleLogin = () => {
-		const clientId =
-			'153084653210-rv3oct12c4a2319k42rqn3hp2tlnadjk.apps.googleusercontent.com';
-		const redirectUri = 'http://localhost:3000';
-		const scope = 'https://www.googleapis.com/auth/plus.login';
-		const googleLoginUrl = `https://accounts.google.com/o/oauth2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code`;
-		window.location.assign(googleLoginUrl);
-	};
+  handleGoogleLogin = () => {
+    const clientId =
+      '153084653210-rv3oct12c4a2319k42rqn3hp2tlnadjk.apps.googleusercontent.com';
+    const redirectUri = 'http://localhost:3000';
+    const scope = 'https://www.googleapis.com/auth/plus.login';
+    const googleLoginUrl = `https://accounts.google.com/o/oauth2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code`;
+    window.location.assign(googleLoginUrl);
+  };
 
-	handleKakaoLogin = () => {
-		const clientId = 'd3f764102a2147802881657a1cc5cc7b';
-		const redirectUri = 'http://localhost:3000';
-		const kakaoLoginUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
-		window.location.assign(kakaoLoginUrl);
-	};
+  handleKakaoLogin = () => {
+    const clientId = 'd3f764102a2147802881657a1cc5cc7b';
+    const redirectUri = 'http://localhost:3000';
+    const kakaoLoginUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
+    window.location.assign(kakaoLoginUrl);
+  };
 
-	render() {
-		const { isOpen, close } = this.props;
-		return (
-			<>
-				{isOpen ? (
-					<Modal onClick={close}>
-						<LoginModal onClick={e => e.stopPropagation()}>
-							<LoginArea>
-								<Title>로그인</Title>
-								<InputBox>
-									<Email onChange={this.handleInputValue('email')} />
-								</InputBox>
-								<InputBox>
-									<Password onChange={this.handleInputValue('password')} />
-								</InputBox>
-								<ErrorMessageArea>{this.state.errorMessage}</ErrorMessageArea>
-								<ButtonArea>
-									<Button onClick={this.handleLocalLogin} />
-									<SignUpLink
-										to='/user/signup'
-										onClick={close}
-										style={{ textDecoration: 'none' }}>
-										SignUp
-									</SignUpLink>
-								</ButtonArea>
+  render() {
+    const { isOpen, close } = this.props;
+    return (
+      <>
+        {isOpen ? (
+          <Modal onClick={close}>
+            <LoginModal onClick={e => e.stopPropagation()}>
+              <LoginArea>
+                <Title>로그인</Title>
+                <InputBox>
+                  <Email onChange={this.handleInputValue('email')} />
+                </InputBox>
+                <InputBox>
+                  <Password onChange={this.handleInputValue('password')} />
+                </InputBox>
+                <ErrorMessageArea>{this.state.errorMessage}</ErrorMessageArea>
+                <ButtonArea>
+                  <Button onClick={this.handleLocalLogin}> Login </Button>
 
-								<SocialArea>
-									<GoogleButton
-										src='../images/googleLogin.png'
-										onClick={this.handleGoogleLogin}
-									/>
-									<KakaoButton
-										src='../images/kakaoLogin.png'
-										onClick={this.handleKakaoLogin}
-									/>
-								</SocialArea>
-							</LoginArea>
-						</LoginModal>
-					</Modal>
-				) : null}
-			</>
-		);
-	}
+                  <SignUpLink
+                    to='/user/signup'
+                    onClick={close}>
+                    <Button> Signup </Button>
+                  </SignUpLink>
+                </ButtonArea>
+
+                <SocialArea>
+                  <GoogleButton
+                    src='../images/googleLogin.png'
+                    onClick={this.handleGoogleLogin}
+                  />
+                  <KakaoButton
+                    src='../images/kakaoLogin.png'
+                    onClick={this.handleKakaoLogin}
+                  />
+                </SocialArea>
+              </LoginArea>
+            </LoginModal>
+          </Modal>
+        ) : null}
+      </>
+    );
+  }
 }
 export default Login;
