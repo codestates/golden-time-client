@@ -1,5 +1,11 @@
 import React from 'react';
-import { BrowserRouter, Route, Redirect, Switch, withRouter } from 'react-router-dom';
+import {
+	BrowserRouter,
+	Route,
+	Redirect,
+	Switch,
+	withRouter,
+} from 'react-router-dom';
 import Home from '../Routes/Home';
 import Signup from '../Routes/Signup';
 import UserInfo from '../Routes/UserInfo';
@@ -17,8 +23,8 @@ class Router extends React.Component {
 			isLogin: false,
 			accessToken: null,
 			search: null,
-			currentLocation: null
-		}
+			currentLocation: null,
+		};
 
 		this.handleSearchValue = this.handleSearchValue.bind(this);
 		this.handleLocationValue = this.handleLocationValue.bind(this);
@@ -27,20 +33,27 @@ class Router extends React.Component {
 
 	getLocation() {
 		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(async (position) => {
-				const x = position.coords.longitude;
-				const y = position.coords.latitude;
-				const APIKEY = 'ffb53639ffe1e1521cd3006a5a09ee3d';
-				const result = await axios.get(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}`, {
-					headers: {
-						'Authorization': `KakaoAK ${APIKEY}`
-					}
-				});
-				const currentLocation = result.data.documents[0].address.region_2depth_name;
-				this.setState({ currentLocation });
-			}, function (error) {
-				console.error(error);
-			});
+			navigator.geolocation.getCurrentPosition(
+				async position => {
+					const x = position.coords.longitude;
+					const y = position.coords.latitude;
+					const APIKEY = 'ffb53639ffe1e1521cd3006a5a09ee3d';
+					const result = await axios.get(
+						`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}`,
+						{
+							headers: {
+								Authorization: `KakaoAK ${APIKEY}`,
+							},
+						}
+					);
+					const currentLocation =
+						result.data.documents[0].address.region_2depth_name;
+					this.setState({ currentLocation });
+				},
+				function (error) {
+					console.error(error);
+				}
+			);
 		} else {
 			console.log('GPS를 지원하지 않습니다');
 		}
@@ -60,19 +73,19 @@ class Router extends React.Component {
 		this.getLocation();
 	}
 
-	handleLocalLogin = token => {
-		this.setState({ isLogin: true, accessToken: token });
+	handleLocalLogin = access_token => {
+		this.setState({ isLogin: true, accessToken: access_token });
 	};
 
 	async handleGoogleLogin(authorizationCode) {
 		try {
-			const response = await axios.post('http://localhost:4000/auth/google', {
+			const response = await axios.post('http://localhost:8080/auth/google', {
 				authorizationCode,
 			});
-			if (response.access_token) {
+			if (response.data.access_token) {
 				this.setState({
 					isLogin: true,
-					accessToken: response.access_token,
+					accessToken: response.data.access_token,
 				});
 			}
 		} catch (err) {
@@ -82,13 +95,13 @@ class Router extends React.Component {
 
 	async handleKakaoLogin(authorizationCode) {
 		try {
-			const response = await axios.post('http://localhost:4000/auth/kakao', {
+			const response = await axios.post('http://localhost:8080/auth/kakao', {
 				authorizationCode,
 			});
-			if (response.access_token) {
+			if (response.data.access_token) {
 				this.setState({
 					isLogin: true,
-					accessToken: response.access_token,
+					accessToken: response.data.access_token,
 				});
 			}
 		} catch (err) {
@@ -112,7 +125,10 @@ class Router extends React.Component {
 		return (
 			<BrowserRouter>
 				<>
-					<Navi handleSearchValue={this.handleSearchValue} handleLocationValue={this.handleLocationValue} handleTokenValue={this.handleTokenValue}
+					<Navi
+						handleSearchValue={this.handleSearchValue}
+						handleLocationValue={this.handleLocationValue}
+						handleTokenValue={this.handleTokenValue}
 						handleLocalLogin={this.handleLocalLogin.bind(this)}
 						handleLogout={this.handleLogout.bind(this)}
 						isLogin={this.state.isLogin}
@@ -121,34 +137,20 @@ class Router extends React.Component {
 					/>
 					<Switch>
 						<Route
-							exact path='/'
+							exact
+							path='/'
 							render={() => <Temp title={this.state.search} />}
 						/>
-						<Route
-							path='/user/signup'
-							render={() => (<Signup />)}
-						/>
-						<Route
-							path='/user/userinfo'
-							render={() => (<Temp />)}
-						/>
-						<Route
-							path='/goods/detail/:id'
-							render={() => (<Temp />)}
-						/>
-						<Route
-							path='/goods/edit/:id'
-							render={() => (<Temp />)}
-						/>
-						<Route
-							path='/goods/post/:id'
-							render={() => (<Temp />)}
-						/>
-						<Redirect from="*" to="/" />
+						<Route path='/user/signup' render={() => <Signup />} />
+						<Route path='/user/userinfo' render={() => <Temp />} />
+						<Route path='/goods/detail/:id' render={() => <Temp />} />
+						<Route path='/goods/edit/:id' render={() => <Temp />} />
+						<Route path='/goods/post/:id' render={() => <Temp />} />
+						<Redirect from='*' to='/' />
 					</Switch>
 				</>
 			</BrowserRouter>
-		)
+		);
 	}
 }
 

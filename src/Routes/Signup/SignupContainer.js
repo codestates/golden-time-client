@@ -23,7 +23,7 @@ class SignupContainer extends React.Component {
 
 	handleSubmit = async () => {
 		const { email, password, nick } = this.state;
-		const signUpUrl = 'http://localhost:4000/auth/signup';
+		const signUpUrl = 'http://localhost:8080/auth/signup';
 
 		if (!isEmail(this.state.email)) {
 			this.setState({
@@ -57,7 +57,7 @@ class SignupContainer extends React.Component {
 				password,
 				nick,
 			});
-			this.props.history.push(response.redirect_url);
+			this.props.history.push(response.data.redirect_url);
 		} catch (err) {
 			this.setState({ ...this.state, errorMessage: '중복된 이메일입니다.' });
 			return;
