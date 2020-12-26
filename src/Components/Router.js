@@ -24,6 +24,7 @@ class Router extends React.Component {
 			accessToken: null,
 			search: null,
 			currentLocation: null,
+			userInfo: {},
 		};
 
 		this.handleSearchValue = this.handleSearchValue.bind(this);
@@ -70,11 +71,18 @@ class Router extends React.Component {
 			}
 		}
 
+		const accessToken = localStorage.getItem('accessToken');
+		if (accessToken) {
+			this.setState({ ...this.state, isLogin: true, accessToken });
+			this.getUserInfo();
+		}
 		this.getLocation();
 	}
 
-	handleLocalLogin = access_token => {
+	handleLocalLogin = async access_token => {
 		this.setState({ isLogin: true, accessToken: access_token });
+		localStorage.setItem('accessToken', access_token);
+		this.getUserInfo();
 	};
 
 	async handleGoogleLogin(authorizationCode) {
@@ -88,6 +96,8 @@ class Router extends React.Component {
 					accessToken: response.data.access_token,
 				});
 			}
+			localStorage.setItem('accessToken', response.data.access_token);
+			this.getUserInfo();
 		} catch (err) {
 			throw err;
 		}
@@ -104,13 +114,52 @@ class Router extends React.Component {
 					accessToken: response.data.access_token,
 				});
 			}
+			localStorage.setItem('accessToken', response.data.access_token);
+			this.getUserInfo();
 		} catch (err) {
 			throw err;
 		}
 	}
 
-	handleLogout() {
-		this.setState({ isLogin: false, accessToken: null });
+	getUserInfo = async () => {
+		try {
+			const userInfo = await axios.get('http://localhost:8080/auth/user', {
+				withCredentials: true,
+				headers: {
+					Authorization: `bearer ${this.state.accessToken}`,
+				},
+			});
+
+			const { id, email, nick, profile, provider, createdAt } = userInfo.data;
+
+			this.setState({
+				...this.state,
+				userInfo: { id, email, nick, profile, provider, createdAt },
+			});
+		} catch (err) {
+			throw err;
+		}
+	};
+
+	async handleLogout() {
+		try {
+			const response = await axios.post(
+				'http://localhost:8080/auth/signout',
+				{},
+				{
+					withCredentials: true,
+					headers: {
+						Authorization: `bearer ${this.state.accessToken}`,
+					},
+				}
+			);
+			if (response.data.message === 'successfully LOGOUT!') {
+				localStorage.clear();
+				this.setState({ isLogin: false, accessToken: null });
+			}
+		} catch (err) {
+			throw err;
+		}
 	}
 
 	handleSearchValue(input) {
@@ -119,6 +168,12 @@ class Router extends React.Component {
 
 	handleLocationValue(input) {
 		this.setState({ currentLocation: input });
+	}
+
+	modifyUserInfo(accessToken) {
+		this.setState({ ...this.state, accessToken });
+		localStorage.setItem('accessToken', accessToken);
+		this.getUserInfo();
 	}
 
 	render() {
@@ -141,8 +196,22 @@ class Router extends React.Component {
 							path='/'
 							render={() => <Temp title={this.state.search} />}
 						/>
-						<Route path='/user/signup' render={() => <Signup />} />
-						<Route path='/user/userinfo' render={() => <Temp />} />
+						<Route
+							path='/user/signup'
+							render={() => (
+								<Signup currentLocation={this.state.currentLocation} />
+							)}
+						/>
+						<Route
+							path='/user/userinfo'
+							render={() => (
+								<UserInfo
+									userData={this.state.userInfo}
+									modifyUserInfo={this.modifyUserInfo.bind(this)}
+									accessToken={this.state.accessToken}
+								/>
+							)}
+						/>
 						<Route path='/goods/detail/:id' render={() => <Temp />} />
 						<Route path='/goods/edit/:id' render={() => <Temp />} />
 						<Route path='/goods/post/:id' render={() => <Temp />} />

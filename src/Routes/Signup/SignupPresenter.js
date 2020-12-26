@@ -24,10 +24,11 @@ const Title = styled.div`
 
 const InputBox = styled.div`
 	text-align: left;
+	margin-top: 1.3rem;
 `;
 
 const InputTitle = styled.div`
-	font-size: 0.8rem;
+	font-size: 0.7rem;
 	font-weight: bold;
 `;
 
@@ -101,13 +102,13 @@ const NickName = styled.input.attrs({
 
 const Button = styled.input.attrs({
 	type: 'button',
-	value: 'SignUp',
+	value: '가입하기',
 })`
-	width: 100%;
+	width: 70%;
 	font-size: 16px;
 	line-height: 24px;
 	letter-spacing: -0.16px;
-	height: 52px;
+	height: 3.2rem;
 	line-height: 50px;
 	font-weight: 700;
 	border-radius: 15px;
@@ -137,21 +138,22 @@ const SignupPresenter = ({ handleInputValue, errorMessage, handleSubmit }) => {
 			<RegistArea>
 				<Title>회원가입</Title>
 				<InputBox>
-					<InputTitle>Email</InputTitle>
+					<InputTitle>이메일 주소</InputTitle>
 					<Email onChange={handleInputValue('email')} />
 				</InputBox>
 				<InputBox>
-					<InputTitle>Password</InputTitle>
+					<InputTitle>닉네임</InputTitle>
+					<NickName onChange={handleInputValue('nick')} />
+				</InputBox>
+				<InputBox>
+					<InputTitle>비밀번호</InputTitle>
 					<Password onChange={handleInputValue('password')} />
 				</InputBox>
 				<InputBox>
-					<InputTitle>PasswordCheck</InputTitle>
+					<InputTitle>비밀번호 확인</InputTitle>
 					<PasswordCheck onChange={handleInputValue('passwordCheck')} />
 				</InputBox>
-				<InputBox>
-					<InputTitle>NickName</InputTitle>
-					<NickName onChange={handleInputValue('nick')} />
-				</InputBox>
+
 				<ErrorMessageArea>{errorMessage}</ErrorMessageArea>
 				<ButtonArea>
 					<Button onClick={handleSubmit} />

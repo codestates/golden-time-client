@@ -57,7 +57,7 @@ const InputBox = styled.div`
 
 const Email = styled.input.attrs({
 	type: 'email',
-	placeholder: 'Email',
+	placeholder: '이메일 주소',
 })`
 	padding: 7px 0 8px;
 	width: 100%;
@@ -74,7 +74,7 @@ const Email = styled.input.attrs({
 
 const Password = styled.input.attrs({
 	type: 'password',
-	placeholder: 'Password',
+	placeholder: '비밀번호',
 })`
 	padding: 7px 0 8px;
 	width: 100%;
@@ -97,7 +97,7 @@ const ErrorMessageArea = styled.div`
 `;
 
 const LoginButton = styled.button`
-	width: 100%;
+	width: 70%;
 	font-size: 16px;
 	line-height: 24px;
 	letter-spacing: -0.16px;
@@ -113,7 +113,7 @@ const LoginButton = styled.button`
 `;
 
 const SignUpButton = styled.button`
-	width: 100%;
+	width: 70%;
 	font-size: 16px;
 	line-height: 24px;
 	letter-spacing: -0.16px;

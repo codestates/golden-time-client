@@ -31,6 +31,12 @@ class SignupContainer extends React.Component {
 				errorMessage: '이메일 형식이 올바르지 않습니다.',
 			});
 			return;
+		} else if (!this.state.nick.length) {
+			this.setState({
+				...this.state,
+				errorMessage: '사용하실 닉네임을 입력해주세요.',
+			});
+			return;
 		} else if (!isPassword(this.state.password)) {
 			this.setState({
 				...this.state,
@@ -43,19 +49,13 @@ class SignupContainer extends React.Component {
 				errorMessage: '비밀번호가 일치하지 않습니다.',
 			});
 			return;
-		} else if (!this.state.nick.length) {
-			this.setState({
-				...this.state,
-				errorMessage: '사용하실 닉네임을 입력해주세요.',
-			});
-			return;
 		}
-
 		try {
 			const response = await axios.post(signUpUrl, {
 				email,
 				password,
 				nick,
+				zone: this.props.currentLocation,
 			});
 			this.props.history.push(response.data.redirect_url);
 		} catch (err) {
