@@ -1,5 +1,5 @@
-import React from "react";
-import GoodsDetailPresenter from "./GoodsDetailPresenter";
+import React from 'react';
+import GoodsDetailPresenter from './GoodsDetailPresenter';
 
 export default class extends React.Component {
   constructor(props) {

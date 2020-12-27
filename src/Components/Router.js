@@ -1,5 +1,11 @@
 import React from 'react';
-import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
+import {
+	BrowserRouter,
+	Route,
+	Redirect,
+	Switch,
+	withRouter,
+} from 'react-router-dom';
 import Home from '../Routes/Home';
 import Signup from '../Routes/Signup';
 import UserInfo from '../Routes/UserInfo';
@@ -17,7 +23,8 @@ class Router extends React.Component {
 			isLogin: false,
 			accessToken: null,
 			search: '',
-			currentLocation: null
+			currentLocation: null,
+			userInfo: {}
 		}
 		this.getLocation = this.getLocation.bind(this);
 		this.handleSearchValue = this.handleSearchValue.bind(this);
@@ -56,27 +63,33 @@ class Router extends React.Component {
 				this.handleKakaoLogin(authorizationCode);
 			}
 		}
+
+		const accessToken = localStorage.getItem('accessToken');
+		if (accessToken) {
+			this.setState({ ...this.state, isLogin: true, accessToken });
+			this.getUserInfo();
+		}
 	}
 
-	handleSearchValue(input) {
-		this.setState({ search: input });
-	}
-
-	handleLocalLogin = token => {
-		this.setState({ isLogin: true, accessToken: token });
+	handleLocalLogin = async access_token => {
+		this.setState({ isLogin: true, accessToken: access_token });
+		localStorage.setItem('accessToken', access_token);
+		this.getUserInfo();
 	};
 
 	async handleGoogleLogin(authorizationCode) {
 		try {
-			const response = await axios.post('http://localhost:4000/auth/google', {
+			const response = await axios.post('http://localhost:8080/auth/google', {
 				authorizationCode,
 			});
-			if (response.access_token) {
+			if (response.data.access_token) {
 				this.setState({
 					isLogin: true,
-					accessToken: response.access_token,
+					accessToken: response.data.access_token,
 				});
 			}
+			localStorage.setItem('accessToken', response.data.access_token);
+			this.getUserInfo();
 		} catch (err) {
 			throw err;
 		}
@@ -84,22 +97,75 @@ class Router extends React.Component {
 
 	async handleKakaoLogin(authorizationCode) {
 		try {
-			const response = await axios.post('http://localhost:4000/auth/kakao', {
+			const response = await axios.post('http://localhost:8080/auth/kakao', {
 				authorizationCode,
 			});
-			if (response.access_token) {
+			if (response.data.access_token) {
 				this.setState({
 					isLogin: true,
-					accessToken: response.access_token,
+					accessToken: response.data.access_token,
 				});
+			}
+			localStorage.setItem('accessToken', response.data.access_token);
+			this.getUserInfo();
+		} catch (err) {
+			throw err;
+		}
+	}
+
+	getUserInfo = async () => {
+		try {
+			const userInfo = await axios.get('http://localhost:8080/auth/user', {
+				withCredentials: true,
+				headers: {
+					Authorization: `bearer ${this.state.accessToken}`,
+				},
+			});
+
+			const { id, email, nick, profile, provider, createdAt } = userInfo.data;
+
+			this.setState({
+				...this.state,
+				userInfo: { id, email, nick, profile, provider, createdAt },
+			});
+		} catch (err) {
+			throw err;
+		}
+	};
+
+	async handleLogout() {
+		try {
+			const response = await axios.post(
+				'http://localhost:8080/auth/signout',
+				{},
+				{
+					withCredentials: true,
+					headers: {
+						Authorization: `bearer ${this.state.accessToken}`,
+					},
+				}
+			);
+			if (response.data.message === 'successfully LOGOUT!') {
+				localStorage.clear();
+				this.setState({ isLogin: false, accessToken: null });
 			}
 		} catch (err) {
 			throw err;
 		}
 	}
 
-	handleLogout() {
-		this.setState({ isLogin: false, accessToken: null });
+	handleSearchValue(input) {
+		this.setState({ search: input });
+	}
+
+	handleLocationValue(input) {
+		this.setState({ currentLocation: input });
+	}
+
+	modifyUserInfo(accessToken) {
+		this.setState({ ...this.state, accessToken });
+		localStorage.setItem('accessToken', accessToken);
+		this.getUserInfo();
 	}
 
 	render() {
@@ -128,11 +194,19 @@ class Router extends React.Component {
 						/>
 						<Route
 							path='/user/signup'
-							render={() => (<Signup />)}
+							render={() => (
+								<Signup currentLocation={this.state.currentLocation} />
+							)}
 						/>
 						<Route
 							path='/user/userinfo'
-							render={() => (<Temp />)}
+							render={() => (
+								<UserInfo
+									userData={this.state.userInfo}
+									modifyUserInfo={this.modifyUserInfo.bind(this)}
+									accessToken={this.state.accessToken}
+								/>
+							)}
 						/>
 						<Route
 							path='/goods/detail/:id'
@@ -143,14 +217,14 @@ class Router extends React.Component {
 							render={() => (<Temp />)}
 						/>
 						<Route
-							path='/goods/post/:id'
+							path='/goods/post'
 							render={() => (<Temp />)}
 						/>
-						<Redirect from="*" to="/" />
+						<Redirect from='*' to='/' />
 					</Switch>
 				</>
 			</BrowserRouter>
-		)
+		);
 	}
 }
 

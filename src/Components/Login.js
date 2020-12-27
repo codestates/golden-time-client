@@ -57,7 +57,7 @@ const InputBox = styled.div`
 
 const Email = styled.input.attrs({
 	type: 'email',
-	placeholder: 'Email',
+	placeholder: '이메일 주소',
 })`
 	padding: 7px 0 8px;
 	width: 100%;
@@ -74,7 +74,7 @@ const Email = styled.input.attrs({
 
 const Password = styled.input.attrs({
 	type: 'password',
-	placeholder: 'Password',
+	placeholder: '비밀번호',
 })`
 	padding: 7px 0 8px;
 	width: 100%;
@@ -97,7 +97,7 @@ const ErrorMessageArea = styled.div`
 `;
 
 const LoginButton = styled.button`
-	width: 100%;
+	width: 70%;
 	font-size: 16px;
 	line-height: 24px;
 	letter-spacing: -0.16px;
@@ -113,7 +113,7 @@ const LoginButton = styled.button`
 `;
 
 const SignUpButton = styled.button`
-	width: 100%;
+	width: 70%;
 	font-size: 16px;
 	line-height: 24px;
 	letter-spacing: -0.16px;
@@ -179,7 +179,7 @@ class Login extends Component {
 
 	loginSubmit = async () => {
 		const { email, password } = this.state;
-		const localLoginUrl = 'http://localhost:4000/auth/signin';
+		const localLoginUrl = 'http://localhost:8080/auth/signin';
 
 		if (!email.length || !password.length) {
 			this.setState({
@@ -199,8 +199,8 @@ class Login extends Component {
 					withCredentials: true,
 				}
 			);
-			this.props.handleLocalLogin(response.token);
-			this.props.history.push(response.redirect_url);
+			this.props.handleLocalLogin(response.data.access_token);
+			this.props.history.push(response.data.redirect_url);
 		} catch (err) {
 			this.setState({
 				...this.state,
@@ -211,15 +211,15 @@ class Login extends Component {
 
 	handleGoogleLogin = () => {
 		const clientId =
-			'153084653210-rv3oct12c4a2319k42rqn3hp2tlnadjk.apps.googleusercontent.com';
+			'995004087715-hrt2q4rjjqbs3q7fg0j84nokjd9287be.apps.googleusercontent.com';
 		const redirectUri = 'http://localhost:3000';
-		const scope = 'https://www.googleapis.com/auth/plus.login';
+		const scope = 'email+profile';
 		const googleLoginUrl = `https://accounts.google.com/o/oauth2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code`;
 		window.location.assign(googleLoginUrl);
 	};
 
 	handleKakaoLogin = () => {
-		const clientId = 'd3f764102a2147802881657a1cc5cc7b';
+		const clientId = 'd4217ea18c8d9c948ba3f75c4c6b2629';
 		const redirectUri = 'http://localhost:3000';
 		const kakaoLoginUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
 		window.location.assign(kakaoLoginUrl);
