@@ -78,7 +78,7 @@ const ProfileImage = styled.img`
 const ProfileContent = styled.div`
 	display: flex;
 	flex-direction: column;
-	padding: 1rem;
+	padding: 1rem 1rem 0 1rem;
 	font-size: 1.2rem;
 	font-weight: bold;
 `;
@@ -93,16 +93,21 @@ const NewImageButton = styled.input.attrs({
 	value: '이미지 변경',
 })`
 	position: relative;
-	right: 0.5rem;
+	right: 5px;
+	bottom: 15px;
+	margin-top: 3rem;
+	padding-top: 1px;
+	padding-left: 11px;
+	padding-right: 12px;
 	cursor: pointer;
-	margin-top: 1.8rem;
+	vertical-align: middle;
+	text-align: center;
 	background-color: black;
 	border-radius: 15px;
 	border: 1px solid black;
 	color: white;
 	outline: 0;
-	height: 30px;
-	width: 5rem;
+	height: 25px;
 	font-weight: bold;
 	font-size: 8px;
 `;
@@ -310,7 +315,7 @@ const UserInfoPresenter = ({
 					<ProfileImageArea>
 						{userData.profile ? (
 							<ProfileImage
-								src={`http://localhost:8080/upload/${userData.profile}`}
+								src={`http://localhost:8080/uploads/${userData.profile}`}
 								alt='프로필 이미지'
 							/>
 						) : (

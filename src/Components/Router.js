@@ -24,8 +24,8 @@ class Router extends React.Component {
 			accessToken: null,
 			search: '',
 			currentLocation: null,
-			userInfo: {}
-		}
+			userInfo: {},
+		};
 		this.getLocation = this.getLocation.bind(this);
 		this.handleSearchValue = this.handleSearchValue.bind(this);
 		this.handleLocalLogin = this.handleLocalLogin.bind(this);
@@ -34,19 +34,22 @@ class Router extends React.Component {
 
 	getLocation() {
 		try {
-			navigator.geolocation.getCurrentPosition(async (position) => {
+			navigator.geolocation.getCurrentPosition(async position => {
 				const x = position.coords.longitude;
 				const y = position.coords.latitude;
-				const result = await axios.get(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}`, {
-					headers: {
-						'Authorization': `KakaoAK ${process.env.REACT_APP_KAKAO_APIKEY}`
+				const result = await axios.get(
+					`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}`,
+					{
+						headers: {
+							Authorization: `KakaoAK ffb53639ffe1e1521cd3006a5a09ee3d`,
+						},
 					}
-				});
-				const currentLocation = result.data.documents[0].address.region_2depth_name;
+				);
+				const currentLocation =
+					result.data.documents[0].address.region_2depth_name;
 				this.setState({ currentLocation });
 			});
-		}
-		catch {
+		} catch {
 			this.setState({ currentLocation: 'no' });
 		}
 	}
@@ -81,6 +84,7 @@ class Router extends React.Component {
 		try {
 			const response = await axios.post('http://localhost:8080/auth/google', {
 				authorizationCode,
+				area: this.state.currentLocation,
 			});
 			if (response.data.access_token) {
 				this.setState({
@@ -99,6 +103,7 @@ class Router extends React.Component {
 		try {
 			const response = await axios.post('http://localhost:8080/auth/kakao', {
 				authorizationCode,
+				area: this.state.currentLocation,
 			});
 			if (response.data.access_token) {
 				this.setState({
@@ -148,6 +153,7 @@ class Router extends React.Component {
 			if (response.data.message === 'successfully LOGOUT!') {
 				localStorage.clear();
 				this.setState({ isLogin: false, accessToken: null });
+				this.props.history.push('/');
 			}
 		} catch (err) {
 			throw err;
@@ -183,14 +189,16 @@ class Router extends React.Component {
 					/>
 					<Switch>
 						<Route
-							exact path='/'
-							render={() =>
+							exact
+							path='/'
+							render={() => (
 								<Home
 									isLogin={isLogin}
 									accessToken={accessToken}
 									search={search}
 									currentLocation={currentLocation}
-								/>}
+								/>
+							)}
 						/>
 						<Route
 							path='/user/signup'
@@ -208,18 +216,9 @@ class Router extends React.Component {
 								/>
 							)}
 						/>
-						<Route
-							path='/goods/detail/:id'
-							component={GoodsDetail}
-						/>
-						<Route
-							path='/goods/edit/:id'
-							render={() => (<Temp />)}
-						/>
-						<Route
-							path='/goods/post'
-							render={() => (<Temp />)}
-						/>
+						<Route path='/goods/detail/:id' component={GoodsDetail} />
+						<Route path='/goods/edit/:id' render={() => <Temp />} />
+						<Route path='/goods/post' render={() => <Temp />} />
 						<Redirect from='*' to='/' />
 					</Switch>
 				</>
