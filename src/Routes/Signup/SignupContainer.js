@@ -55,7 +55,7 @@ class SignupContainer extends React.Component {
 				email,
 				password,
 				nick,
-				zone: this.props.currentLocation,
+				area: this.props.currentLocation,
 			});
 			this.props.history.push(response.data.redirect_url);
 		} catch (err) {

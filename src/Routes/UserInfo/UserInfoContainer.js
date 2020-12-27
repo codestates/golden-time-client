@@ -113,7 +113,7 @@ class UserInfoContainer extends Component {
 			});
 		} else {
 			try {
-				const response = await axios.patch(
+				const response = await axios.post(
 					'http://localhost:8080/auth/modifiedpassword',
 					{
 						password: this.state.currentPassword,
