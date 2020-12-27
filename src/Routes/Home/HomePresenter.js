@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-// import Helmet from "react-helmet";
 import Goods from "../../Components/Goods";
 import Session from "../../Components/Session";
 import Loader from "../../Components/Loader";
+// import Helmet from "react-helmet";
 
 const Container = styled.div`
   flex-direction: column;
@@ -18,24 +18,26 @@ const Notice = styled.div`
   background-color: rgb(99,126,168);
 `;
 
-const HomePresenter = ({ goods }) => {
+const HomePresenter = ({ currentLocation, goods }) => {
   return (
     <Container>
       <Notice />
-      <Session>
-        {goods.map(item => (
-          <Goods
-            id={item.id}
-            src={item.src}
-            title={item.title}
-            price={item.price}
-            closing_time={item.closing_time}
-          />
-        ))}
-      </Session>
+      {goods ?
+        <Session currentLocation={currentLocation}>
+          {goods.map(item => (
+            <Goods
+              key={item.id}
+              id={item.id}
+              src={item.src}
+              title={item.title}
+              price={item.price}
+              closing_time={item.closing_time}
+            />
+          ))}
+        </Session>
+        : <Loader />}
     </Container>
   );
 }
-
 
 export default HomePresenter;

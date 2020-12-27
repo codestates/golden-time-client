@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Redirect, Switch, withRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import Home from '../Routes/Home';
 import Signup from '../Routes/Signup';
 import UserInfo from '../Routes/UserInfo';
@@ -14,39 +14,39 @@ class Router extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			isLogin: true,
+			isLogin: false,
 			accessToken: null,
-			search: null,
+			search: '',
 			currentLocation: null
 		}
-
-		this.handleSearchValue = this.handleSearchValue.bind(this);
-		this.handleLocationValue = this.handleLocationValue.bind(this);
 		this.getLocation = this.getLocation.bind(this);
+		this.handleSearchValue = this.handleSearchValue.bind(this);
+		this.handleLocalLogin = this.handleLocalLogin.bind(this);
+		this.handleLogout = this.handleLogout.bind(this);
 	}
 
 	getLocation() {
-		if (navigator.geolocation) {
+		try {
 			navigator.geolocation.getCurrentPosition(async (position) => {
 				const x = position.coords.longitude;
 				const y = position.coords.latitude;
-				const APIKEY = 'ffb53639ffe1e1521cd3006a5a09ee3d';
 				const result = await axios.get(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}`, {
 					headers: {
-						'Authorization': `KakaoAK ${APIKEY}`
+						'Authorization': `KakaoAK ${process.env.REACT_APP_KAKAO_APIKEY}`
 					}
 				});
 				const currentLocation = result.data.documents[0].address.region_2depth_name;
 				this.setState({ currentLocation });
-			}, function (error) {
-				console.error(error);
 			});
-		} else {
-			console.log('GPS를 지원하지 않습니다');
+		}
+		catch {
+			this.setState({ currentLocation: 'no' });
 		}
 	}
 
 	componentDidMount() {
+		this.getLocation();
+
 		const url = new URL(window.location.href);
 		const authorizationCode = url.searchParams.get('code');
 		if (authorizationCode) {
@@ -56,8 +56,10 @@ class Router extends React.Component {
 				this.handleKakaoLogin(authorizationCode);
 			}
 		}
+	}
 
-		this.getLocation();
+	handleSearchValue(input) {
+		this.setState({ search: input });
 	}
 
 	handleLocalLogin = token => {
@@ -100,29 +102,29 @@ class Router extends React.Component {
 		this.setState({ isLogin: false, accessToken: null });
 	}
 
-	handleSearchValue(input) {
-		this.setState({ search: input });
-	}
-
-	handleLocationValue(input) {
-		this.setState({ currentLocation: input });
-	}
-
 	render() {
+		const { isLogin, accessToken, search, currentLocation } = this.state;
 		return (
 			<BrowserRouter>
 				<>
-					<Navi handleSearchValue={this.handleSearchValue} handleLocationValue={this.handleLocationValue} handleTokenValue={this.handleTokenValue}
-						handleLocalLogin={this.handleLocalLogin.bind(this)}
-						handleLogout={this.handleLogout.bind(this)}
-						isLogin={this.state.isLogin}
-						accessToken={this.state.accessToken}
-						currentLocation={this.state.currentLocation}
+					<Navi
+						handleSearchValue={this.handleSearchValue}
+						handleLocalLogin={this.handleLocalLogin}
+						handleLogout={this.handleLogout}
+						isLogin={isLogin}
+						accessToken={accessToken}
+						currentLocation={currentLocation}
 					/>
 					<Switch>
 						<Route
 							exact path='/'
-							render={() => <Home title={this.state.search} />}
+							render={() =>
+								<Home
+									isLogin={isLogin}
+									accessToken={accessToken}
+									search={search}
+									currentLocation={currentLocation}
+								/>}
 						/>
 						<Route
 							path='/user/signup'
@@ -134,7 +136,7 @@ class Router extends React.Component {
 						/>
 						<Route
 							path='/goods/detail/:id'
-							render={() => (<Temp />)}
+							component={GoodsDetail}
 						/>
 						<Route
 							path='/goods/edit/:id'

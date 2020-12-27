@@ -10,10 +10,14 @@ const globalStyles = createGlobalStyle`
     *{
         box-sizing: border-box;
     }
+    input{
+        padding-left: 20px;
+    }
+    input::placeholder {
+        color:gray;
+    }
     input:focus{
         outline: none;
-        padding-left: 20px;
-        font-size: 15px;
     }
     body{
         font-size: 15px;

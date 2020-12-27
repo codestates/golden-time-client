@@ -20,7 +20,7 @@ const Grid = styled.div`
 
 const Section = ({ currentLocation, children }) => (
   <Container>
-    <Title>{`${`중구`}에서 판매중인 상품`}</Title>
+    <Title>{currentLocation ? `${currentLocation}에서 판매중인 상품` : `전국에서 판매중인 상품`}</Title>
     <Grid>{children}</Grid>
   </Container>
 );
