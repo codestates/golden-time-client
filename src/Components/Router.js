@@ -22,45 +22,38 @@ class Router extends React.Component {
 		this.state = {
 			isLogin: false,
 			accessToken: null,
-			search: null,
+			search: '',
 			currentLocation: null,
-			userInfo: {},
-		};
-
-		this.handleSearchValue = this.handleSearchValue.bind(this);
-		this.handleLocationValue = this.handleLocationValue.bind(this);
+			userInfo: {}
+		}
 		this.getLocation = this.getLocation.bind(this);
+		this.handleSearchValue = this.handleSearchValue.bind(this);
+		this.handleLocalLogin = this.handleLocalLogin.bind(this);
+		this.handleLogout = this.handleLogout.bind(this);
 	}
 
 	getLocation() {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(
-				async position => {
-					const x = position.coords.longitude;
-					const y = position.coords.latitude;
-					const APIKEY = 'ffb53639ffe1e1521cd3006a5a09ee3d';
-					const result = await axios.get(
-						`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}`,
-						{
-							headers: {
-								Authorization: `KakaoAK ${APIKEY}`,
-							},
-						}
-					);
-					const currentLocation =
-						result.data.documents[0].address.region_2depth_name;
-					this.setState({ currentLocation });
-				},
-				function (error) {
-					console.error(error);
-				}
-			);
-		} else {
-			console.log('GPS를 지원하지 않습니다');
+		try {
+			navigator.geolocation.getCurrentPosition(async (position) => {
+				const x = position.coords.longitude;
+				const y = position.coords.latitude;
+				const result = await axios.get(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}`, {
+					headers: {
+						'Authorization': `KakaoAK ${process.env.REACT_APP_KAKAO_APIKEY}`
+					}
+				});
+				const currentLocation = result.data.documents[0].address.region_2depth_name;
+				this.setState({ currentLocation });
+			});
+		}
+		catch {
+			this.setState({ currentLocation: 'no' });
 		}
 	}
 
 	componentDidMount() {
+		this.getLocation();
+
 		const url = new URL(window.location.href);
 		const authorizationCode = url.searchParams.get('code');
 		if (authorizationCode) {
@@ -76,7 +69,6 @@ class Router extends React.Component {
 			this.setState({ ...this.state, isLogin: true, accessToken });
 			this.getUserInfo();
 		}
-		this.getLocation();
 	}
 
 	handleLocalLogin = async access_token => {
@@ -177,24 +169,28 @@ class Router extends React.Component {
 	}
 
 	render() {
+		const { isLogin, accessToken, search, currentLocation } = this.state;
 		return (
 			<BrowserRouter>
 				<>
 					<Navi
 						handleSearchValue={this.handleSearchValue}
-						handleLocationValue={this.handleLocationValue}
-						handleTokenValue={this.handleTokenValue}
-						handleLocalLogin={this.handleLocalLogin.bind(this)}
-						handleLogout={this.handleLogout.bind(this)}
-						isLogin={this.state.isLogin}
-						accessToken={this.state.accessToken}
-						currentLocation={this.state.currentLocation}
+						handleLocalLogin={this.handleLocalLogin}
+						handleLogout={this.handleLogout}
+						isLogin={isLogin}
+						accessToken={accessToken}
+						currentLocation={currentLocation}
 					/>
 					<Switch>
 						<Route
-							exact
-							path='/'
-							render={() => <Temp title={this.state.search} />}
+							exact path='/'
+							render={() =>
+								<Home
+									isLogin={isLogin}
+									accessToken={accessToken}
+									search={search}
+									currentLocation={currentLocation}
+								/>}
 						/>
 						<Route
 							path='/user/signup'
@@ -212,9 +208,18 @@ class Router extends React.Component {
 								/>
 							)}
 						/>
-						<Route path='/goods/detail/:id' render={() => <Temp />} />
-						<Route path='/goods/edit/:id' render={() => <Temp />} />
-						<Route path='/goods/post/:id' render={() => <Temp />} />
+						<Route
+							path='/goods/detail/:id'
+							component={GoodsDetail}
+						/>
+						<Route
+							path='/goods/edit/:id'
+							render={() => (<Temp />)}
+						/>
+						<Route
+							path='/goods/post'
+							render={() => (<Temp />)}
+						/>
 						<Redirect from='*' to='/' />
 					</Switch>
 				</>
