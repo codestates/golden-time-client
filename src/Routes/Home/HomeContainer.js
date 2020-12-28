@@ -72,7 +72,7 @@ export default class extends React.Component {
   componentDidMount() {
     const condition = {
       title: this.props.search,
-      zone: ''
+      area: ''
     };
     if (this.props.currentLocation === 'no') {
       this.getGoodsData(condition);
