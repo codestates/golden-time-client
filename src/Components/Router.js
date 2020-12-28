@@ -218,7 +218,7 @@ class Router extends React.Component {
 						/>
 						<Route path='/goods/detail/:id' component={GoodsDetail} />
 						<Route path='/goods/edit/:id' render={() => <Temp />} />
-						<Route path='/goods/post' render={() => <Temp />} />
+						<Route path='/goods/post' render={() => <GoodsPost />} />
 						<Redirect from='*' to='/' />
 					</Switch>
 				</>

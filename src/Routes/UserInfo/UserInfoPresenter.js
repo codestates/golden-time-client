@@ -54,6 +54,7 @@ const ProfileArea = styled.div`
 	width: 50%;
 	height: 100%;
 	padding-top: 3em;
+	position: relative;
 `;
 
 const UserProfile = styled.div`
