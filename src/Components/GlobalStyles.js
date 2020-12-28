@@ -23,6 +23,7 @@ const globalStyles = createGlobalStyle`
         font-size: 15px;
         background-color: white;
         color: black;
+        position:relative;
         padding-top: 100px;
     }
 `;

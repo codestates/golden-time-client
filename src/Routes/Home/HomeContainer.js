@@ -93,7 +93,7 @@ export default class extends React.Component {
 
   render() {
     return (
-      <HomePresenter currentLocation={this.props.currentLocation} goods={this.state.goods} />
+      <HomePresenter userInfo={this.props.userInfo} currentLocation={this.props.currentLocation} goods={this.state.goods} />
     );
   }
 }

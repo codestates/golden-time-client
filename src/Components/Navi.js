@@ -7,6 +7,7 @@ import axios from "axios";
 
 const Container = styled.header`
   position: fixed;
+  z-index: 4;
   top: 0;
   left: 0;
   right: 0;
