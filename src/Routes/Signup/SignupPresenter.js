@@ -119,8 +119,7 @@ const Button = styled.input.attrs({
 `;
 
 const ButtonArea = styled.div`
-	position: relative;
-	top: 2em;
+	margin-top: 1rem;
 	align-items: center;
 	height: 10%;
 `;

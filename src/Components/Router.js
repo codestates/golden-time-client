@@ -12,6 +12,7 @@ import UserInfo from '../Routes/UserInfo';
 import GoodsDetail from '../Routes/GoodsDetail';
 import GoodsEdit from '../Routes/GoodsEdit';
 import GoodsPost from '../Routes/GoodsPost';
+import MyGoods from '../Routes/MyGoods';
 import Navi from './Navi';
 import Temp from './Temp';
 import axios from 'axios';
@@ -217,8 +218,9 @@ class Router extends React.Component {
 							)}
 						/>
 						<Route path='/goods/detail/:id' component={GoodsDetail} />
-						<Route path='/goods/edit/:id' render={() => <Temp />} />
-						<Route path='/goods/post' render={() => <Temp />} />
+						<Route path='/goods/edit/:id' component={GoodsEdit} />
+						<Route path='/goods/post' render={() => <GoodsPost />} />
+						<Route path='/user/mygoods' render={() => <MyGoods />} />
 						<Redirect from='*' to='/' />
 					</Switch>
 				</>
