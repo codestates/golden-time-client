@@ -72,7 +72,7 @@ class Navi extends React.Component {
 		super(props);
 		this.state = {
 			search: '',
-			isModal: false,
+			isModal: false
 		};
 
 		this.handleHome = this.handleHome.bind(this);
@@ -84,7 +84,7 @@ class Navi extends React.Component {
 	handleHome = () => {
 		this.setState({ search: '' });
 		this.props.handleSearchValue('');
-	};
+	}
 
 	handleInputValue = key => e => {
 		this.setState({ [key]: e.target.value });
@@ -93,6 +93,7 @@ class Navi extends React.Component {
 	handleSearch = () => {
 		this.props.handleSearchValue(this.state.search);
 	};
+
 
 	handleIsModal = () => {
 		this.setState(state => ({ isModal: !state.isModal }));

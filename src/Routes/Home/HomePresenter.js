@@ -14,11 +14,11 @@ const Container = styled.div`
 
 const Notice = styled.div`
   width: 100vw;
-  height:300px;
+  height: 300px;
   background-color: rgb(99,126,168);
 `;
 
-const HomePresenter = ({ currentLocation, goods }) => {
+const HomePresenter = ({ currentLocation, goods, userInfo }) => {
   return (
     <Container>
       <Notice />
@@ -32,6 +32,7 @@ const HomePresenter = ({ currentLocation, goods }) => {
               title={item.title}
               price={item.price}
               closing_time={item.closing_time}
+              userInfo={userInfo}
             />
           ))}
         </Session>

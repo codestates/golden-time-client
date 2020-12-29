@@ -25,7 +25,7 @@ class Router extends React.Component {
 			accessToken: null,
 			search: '',
 			currentLocation: null,
-			userInfo: {},
+			userInfo: { a: 1 },
 		};
 		this.getLocation = this.getLocation.bind(this);
 		this.handleSearchValue = this.handleSearchValue.bind(this);
@@ -56,6 +56,7 @@ class Router extends React.Component {
 	}
 
 	componentDidMount() {
+		console.log('첫 컴디드');
 		this.getLocation();
 
 		const url = new URL(window.location.href);
@@ -176,7 +177,7 @@ class Router extends React.Component {
 	}
 
 	render() {
-		const { isLogin, accessToken, search, currentLocation } = this.state;
+		const { isLogin, userInfo, accessToken, search, currentLocation } = this.state;
 		return (
 			<BrowserRouter>
 				<>
@@ -195,6 +196,20 @@ class Router extends React.Component {
 							render={() => (
 								<Home
 									isLogin={isLogin}
+									userInfo={userInfo}
+									accessToken={accessToken}
+									search={search}
+									currentLocation={currentLocation}
+								/>
+							)}
+						/>
+						<Route
+							exact
+							path='/:src'
+							render={() => (
+								<Home
+									isLogin={isLogin}
+									userInfo={userInfo}
 									accessToken={accessToken}
 									search={search}
 									currentLocation={currentLocation}

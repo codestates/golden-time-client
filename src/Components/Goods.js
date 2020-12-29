@@ -6,7 +6,6 @@ const Container = styled.div`
   flex-direction: column;
   display: flex;
   justify-content: center;
-  /* align-items: flex-end; */
 `;
 
 const Image = styled.img`
@@ -55,8 +54,11 @@ function makeTimer(closing_time) {
   return (`남은시간 : ${diffDays < 10 ? `0${diffDays}` : diffDays}일 ${diffHours < 10 ? `0${diffHours}` : diffHours}시간 ${diffMin < 10 ? `0${diffMin}` : diffMin}분 ${diffSec < 10 ? `0${diffSec}` : diffSec}초`);
 }
 
-const Goods = ({ id, src, title, price, closing_time }) => (
-  <Link to={`/goods/detail/${id}`}>
+const Goods = ({ id, src, title, price, closing_time, userInfo }) => (
+  <Link to={{
+    pathname: `/goods/detail/${id}`,
+    state: { userInfo }
+  }}>
     <Container>
       <Image src={src} />
       <Title>{title}</Title>

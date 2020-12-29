@@ -12,6 +12,7 @@ const globalStyles = createGlobalStyle`
     }
     input{
         padding-left: 20px;
+        border: 0;
     }
     input::placeholder {
         color:gray;
@@ -23,6 +24,7 @@ const globalStyles = createGlobalStyle`
         font-size: 15px;
         background-color: white;
         color: black;
+        position:relative;
         padding-top: 100px;
     }
 `;
