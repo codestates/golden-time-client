@@ -3,57 +3,80 @@ import styled from "styled-components";
 import axios from "axios";
 
 const Container = styled.div`
-  background-color:forestgreen;
   display: flex;
-  justify-content: center;
-  /* align-items: flex-end; */
+  justify-content: space-between;
+  border-bottom: 0.5px solid black;
 `;
 
 const Text = styled.div`
-  background-color:blue;
-  width:200px;
-  height:50px;
+  width: 60%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const User = styled.div`
- background-color:palegoldenrod;
-  width:100px;
-  height:50px;
+  width: 10%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 const Time = styled.div`
- background-color:indianred;
-  width:100px;
+  width: 10%;
   height:50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
-
-const Edit = styled.div`
-  background-color:white;
-  width:50px;
-  height:50px;
-  border-radius: 50px;
-`;
 
 const EditComment = styled.input`
   background-color:rgb(244,244,244);
   border-radius:20px;
-	width: 80%;
+	width: 60%;
 	height: 50px;
   border:0;
 `;
 
-const EditBtn = styled.div`
-  background-color:oldlace;
-  width:50px;
-  height:50px;
-  border-radius: 50px;
+const ButtonContainer = styled.div`
+  width: 10%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+const EditButton = styled.div`
+  width: 50px;
+  height: 25px;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self:center;
+	border: 0.5px solid black;
+	background-color: white;
+	cursor: pointer;
 `;
 
-const Delete = styled.div`
-  background-color:white;
-  width:50px;
-  height:50px;
-  border-radius: 50px;
+const DeleteButton = styled.div`
+  width: 50px;
+  height: 25px;
+  border-radius: 15px;
+  font-size: 15px;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-self:center;
+  align-items: center;
+	border: 0.5px solid black;
+	background-color: white;
+  cursor: pointer;
+  margin-left:10px;
 `;
 
 function makeTimer(createdAt) {
@@ -72,8 +95,7 @@ class Comment extends React.Component {
       userInfo: {},
       userId: null,
       userNick: null,
-      commentMessage: null,
-      createdAt: null
+      commentMessage: null
     }
     this.editComment = this.editComment.bind(this);
   }
@@ -98,7 +120,7 @@ class Comment extends React.Component {
         alert('입력하신 텍스트가 없습니다.');
         throw '코멘트 에러';
       }
-      this.setState({ editing: false, commentMessage: this.state.editComment, createdAt: new Date().getTime() / 1000 },
+      this.setState({ editing: false, commentMessage: this.state.editComment },
         async () => {
           // let accessToken = localStorage.getItem('accessToken');
           // await axios.post(`http://localhost:8080/comments/modified`,
@@ -125,17 +147,18 @@ class Comment extends React.Component {
         {this.state.editing ?
           <>
             <EditComment type='text' placeholder={this.state.commentMessage} onChange={this.handleCommentInputValue("editComment")} />
-            <EditBtn onClick={this.editComment}>확인</EditBtn>
+            <EditButton onClick={this.editComment}>확인</EditButton>
           </>
           : <Text>{this.state.commentMessage}</Text>}
         <User>{this.state.userNick}</User>
-        <Time>{this.state.createdAt}</Time>
-        {this.state.userInfo.id === this.state.userId ?
-          <>
-            <Edit onClick={this.handleEditing}>수정</Edit>
-            <Delete onClick={this.props.deleteComment.bind(null, this.state.commentId)}>삭제</Delete>
-          </>
-          : <></>}
+        <ButtonContainer>
+          {this.state.userInfo.id === this.state.userId ?
+            <>
+              <EditButton onClick={this.handleEditing}>수정</EditButton>
+              <DeleteButton onClick={this.props.deleteComment.bind(null, this.state.commentId)}>삭제</DeleteButton>
+            </>
+            : <></>}
+        </ButtonContainer>
       </Container>
     )
   }

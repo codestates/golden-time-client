@@ -14,7 +14,7 @@ const Container = styled.div`
 
 const Notice = styled.div`
   width: 100vw;
-  height:300px;
+  height: 300px;
   background-color: rgb(99,126,168);
 `;
 

@@ -12,6 +12,7 @@ const globalStyles = createGlobalStyle`
     }
     input{
         padding-left: 20px;
+        border: 0;
     }
     input::placeholder {
         color:gray;

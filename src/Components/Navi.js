@@ -107,7 +107,7 @@ class Navi extends React.Component {
 
         <Input type='text' placeholder={"찾으시는 상품을 입력하세요."} value={this.state.search} onChange={this.handleInputValue("search")} />
 
-        <Link to="/">
+        <Link to="/123123">
           <Search onClick={this.handleSearch}>
             <FaSearch size="25" color='gray' />
           </Search>

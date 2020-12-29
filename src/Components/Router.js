@@ -55,6 +55,7 @@ class Router extends React.Component {
 	}
 
 	componentDidMount() {
+		console.log('첫 컴디드');
 		this.getLocation();
 
 		const url = new URL(window.location.href);
@@ -191,6 +192,19 @@ class Router extends React.Component {
 						<Route
 							exact
 							path='/'
+							render={() => (
+								<Home
+									isLogin={isLogin}
+									userInfo={userInfo}
+									accessToken={accessToken}
+									search={search}
+									currentLocation={currentLocation}
+								/>
+							)}
+						/>
+						<Route
+							exact
+							path='/:src'
 							render={() => (
 								<Home
 									isLogin={isLogin}

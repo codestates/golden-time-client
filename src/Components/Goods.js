@@ -6,7 +6,6 @@ const Container = styled.div`
   flex-direction: column;
   display: flex;
   justify-content: center;
-  /* align-items: flex-end; */
 `;
 
 const Image = styled.img`
@@ -60,7 +59,6 @@ const Goods = ({ id, src, title, price, closing_time, userInfo }) => (
     pathname: `/goods/detail/${id}`,
     state: { userInfo }
   }}>
-    {console.log(userInfo)}
     <Container>
       <Image src={src} />
       <Title>{title}</Title>
