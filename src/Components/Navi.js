@@ -73,7 +73,7 @@ class Navi extends React.Component {
 		this.state = {
 			search: '',
 			isModal: false
-		}
+		};
 
 		this.handleHome = this.handleHome.bind(this);
 		this.handleInputValue = this.handleInputValue.bind(this);
@@ -86,13 +86,14 @@ class Navi extends React.Component {
 		this.props.handleSearchValue('');
 	}
 
-	handleInputValue = (key) => (e) => {
+	handleInputValue = key => e => {
 		this.setState({ [key]: e.target.value });
 	};
 
 	handleSearch = () => {
 		this.props.handleSearchValue(this.state.search);
-	}
+	};
+
 
 	handleIsModal = () => {
 		this.setState(state => ({ isModal: !state.isModal }));
@@ -101,47 +102,63 @@ class Navi extends React.Component {
 	render() {
 		return (
 			<Container>
-				<Link to="/">
+				<Link to='/'>
 					<Home onClick={this.handleHome}>Golden Time</Home>
 				</Link>
 
-				<Input type='text' placeholder={"찾으시는 상품을 입력하세요."} value={this.state.search} onChange={this.handleInputValue("search")} />
+				<Input
+					type='text'
+					placeholder={'찾으시는 상품을 입력하세요.'}
+					value={this.state.search}
+					onChange={this.handleInputValue('search')}
+				/>
 
-				<Link to="/123123">
+				<Link to='/'>
 					<Search onClick={this.handleSearch}>
-						<FaSearch size="25" color='gray' />
+						<FaSearch size='25' color='gray' />
 					</Search>
 				</Link>
 
-				{this.props.currentLocation ?
-					this.props.currentLocation === 'no' ? <Location>위치 정보를 받아올 수 없습니다.</Location> :
-						<Location>현재 위치는{'\u00A0'}<LocationName>{this.props.currentLocation}</LocationName>{'\u00A0'}입니다.</Location>
-					: <Location>위치 정보를 확인하는 중입니다.</Location>
-				}
+				{this.props.currentLocation ? (
+					this.props.currentLocation === 'no' ? (
+						<Location>위치 정보를 받아올 수 없습니다.</Location>
+					) : (
+						<Location>
+							현재 위치는{'\u00A0'}
+							<LocationName>{this.props.currentLocation}</LocationName>
+							{'\u00A0'}입니다.
+						</Location>
+					)
+				) : (
+					<Location>위치 정보를 확인하는 중입니다.</Location>
+				)}
 
-				{this.props.isLogin ?
+				{this.props.isLogin ? (
 					<>
-						<Link to="/user/userinfo">
+						<Link to='/user/userinfo'>
 							<Item>개인 페이지</Item>
 						</Link>
 
-						<Link to="/">
+						<Link to='/'>
 							<Item onClick={this.props.handleLogout}>로그아웃</Item>
 						</Link>
 					</>
-					: <>
+				) : (
+					<>
 						<Item onClick={this.handleIsModal}>로그인</Item>
-						{this.state.isModal &&
+						{this.state.isModal ? (
 							<Login
 								isOpen={true}
 								close={this.handleIsModal}
 								handleLocalLogin={this.props.handleLocalLogin}
 							/>
-						}
+						) : (
+							<></>
+						)}
 					</>
-				}
-			</Container >
-		)
+				)}
+			</Container>
+		);
 	}
 }
 
