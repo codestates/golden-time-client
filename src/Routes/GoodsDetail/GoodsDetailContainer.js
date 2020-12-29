@@ -7,6 +7,7 @@ export default class extends React.Component {
     super(props);
     this.state = {
       userInfo: { id: 22, nick: "이재용" },
+      userInfo: {},
       detail: {},
       imageNum: 0,
       convertedData: {

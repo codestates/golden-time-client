@@ -16,34 +16,34 @@ export default class extends React.Component {
   //   return (this.props.currentLocation !== nextProps.currentLocation || this.props.search !== nextProps.search);
   // }
 
-  componentWillUpdate() {
-  }
+  // componentWillUpdate() {
+  // }
 
   componentDidMount() {
-    console.log(123123);
-    this.setState({ currentLocation: this.props.currentLocation });
-    // this.getGoodsData();
+    // console.log(123123);
+    // this.setState({ currentLocation: this.props.currentLocation });
+    this.getGoodsData();
     // this.props.cuurentLocation === null
-    if (this.props.currentLocation === 'no') {
-      if (this.props.search) {
-        this.getSearchGoodsData();
-      } else {
-        this.getGoodsData();
-      }
-    } else if (this.props.currentLocation) {
-      if (this.props.search) {
-        this.getSearchGoodsData({ area: this.props.currentLocation });
-      } else {
-        this.getGoodsData({ area: this.props.currentLocation });
-      }
-    }
+    // if (this.props.currentLocation === 'no') {
+    //   if (this.props.search) {
+    //     this.getSearchGoodsData();
+    //   } else {
+    //     this.getGoodsData();
+    //   }
+    // } else if (this.props.currentLocation) {
+    //   if (this.props.search) {
+    //     this.getSearchGoodsData({ area: this.props.currentLocation });
+    //   } else {
+    //     this.getGoodsData({ area: this.props.currentLocation });
+    //   }
+    // }
 
   }
 
   async getGoodsData(area) {
     try {
-      // const goods = axios.post('http://localhost:4000/api/goods', area);
-      // this.setState({ goods });
+      const goods = axios.post('http://localhost:4000/api/goods', area);
+      this.setState({ goods });
       console.log('전체요청');
       this.setState({
         goods: [{
