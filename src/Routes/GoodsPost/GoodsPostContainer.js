@@ -25,7 +25,6 @@ class GoodsPostContainer extends Component {
 
 	handleImageChange(e) {
 		e.preventDefault();
-
 		let files = Array.from(e.target.files);
 		files.forEach(file => {
 			let reader = new FileReader();
@@ -128,8 +127,8 @@ class GoodsPostContainer extends Component {
 	render() {
 		return (
 			<GoodsPostPresenter
-				fileRef={this.fileRef}
 				errorMessage={this.state.errorMessage}
+				fileRef={this.fileRef}
 				closing_time={this.state.closing_time}
 				imagesPreviewUrls={this.state.imagesPreviewUrls}
 				handleSubmit={this.handleSubmit.bind(this)}

@@ -12,7 +12,7 @@ const Container = styled.div`
 `;
 
 const Content = styled.div`
-	width: 40%;
+	width: 38%;
 	height: 100%;
 `;
 
@@ -42,7 +42,6 @@ const ImageContent = styled.div``;
 const InfoArea = styled.div`
 	margin-top: 1.3rem;
 	border-bottom: solid 1px lightgray;
-	height: auto;
 	padding-bottom: 0.5rem;
 `;
 
@@ -184,7 +183,7 @@ const DateSelectButton = styled.button`
 	cursor: pointer;
 	padding: 0;
 	border-radius: 10px;
-	border: solid 2px black;
+	border: solid 3px lightgray;
 	color: black;
 `;
 
@@ -223,8 +222,8 @@ const GoodsPostPresenter = ({
 									onClick={ImageUpLoadButtonClick}
 								/>
 								<ImageFileInput
-									type='file'
 									ref={fileRef}
+									type='file'
 									multiple
 									onChange={handleImageChange}
 								/>
@@ -273,11 +272,11 @@ const GoodsPostPresenter = ({
 					<InfoText>카테고리</InfoText>
 					<CatagorySelect onChange={handleSelectChange}>
 						<option value='0'>선택</option>
-						<option value='1'>의류</option>
-						<option value='2'>가전제품</option>
-						<option value='3'>가구</option>
-						<option value='4'>생활용품</option>
-						<option valye='5'>기타</option>
+						<option value='의류'>의류</option>
+						<option value='가전'>가전제품</option>
+						<option value='가구'>가구</option>
+						<option value='생활용품'>생활용품</option>
+						<option valye='기타'>기타</option>
 					</CatagorySelect>
 				</InfoArea>
 				<ErrorMessageArea>{errorMessage}</ErrorMessageArea>

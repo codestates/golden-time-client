@@ -9,7 +9,7 @@ const Container = styled.div`
 
 const SideMenu = styled.div`
 	width: 15%;
-	padding: 2rem;
+	padding: 4.4rem 0 0 4rem;
 	display: flex;
 	flex-direction: column;
 `;
@@ -108,9 +108,9 @@ const NewImageButton = styled.input.attrs({
 	border: 1px solid black;
 	color: white;
 	outline: 0;
-	height: 25px;
+	height: 2rem;
 	font-weight: bold;
-	font-size: 8px;
+	font-size: 0.8rem;
 `;
 
 const ProfileInfo = styled.div`
@@ -167,9 +167,9 @@ const ModifyButton = styled.input.attrs({
 	border: 1px solid black;
 	color: white;
 	outline: 0;
-	height: 25px;
+	height: 1.7rem;
 	font-weight: bold;
-	font-size: 8px;
+	font-size: 0.8rem;
 `;
 
 const NickNameModifyArea = styled.div`
@@ -188,6 +188,7 @@ const NickNameInput = styled.input.attrs({
 	border: solid 0.2px lightgray;
 	height: 2rem;
 	width: 50%;
+	padding-left: 0.3rem;
 `;
 
 const ButtonArea = styled.div`
@@ -204,11 +205,12 @@ const InputCloseButton = styled.input.attrs({
 	background-color: white;
 	outline: 0;
 	border-radius: 6px;
-	border: solid 1px black;
+	border: solid 3px black;
 	color: black;
 	padding: 0 38px;
-	height: 2.3rem;
+	height: 2rem;
 	cursor: pointer;
+	font-weight: bold;
 `;
 
 const InputSubmitButton = styled.input.attrs({
@@ -222,8 +224,9 @@ const InputSubmitButton = styled.input.attrs({
 	border: solid 1px black;
 	color: white;
 	padding: 0 38px;
-	height: 2.3rem;
+	height: 2rem;
 	cursor: pointer;
+	font-weight: bold;
 `;
 
 const PasswordModifyArea = styled.div`
@@ -242,6 +245,7 @@ const CurrentPasswordInput = styled.input.attrs({
 	border: solid 0.2px lightgray;
 	height: 2rem;
 	width: 50%;
+	padding-left: 0.3rem;
 `;
 
 const NewPasswordInput = styled.input.attrs({
@@ -254,6 +258,7 @@ const NewPasswordInput = styled.input.attrs({
 	border: solid 0.2px lightgray;
 	height: 2rem;
 	width: 50%;
+	padding-left: 0.3rem;
 `;
 
 const NewPasswordCheck = styled.input.attrs({
@@ -266,6 +271,7 @@ const NewPasswordCheck = styled.input.attrs({
 	border: solid 0.2px lightgray;
 	height: 2rem;
 	width: 50%;
+	padding-left: 0.3rem;
 `;
 
 const PasswordAreaTitle = styled.p`
