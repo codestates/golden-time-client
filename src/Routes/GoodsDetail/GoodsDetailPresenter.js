@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { FaRegCaretSquareRight, FaRegCaretSquareLeft } from "react-icons/fa";
 import styled from "styled-components";
 import Comment from "../../Components/Comment";
-import Loader from "../../Components/Loader";
 
 const MainContainer = styled.div`
   display: flex;
@@ -35,12 +34,6 @@ const Image = styled.img`
   margin-left: 5px;
   margin-right: 5px;
 `;
-
-// const ImageBefore = styled.div`
-// `;
-
-// const ImageNext = styled.div`
-// `;
 
 const ContentsContainer = styled.div`
   width: 50%;
@@ -207,7 +200,23 @@ const SubmitComment = styled.div`
   margin-left:20px;
 `;
 
-const GoodsDetailPresenter = ({ userInfo, detail: { id, category, images = [], title, text, comments = [], user = {}, bidder = {}, }, imageNum, convertedData: { price, bidPrice, closing_time }, postBidPrice, handleInputValue, comment, handleCommentInputValue, postComment, deleteComment, deletePost, handleNextImage, handleBeforeImage }) => {
+const GoodsDetailPresenter = ({
+  userInfo,
+  detail: { id, category, images = [], title, text, comments = [], user = {}, bidder = {}, },
+  imageNum,
+  convertedData: { price, bidPrice, closing_time },
+  comment,
+  editing,
+  handleInputValue,
+  handleCommentInputValue,
+  handleNextImage,
+  handleBeforeImage,
+  handleEditing,
+  postBidPrice,
+  postComment,
+  editComment,
+  deleteComment,
+  deletePost }) => {
   return (
     <MainContainer>
       <SubContainer>
@@ -219,8 +228,8 @@ const GoodsDetailPresenter = ({ userInfo, detail: { id, category, images = [], t
         <ContentsContainer>
           <Title>{title}<Category>{`(${category})`}</Category></Title>
           <Seller>{`판매자 : ${user.nick}`}</Seller>
-          <Price>{`시작가 : ${price}원`}</Price>
-          <BidPrice>{`현재가 : ${bidPrice}원`}<Bidder>{`(입찰 예정자 : ${bidder.nick})`}</Bidder></BidPrice>
+          <Price>{`시작가 : ${price} 원`}</Price>
+          <BidPrice>{`현재가 : ${bidPrice} 원`}<Bidder>{`(입찰 예정자 : ${bidder.nick})`}</Bidder></BidPrice>
           <ClosingTime>{closing_time}</ClosingTime>
           <Text>{text}</Text>
           {userInfo.id === user.id ?
@@ -228,7 +237,7 @@ const GoodsDetailPresenter = ({ userInfo, detail: { id, category, images = [], t
               <EditButton to={`/goods/edit/${id}`}>수정</EditButton>
               <DeleteButton onClick={deletePost}>삭제</DeleteButton>
             </ButtonContainer>
-            : <BidContainer>
+            : closing_time !== "입찰 마감" && <BidContainer>
               <Input type='number' placeholder={"입찰가격을 입력하세요."} onChange={handleInputValue("inputBidPrice")} />
               <Ask onClick={postBidPrice}>입찰</Ask>
             </BidContainer>
@@ -236,17 +245,21 @@ const GoodsDetailPresenter = ({ userInfo, detail: { id, category, images = [], t
         </ContentsContainer>
       </SubContainer>
       <CommentContainer>
-        {comments.map(item => (
+        {comments.map((item, index) => (
           <Comment
             key={item.commentId}
-            postId={id}
-            userInfo={userInfo}
-            userId={item.userId}
+            index={index}
             commentId={item.commentId}
+            userId={item.userId}
             userNick={item.nick}
             commentMessage={item.commentMessage}
             createdAt={item.createdAt}
+            handleCommentInputValue={handleCommentInputValue}
+            handleEditing={handleEditing}
+            editing={editing}
+            editComment={editComment}
             deleteComment={deleteComment}
+            userInfo={userInfo}
           />
         ))}
         <CommentInputContainer>

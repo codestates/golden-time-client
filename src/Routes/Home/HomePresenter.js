@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Goods from "../../Components/Goods";
 import Session from "../../Components/Session";
 import Loader from "../../Components/Loader";
-// import Helmet from "react-helmet";
 
 const Container = styled.div`
   flex-direction: column;
@@ -14,16 +13,16 @@ const Container = styled.div`
 
 const Notice = styled.div`
   width: 100vw;
-  height: 300px;
+  height:300px;
   background-color: rgb(99,126,168);
 `;
 
-const HomePresenter = ({ currentLocation, goods, userInfo }) => {
+const HomePresenter = ({ loading, goods, userInfo, currentLocation, search }) => {
   return (
     <Container>
       <Notice />
-      {goods ?
-        <Session currentLocation={currentLocation}>
+      {loading ? <Loader />
+        : <Session currentLocation={currentLocation} search={search} >
           {goods.map(item => (
             <Goods
               key={item.id}
@@ -31,13 +30,14 @@ const HomePresenter = ({ currentLocation, goods, userInfo }) => {
               src={item.src}
               title={item.title}
               price={item.price}
+              bidPrice={item.bidPrice}
               closing_time={item.closing_time}
               userInfo={userInfo}
             />
           ))}
         </Session>
-        : <Loader />}
-    </Container>
+      }
+    </Container >
   );
 }
 

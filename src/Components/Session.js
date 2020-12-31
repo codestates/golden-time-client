@@ -36,10 +36,14 @@ const Grid = styled.div`
   grid-gap: 50px;
 `;
 
-const Section = ({ currentLocation, children }) => (
+const Section = ({ currentLocation, search, children }) => (
   <Container>
     <Main>
-      <Title>{currentLocation ? `${currentLocation}에서 판매중인 상품` : `전국에서 판매중인 상품`}</Title>
+      <Title>
+        {currentLocation === 'no' ? search ?
+          `전국에서 '${search}' 검색 결과` : `전국에서 판매중인 상품`
+          : search ? `${currentLocation}에서 '${search}' 검색 결과` : `${currentLocation}에서 판매중인 상품`}
+      </Title>
       <PostButton to="/goods/post">
         상품등록
       </PostButton>
