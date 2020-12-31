@@ -53,7 +53,7 @@ const Location = styled.div`
 `;
 
 const LocationName = styled.div`
-	font-size: 20px;
+	font-size: 15px;
 	font-weight: 800;
 `;
 
@@ -72,7 +72,7 @@ class Navi extends React.Component {
 		super(props);
 		this.state = {
 			search: '',
-			isModal: false
+			isModal: false,
 		};
 
 		this.handleHome = this.handleHome.bind(this);
@@ -84,7 +84,7 @@ class Navi extends React.Component {
 	handleHome = () => {
 		this.setState({ search: '' });
 		this.props.handleSearchValue('');
-	}
+	};
 
 	handleInputValue = key => e => {
 		this.setState({ [key]: e.target.value });
@@ -94,7 +94,6 @@ class Navi extends React.Component {
 		this.props.handleSearchValue(this.state.search);
 	};
 
-
 	handleIsModal = () => {
 		this.setState(state => ({ isModal: !state.isModal }));
 	};
@@ -103,7 +102,9 @@ class Navi extends React.Component {
 		return (
 			<Container>
 				<Link to='/'>
-					<Home onClick={this.handleHome}>Golden Time</Home>
+					<Home onClick={this.handleHome}>
+						<img src='/images/goldenTimeLogo.png' width='180px' height='90px' />
+					</Home>
 				</Link>
 
 				<Input

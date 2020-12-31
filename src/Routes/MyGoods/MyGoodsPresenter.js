@@ -67,14 +67,69 @@ const GoodsList = styled.ul`
 const GoodsItem = styled.li`
 	margin-right: 1rem;
 	margin-bottom: 1rem;
+	text-align: center;
 `;
 
 const GoodsImage = styled.img`
 	width: 15rem;
 	border-radius: 50px;
+	&:hover {
+		opacity: 0.6;
+	}
 `;
 
-const MyGoodsPresenter = ({ goodsList }) => (
+const GoodsTitle = styled.div`
+	font-size: 1rem;
+	font-weight: 400;
+	margin-left: 5px;
+	margin-top: 0.8rem;
+	margin-bottom: 0.5rem;
+`;
+
+const GoodsPrice = styled.span`
+	font-size: 0.9rem;
+	font-weight: 600;
+	margin-left: 5px;
+	margin-top: 0.5rem;
+`;
+
+const GoodsClosingTime = styled.div`
+	font-size: 0.9rem;
+	font-weight: 600;
+	margin-left: 5px;
+	color: rgb(211, 30, 49);
+	margin-top: 0.5rem;
+	margin-top: 0.5rem;
+`;
+
+const EmptyArea = styled.div`
+	height: 30rem;
+`;
+
+const EmptyAreaText = styled.p`
+	color: gray;
+`;
+
+const EmptyAreaButton = styled.button`
+	margin-top: 1rem;
+	padding-top: 1px;
+	padding-left: 11px;
+	padding-right: 12px;
+	display: inline-block;
+	cursor: pointer;
+	vertical-align: middle;
+	text-align: center;
+	background-color: rgb(244, 244, 244);
+	border-radius: 6px;
+	color: black;
+	outline: 0;
+	height: 2rem;
+	font-weight: 700;
+	font-size: 0.8rem;
+	border: 0;
+`;
+
+const MyGoodsPresenter = ({ goodsList, numberWithCommas, makeTimer }) => (
 	<Container>
 		<SideMenu>
 			<Title>MyPage</Title>
@@ -83,7 +138,7 @@ const MyGoodsPresenter = ({ goodsList }) => (
 					<UnSelectedLink>프로필 정보</UnSelectedLink>
 				</Link>
 				<Link to='/user/mygoods'>
-					<SelectedLink>판매 내역</SelectedLink>
+					<SelectedLink>판매중인 상품</SelectedLink>
 				</Link>
 			</LinkArea>
 		</SideMenu>
@@ -93,28 +148,24 @@ const MyGoodsPresenter = ({ goodsList }) => (
 				<GoodsList>
 					{goodsList.length ? (
 						goodsList.map(item => (
-							<GoodsItem key={item.id}>
-								<GoodsImage src={item.thumbnail} />
-							</GoodsItem>
+							<Link to={`/goods/detail/${item.id}`}>
+								<GoodsItem key={item.id}>
+									<GoodsImage src={item.thumbnail} />
+									<GoodsTitle>{item.title}</GoodsTitle>
+									<GoodsPrice>{numberWithCommas(item.price)}</GoodsPrice>
+									<GoodsClosingTime>
+										{makeTimer(item.closing_time)}
+									</GoodsClosingTime>
+								</GoodsItem>
+							</Link>
 						))
 					) : (
-						<>
-							<GoodsItem>
-								<GoodsImage src='https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407' />
-							</GoodsItem>
-							<GoodsItem>
-								<GoodsImage src='https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407' />
-							</GoodsItem>
-							<GoodsItem>
-								<GoodsImage src='https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407' />
-							</GoodsItem>
-							<GoodsItem>
-								<GoodsImage src='https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407' />
-							</GoodsItem>
-							<GoodsItem>
-								<GoodsImage src='https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407' />
-							</GoodsItem>
-						</>
+						<EmptyArea>
+							<EmptyAreaText>현재 판매중인 상품이 없습니다.</EmptyAreaText>
+							<Link to={'/goods/post'}>
+								<EmptyAreaButton>상품 등록 하러가기</EmptyAreaButton>
+							</Link>
+						</EmptyArea>
 					)}
 				</GoodsList>
 			</GoodsArea>

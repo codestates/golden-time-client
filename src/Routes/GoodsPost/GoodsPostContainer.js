@@ -107,7 +107,7 @@ class GoodsPostContainer extends Component {
 
 			try {
 				const result = await axios.post(
-					'http://localhost:8080/goods/addgoods',
+					'http://localhost:8088/goods/addgoods',
 					formData,
 					{
 						withCredentials: true,
@@ -127,8 +127,8 @@ class GoodsPostContainer extends Component {
 	render() {
 		return (
 			<GoodsPostPresenter
-				errorMessage={this.state.errorMessage}
 				fileRef={this.fileRef}
+				errorMessage={this.state.errorMessage}
 				closing_time={this.state.closing_time}
 				imagesPreviewUrls={this.state.imagesPreviewUrls}
 				handleSubmit={this.handleSubmit.bind(this)}
