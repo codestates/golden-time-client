@@ -15,7 +15,7 @@ const SideMenu = styled.div`
 `;
 
 const Title = styled.div`
-	font-size: 32px;
+	font-size: 2rem;
 	font-weight: bold;
 `;
 
@@ -96,17 +96,17 @@ const NewImageButton = styled.input.attrs({
 	position: relative;
 	right: 5px;
 	bottom: 15px;
-	margin-top: 3rem;
+	margin-top: 2rem;
 	padding-top: 1px;
 	padding-left: 11px;
 	padding-right: 12px;
 	cursor: pointer;
 	vertical-align: middle;
 	text-align: center;
-	background-color: black;
-	border-radius: 15px;
+	background-color: white;
+	border-radius: 6px;
 	border: 1px solid black;
-	color: white;
+	color: black;
 	outline: 0;
 	height: 2rem;
 	font-weight: bold;
@@ -162,14 +162,15 @@ const ModifyButton = styled.input.attrs({
 	cursor: pointer;
 	vertical-align: middle;
 	text-align: center;
-	background-color: black;
-	border-radius: 15px;
+	background-color: white;
+	border-radius: 6px;
 	border: 1px solid black;
-	color: white;
+	color: black;
 	outline: 0;
-	height: 1.7rem;
-	font-weight: bold;
+	height: 2rem;
+	font-weight: 700;
 	font-size: 0.8rem;
+	width: 10%;
 `;
 
 const NickNameModifyArea = styled.div`
@@ -185,10 +186,10 @@ const NickNameInput = styled.input.attrs({
 	margin-top: 0.5rem;
 	outline: 0;
 	border-radius: 8px;
-	border: solid 0.2px lightgray;
 	height: 2rem;
 	width: 50%;
 	padding-left: 0.3rem;
+	background-color: rgb(244, 244, 244);
 `;
 
 const ButtonArea = styled.div`
@@ -205,7 +206,7 @@ const InputCloseButton = styled.input.attrs({
 	background-color: white;
 	outline: 0;
 	border-radius: 6px;
-	border: solid 3px black;
+	border: solid 2px black;
 	color: black;
 	padding: 0 38px;
 	height: 2rem;
@@ -242,10 +243,10 @@ const CurrentPasswordInput = styled.input.attrs({
 	margin-top: 0.5rem;
 	outline: 0;
 	border-radius: 8px;
-	border: solid 0.2px lightgray;
 	height: 2rem;
 	width: 50%;
 	padding-left: 0.3rem;
+	background-color: rgb(244, 244, 244);
 `;
 
 const NewPasswordInput = styled.input.attrs({
@@ -255,10 +256,10 @@ const NewPasswordInput = styled.input.attrs({
 	margin-top: 0.5rem;
 	outline: 0;
 	border-radius: 8px;
-	border: solid 0.2px lightgray;
 	height: 2rem;
 	width: 50%;
 	padding-left: 0.3rem;
+	background-color: rgb(244, 244, 244);
 `;
 
 const NewPasswordCheck = styled.input.attrs({
@@ -268,20 +269,21 @@ const NewPasswordCheck = styled.input.attrs({
 	margin-top: 0.5rem;
 	outline: 0;
 	border-radius: 8px;
-	border: solid 0.2px lightgray;
 	height: 2rem;
 	width: 50%;
 	padding-left: 0.3rem;
+	background-color: rgb(244, 244, 244);
 `;
 
 const PasswordAreaTitle = styled.p`
-	font-size: 0.7rem;
+	font-size: 0.8rem;
 	font-weight: bold;
 	color: black;
 	margin-top: 0.6rem;
 `;
 
 const ErrorMessageArea = styled.span`
+	font-size: 0.9rem;
 	margin-left: 1rem;
 	color: red;
 `;
@@ -302,6 +304,7 @@ const UserInfoPresenter = ({
 	newPasswordError,
 	passwordCheckError,
 	handlePasswordModify,
+	handleTimeStamp,
 }) => (
 	<Container>
 		<SideMenu>
@@ -311,7 +314,7 @@ const UserInfoPresenter = ({
 					<SelectedLink>프로필 정보</SelectedLink>
 				</Link>
 				<Link to='/user/mygoods'>
-					<UnSelectedLink>판매 내역</UnSelectedLink>
+					<UnSelectedLink>판매중인 상품</UnSelectedLink>
 				</Link>
 			</LinkArea>
 		</SideMenu>
@@ -322,7 +325,7 @@ const UserInfoPresenter = ({
 					<ProfileImageArea>
 						{userData.profile ? (
 							<ProfileImage
-								src={`http://localhost:8080/uploads/${userData.profile}`}
+								src={`http://localhost:8088/uploads/${userData.profile}`}
 								alt='프로필 이미지'
 							/>
 						) : (
@@ -331,7 +334,11 @@ const UserInfoPresenter = ({
 					</ProfileImageArea>
 					<ProfileContent>
 						{userData.nick ? userData.nick : '김코딩'}
-						<NewImageFile ref={fileRef} onChange={handleImageFileChange} />
+						<NewImageFile
+							ref={fileRef}
+							accept='image/*'
+							onChange={handleImageFileChange}
+						/>
 						<NewImageButton onClick={handleNewImageButtonClick} />
 					</ProfileContent>
 				</UserProfile>
@@ -378,7 +385,9 @@ const UserInfoPresenter = ({
 					<InfoArea>
 						<InfoTitle>가입일</InfoTitle>
 						<InfoText>
-							{userData.createdAt ? userData.createdAt : '2020-12-25'}
+							{userData.createdAt
+								? handleTimeStamp(userData.createdAt)
+								: handleTimeStamp(1609326350)}
 						</InfoText>
 					</InfoArea>
 

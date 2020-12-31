@@ -10,7 +10,7 @@ class MyGoodsContainer extends Component {
 	async componentDidMount() {
 		const accessToken = localStorage.getItem('accessToken');
 
-		const response = await axios.get('http://localhost:8080/goods/mygoods', {
+		const response = await axios.get('http://localhost:8088/goods/mygoods', {
 			withCredentials: true,
 			headers: {
 				Authorization: `bearer ${accessToken}`,
@@ -21,8 +21,40 @@ class MyGoodsContainer extends Component {
 		console.log('내 상품 리스트', this.state.goodsList);
 	}
 
+	numberWithCommas(price) {
+		return `경매 시작가 : ${price
+			.toString()
+			.replace(/\B(?=(\d{3})+(?!\d))/g, ',')} 원`;
+	}
+
+	makeTimer(closing_time) {
+		let cur = new Date();
+		let end = new Date(closing_time * 1000);
+		let diff = end - cur;
+		const diffDays = Math.floor(
+			(end.getTime() - cur.getTime()) / (1000 * 60 * 60 * 24)
+		);
+		diff -= diffDays * (1000 * 60 * 60 * 24);
+		const diffHours = Math.floor(diff / (1000 * 60 * 60));
+		diff -= diffHours * (1000 * 60 * 60);
+		const diffMin = Math.floor(diff / (1000 * 60));
+		diff -= diffMin * (1000 * 60);
+		const diffSec = Math.floor(diff / 1000);
+		return `종료일 : ${diffDays < 10 ? `0${diffDays}` : diffDays}일 ${
+			diffHours < 10 ? `0${diffHours}` : diffHours
+		}시간 ${diffMin < 10 ? `0${diffMin}` : diffMin}분 ${
+			diffSec < 10 ? `0${diffSec}` : diffSec
+		}초`;
+	}
+
 	render() {
-		return <MyGoodsPresenter goodsList={this.state.goodsList} />;
+		return (
+			<MyGoodsPresenter
+				goodsList={this.state.goodsList}
+				makeTimer={this.makeTimer.bind(this)}
+				numberWithCommas={this.numberWithCommas}
+			/>
+		);
 	}
 }
 

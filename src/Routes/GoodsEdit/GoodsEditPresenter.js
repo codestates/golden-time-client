@@ -3,18 +3,19 @@ import styled from 'styled-components';
 
 const Container = styled.div`
 	display: flex;
-	height: 100vh;
+	height: auto;
 	justify-content: center;
+	margin-bottom: 5rem;
 `;
 
 const Content = styled.div`
-	width: 38%;
+	width: 50%;
 	height: 100%;
 `;
 
 const TitleArea = styled.div`
 	margin-top: 3rem;
-	font-size: 1.5rem;
+	font-size: 2rem;
 	font-weight: bold;
 	padding-bottom: 16px;
 	border-bottom: 3px solid #222;
@@ -24,7 +25,6 @@ const InputArea = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin-top: 3rem;
-	height: 100%;
 `;
 
 const ImageArea = styled.div`
@@ -44,19 +44,21 @@ const InfoArea = styled.div`
 `;
 
 const InfoText = styled.p`
-	font-size: 0.8rem;
+	font-size: 1rem;
 	font-weight: bold;
 	margin-bottom: 0.5rem;
 `;
 
 const InfoInput = styled.input`
 	padding-left: 0.3rem;
-	width: 30%;
+	width: 40%;
+	height: 2rem;
 	font-size: 15px;
 	line-height: 22px;
-	border: 1px solid lightgray;
+	border: 0;
 	resize: none;
 	border-radius: 10px;
+	background-color: rgb(244, 244, 244);
 	outline: 0;
 	&::-webkit-outer-spin-button,
 	::-webkit-inner-spin-button {
@@ -66,19 +68,20 @@ const InfoInput = styled.input`
 `;
 
 const InfoTextArea = styled.textarea`
-	width: 50%;
-	height: 8rem;
+	width: 60%;
+	height: 10rem;
 	font-size: 0.8rem;
 	line-height: 22px;
-	border: 1px solid lightgray;
+	border: 0;
 	resize: none;
 	border-radius: 10px;
 	outline: 0;
+	background-color: rgb(244, 244, 244);
 `;
 
 const GoodsImage = styled.img`
-	width: 10rem;
-	height: 10rem;
+	width: 12rem;
+	height: 12rem;
 `;
 
 const ImageFileInput = styled.input`
@@ -93,16 +96,16 @@ const GoodsImages = styled.ul`
 `;
 
 const ImageUpLoadButton = styled.li`
-	width: 10rem;
-	height: 10rem;
+	width: 12rem;
+	height: 12rem;
 	cursor: pointer;
 	margin-right: 1rem;
 	margin-bottom: 1rem;
 `;
 
 const ImagePreview = styled.li`
-	width: 10rem;
-	height: 10rem;
+	width: 12rem;
+	height: 12rem;
 	margin-right: 1rem;
 	margin-bottom: 1rem;
 `;
@@ -133,7 +136,7 @@ const Button = styled.input.attrs({
 	height: 3.2rem;
 	line-height: 50px;
 	font-weight: 700;
-	border-radius: 15px;
+	border-radius: 40px;
 	outline: 0;
 	color: white;
 	background-color: black;
@@ -148,14 +151,14 @@ const ButtonArea = styled.div`
 `;
 
 const GoodsEditPresenter = ({
-	goodsData,
 	fileRef,
+	goodsData,
+	handleSubmit,
 	imagesPreviewUrls,
 	handleInputValue,
-	ImageUpLoadButtonClick,
-	handleImageChange,
 	removeGoodsImage,
-	handleSubmit,
+	handleImageChange,
+	ImageUpLoadButtonClick,
 }) => (
 	<Container>
 		<Content>
@@ -190,7 +193,7 @@ const GoodsEditPresenter = ({
 						<GoodsImages>
 							<ImageUpLoadButton>
 								<GoodsImage
-									src='../../images/imageUpload.png'
+									src='/images/imageUpload.png'
 									onClick={ImageUpLoadButtonClick}
 								/>
 								<ImageFileInput
@@ -198,6 +201,7 @@ const GoodsEditPresenter = ({
 									ref={fileRef}
 									multiple
 									onChange={handleImageChange}
+									accept='image/*'
 								/>
 							</ImageUpLoadButton>
 							{imagesPreviewUrls &&

@@ -13,6 +13,8 @@ import Home from '../Routes/Home';
 import GoodsDetail from '../Routes/GoodsDetail';
 import GoodsPost from '../Routes/GoodsPost';
 import GoodsEdit from '../Routes/GoodsEdit';
+import MyGoods from '../Routes/MyGoods';
+import Footer from './Footer';
 
 class Router extends React.Component {
 	constructor(props) {
@@ -22,14 +24,14 @@ class Router extends React.Component {
 			accessToken: null,
 			search: '',
 			currentLocation: null,
-			userInfo: { id: 24, nick: '이재용' }
+			userInfo: {}
 		};
 		this.handleSearchValue = this.handleSearchValue.bind(this);
 		this.getLocation = this.getLocation.bind(this);
 		this.handleLocalLogin = this.handleLocalLogin.bind(this);
 		this.handleLogout = this.handleLogout.bind(this);
-		// this.getUserInfo = this.getUserInfo.bind(this);
-		// this.modifyUserInfo = this.modifyUserInfo.bind(this);
+		this.getUserInfo = this.getUserInfo.bind(this);
+		this.modifyUserInfo = this.modifyUserInfo.bind(this);
 	}
 
 	componentDidMount() {
@@ -136,8 +138,8 @@ class Router extends React.Component {
 			);
 			if (response.data.message === 'successfully LOGOUT!') {
 				localStorage.clear();
-				this.setState({ isLogin: false, accessToken: null, userInfo: null });
-				this.props.history.push('/');
+				this.setState({ isLogin: false, accessToken: null, userInfo: {} });
+				window.location.href = 'http://localhost:3000';
 			}
 		} catch (err) {
 			throw err;
@@ -213,8 +215,10 @@ class Router extends React.Component {
 						<Route path='/goods/detail/:id' component={GoodsDetail} />
 						<Route path='/goods/edit/:id' component={GoodsEdit} />
 						<Route path='/goods/post' component={GoodsPost} />
+						<Route path='/user/mygoods' component={MyGoods} />
 						<Redirect from='*' to='/' />
 					</Switch>
+					<Footer />
 				</>
 			</BrowserRouter>
 		);

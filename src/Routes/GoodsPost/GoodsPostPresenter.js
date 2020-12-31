@@ -7,18 +7,19 @@ registerLocale('ko', ko);
 
 const Container = styled.div`
 	display: flex;
-	height: 100vh;
+	height: auto;
 	justify-content: center;
+	margin-bottom: 5rem;
 `;
 
 const Content = styled.div`
-	width: 38%;
+	width: 50%;
 	height: 100%;
 `;
 
 const TitleArea = styled.div`
 	margin-top: 3rem;
-	font-size: 1.5rem;
+	font-size: 2rem;
 	font-weight: bold;
 	padding-bottom: 16px;
 	border-bottom: 3px solid #222;
@@ -28,7 +29,6 @@ const InputArea = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin-top: 3rem;
-	height: 100%;
 `;
 
 const ImageArea = styled.div`
@@ -43,22 +43,24 @@ const InfoArea = styled.div`
 	margin-top: 1.3rem;
 	border-bottom: solid 1px lightgray;
 	padding-bottom: 0.5rem;
+	height: auto;
 `;
 
 const InfoText = styled.p`
-	font-size: 0.8rem;
+	font-size: 1rem;
 	font-weight: bold;
 	margin-bottom: 0.5rem;
 `;
 
 const InfoInput = styled.input`
 	padding-left: 0.3rem;
-	width: 30%;
+	width: 40%;
+	height: 2rem;
 	font-size: 15px;
 	line-height: 22px;
-	border: 1px solid lightgray;
 	resize: none;
 	border-radius: 10px;
+	background-color: rgb(244, 244, 244);
 	outline: 0;
 	&::-webkit-outer-spin-button,
 	::-webkit-inner-spin-button {
@@ -68,22 +70,23 @@ const InfoInput = styled.input`
 `;
 
 const InfoTextArea = styled.textarea`
-	width: 50%;
-	height: 8rem;
+	width: 60%;
+	height: 10rem;
 	font-size: 0.8rem;
 	line-height: 22px;
-	border: 1px solid lightgray;
+	border: 0;
 	resize: none;
 	border-radius: 10px;
 	outline: 0;
+	background-color: rgb(244, 244, 244);
 `;
 
 const GoodsImage = styled.img`
-	width: 10rem;
-	height: 10rem;
+	width: 12rem;
+	height: 12rem;
 `;
 
-const ImageFileInput = styled.input`
+const ImageFileInput = styled.input.attrs({ type: 'file' })`
 	display: none;
 `;
 
@@ -95,16 +98,16 @@ const GoodsImages = styled.ul`
 `;
 
 const ImageUpLoadButton = styled.li`
-	width: 10rem;
-	height: 10rem;
+	width: 12rem;
+	height: 12rem;
 	cursor: pointer;
 	margin-right: 1rem;
 	margin-bottom: 1rem;
 `;
 
 const ImagePreview = styled.li`
-	width: 10rem;
-	height: 10rem;
+	width: 12rem;
+	height: 12rem;
 	margin-right: 1rem;
 	margin-bottom: 1rem;
 `;
@@ -135,7 +138,7 @@ const Button = styled.input.attrs({
 	height: 3.2rem;
 	line-height: 50px;
 	font-weight: 700;
-	border-radius: 15px;
+	border-radius: 40px;
 	outline: 0;
 	color: white;
 	background-color: black;
@@ -159,13 +162,15 @@ const ErrorMessageArea = styled.div`
 const CatagorySelect = styled.select`
 	padding-left: 0.3rem;
 	width: 15%;
-	height: 60%;
+	height: 2rem;
 	font-size: 0.8rem;
 	line-height: 22px;
 	resize: none;
 	border-radius: 10px;
+	border: 0;
 	outline: 0;
-	background-color: white;
+	background-color: rgb(244, 244, 244);
+	font-weight: 700;
 `;
 
 const WonText = styled.span`
@@ -179,12 +184,14 @@ const DateSelectButton = styled.button`
 	width: 10rem;
 	outline: 0;
 	color: white;
-	background-color: white;
+	background-color: rgb(244, 244, 244);
 	cursor: pointer;
 	padding: 0;
-	border-radius: 10px;
-	border: solid 3px lightgray;
+	border-radius: 6px;
 	color: black;
+	border: 0;
+	height: 3rem;
+	font-weight: 700;
 `;
 
 const now = new Date();
@@ -218,14 +225,14 @@ const GoodsPostPresenter = ({
 						<GoodsImages>
 							<ImageUpLoadButton>
 								<GoodsImage
-									src='../images/imageUpload.png'
+									src='/images/imageUpload.png'
 									onClick={ImageUpLoadButtonClick}
 								/>
 								<ImageFileInput
 									ref={fileRef}
-									type='file'
 									multiple
 									onChange={handleImageChange}
+									accept='image/*'
 								/>
 							</ImageUpLoadButton>
 							{imagesPreviewUrls &&

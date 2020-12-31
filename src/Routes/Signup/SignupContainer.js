@@ -23,7 +23,7 @@ class SignupContainer extends React.Component {
 
 	handleSubmit = async () => {
 		const { email, password, nick } = this.state;
-		const signUpUrl = 'http://localhost:8080/auth/signup';
+		const signUpUrl = 'http://localhost:8088/auth/signup';
 
 		if (!isEmail(this.state.email)) {
 			this.setState({
@@ -68,8 +68,8 @@ class SignupContainer extends React.Component {
 		const { errorMessage } = this.state;
 		return (
 			<SignupPresenter
-				handleInputValue={this.handleInputValue.bind(this)}
 				errorMessage={errorMessage}
+				handleInputValue={this.handleInputValue.bind(this)}
 				handleSubmit={this.handleSubmit.bind(this)}
 			/>
 		);

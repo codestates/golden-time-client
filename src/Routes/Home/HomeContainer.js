@@ -61,81 +61,81 @@ export default class extends React.Component {
 
   async getGoodsData(condition) {
     try {
-      // const goods = axios.post('http://localhost:8088/api/goods', condition);
-      // this.setState({ goods });
-      this.setState({
-        goods: [{
-          id: 1,
-          src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
-          title: 'Nike X Dior Air Jordan 1 Low',
-          price: 10009000,
-          bidPrice: 9999999,
-          closing_time: 1609055449
-        }, {
-          id: 2,
-          src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
-          title: 'Nike X Dior Air Jordan 1 Low',
-          price: 10009000,
-          bidPrice: 9999999,
-          closing_time: 1609055449
-        }, {
-          id: 3,
-          src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
-          title: 'Nike X Dior Air Jordan 1 Low',
-          price: 10009000,
-          bidPrice: 9999999,
-          closing_time: 1609055449
-        }, {
-          id: 4,
-          src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
-          title: 'Nike X Dior Air Jordan 1 Low',
-          price: 10009000,
-          bidPrice: 9999999,
-          closing_time: 1609055449
-        }, {
-          id: 5,
-          src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
-          title: 'Nike X Dior Air Jordan 1 Low',
-          price: 10009000,
-          bidPrice: 9999999,
-          closing_time: 1609055449
-        }, {
-          id: 6,
-          src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
-          title: 'Nike X Dior Air Jordan 1 Low',
-          price: 10009000,
-          bidPrice: 9999999,
-          closing_time: 1609055449
-        }, {
-          id: 7,
-          src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
-          title: 'Nike X Dior Air Jordan 1 Low',
-          price: 10009000,
-          bidPrice: 9999999,
-          closing_time: 1609055449
-        }, {
-          id: 8,
-          src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
-          title: 'Nike X Dior Air Jordan 1 Low',
-          price: 10009000,
-          bidPrice: 9999999,
-          closing_time: 1609055449
-        }, {
-          id: 9,
-          src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
-          title: 'Nike X Dior Air Jordan 1 Low',
-          price: 10009000,
-          bidPrice: 9999999,
-          closing_time: 1609055449
-        }, {
-          id: 10,
-          src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
-          title: 'Nike X Dior Air Jordan 1 Low',
-          price: 10009000,
-          bidPrice: 9999999,
-          closing_time: 1609055449
-        }], loading: false
-      });
+      const goods = axios.post('http://localhost:8088/api/goods', condition);
+      this.setState({ goods });
+      // this.setState({
+      //   goods: [{
+      //     id: 1,
+      //     src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
+      //     title: 'Nike X Dior Air Jordan 1 Low',
+      //     price: 10009000,
+      //     bidPrice: 9999999,
+      //     closing_time: 1609055449
+      //   }, {
+      //     id: 2,
+      //     src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
+      //     title: 'Nike X Dior Air Jordan 1 Low',
+      //     price: 10009000,
+      //     bidPrice: 9999999,
+      //     closing_time: 1609055449
+      //   }, {
+      //     id: 3,
+      //     src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
+      //     title: 'Nike X Dior Air Jordan 1 Low',
+      //     price: 10009000,
+      //     bidPrice: 9999999,
+      //     closing_time: 1609055449
+      //   }, {
+      //     id: 4,
+      //     src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
+      //     title: 'Nike X Dior Air Jordan 1 Low',
+      //     price: 10009000,
+      //     bidPrice: 9999999,
+      //     closing_time: 1609055449
+      //   }, {
+      //     id: 5,
+      //     src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
+      //     title: 'Nike X Dior Air Jordan 1 Low',
+      //     price: 10009000,
+      //     bidPrice: 9999999,
+      //     closing_time: 1609055449
+      //   }, {
+      //     id: 6,
+      //     src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
+      //     title: 'Nike X Dior Air Jordan 1 Low',
+      //     price: 10009000,
+      //     bidPrice: 9999999,
+      //     closing_time: 1609055449
+      //   }, {
+      //     id: 7,
+      //     src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
+      //     title: 'Nike X Dior Air Jordan 1 Low',
+      //     price: 10009000,
+      //     bidPrice: 9999999,
+      //     closing_time: 1609055449
+      //   }, {
+      //     id: 8,
+      //     src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
+      //     title: 'Nike X Dior Air Jordan 1 Low',
+      //     price: 10009000,
+      //     bidPrice: 9999999,
+      //     closing_time: 1609055449
+      //   }, {
+      //     id: 9,
+      //     src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
+      //     title: 'Nike X Dior Air Jordan 1 Low',
+      //     price: 10009000,
+      //     bidPrice: 9999999,
+      //     closing_time: 1609055449
+      //   }, {
+      //     id: 10,
+      //     src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
+      //     title: 'Nike X Dior Air Jordan 1 Low',
+      //     price: 10009000,
+      //     bidPrice: 9999999,
+      //     closing_time: 1609055449
+      //   }], loading: false
+      // });
     } catch (err) {
       console.error(err);
     }
@@ -143,25 +143,25 @@ export default class extends React.Component {
 
   async getSearchGoodsData(condition) {
     try {
-      // const goods = axios.post(`http://localhost:8088/search`, condition);
-      // this.setState({ goods });
-      this.setState({
-        goods: [{
-          id: 1,
-          src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
-          title: 'Nike X Dior Air Jordan 1 Low',
-          price: 10009000,
-          bidPrice: 9999999,
-          closing_time: 1609055449
-        }, {
-          id: 2,
-          src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
-          title: 'Nike X Dior Air Jordan 1 Low',
-          price: 10009000,
-          bidPrice: 9999999,
-          closing_time: 1609055449
-        }], loading: false
-      });
+      const goods = axios.post(`http://localhost:8088/search`, condition);
+      this.setState({ goods });
+      // this.setState({
+      //   goods: [{
+      //     id: 1,
+      //     src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
+      //     title: 'Nike X Dior Air Jordan 1 Low',
+      //     price: 10009000,
+      //     bidPrice: 9999999,
+      //     closing_time: 1609055449
+      //   }, {
+      //     id: 2,
+      //     src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
+      //     title: 'Nike X Dior Air Jordan 1 Low',
+      //     price: 10009000,
+      //     bidPrice: 9999999,
+      //     closing_time: 1609055449
+      //   }], loading: false
+      // });
     } catch (err) {
       console.error(err);
     }

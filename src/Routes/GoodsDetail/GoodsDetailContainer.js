@@ -19,17 +19,13 @@ export default class extends React.Component {
       editing: null
     }
     this.getDetailData = this.getDetailData.bind(this);
-
     this.numberWithCommas = this.numberWithCommas.bind(this);
     this.makeTimer = this.makeTimer.bind(this);
-
     this.handleNextImage = this.handleNextImage.bind(this);
     this.handleBeforeImage = this.handleBeforeImage.bind(this);
     this.handleEditing = this.handleEditing.bind(this);
-
     this.handleInputValue = this.handleInputValue.bind(this);
     this.handleCommentInputValue = this.handleCommentInputValue.bind(this);
-
     this.postBidPrice = this.postBidPrice.bind(this);
     this.postComment = this.postComment.bind(this);
     this.editComment = this.editComment.bind(this);
@@ -44,68 +40,68 @@ export default class extends React.Component {
 
   async getDetailData(id) {
     try {
-      // const detail = await axios.post(`http://localhost:8088/api/goods/detail/${id}`);
-      // this.setState({ detail }, () => {
-      //   if (detail.bidPrice === null) {
-      //     this.setState(state => ({ detail: { ...state.detail, bidPrice: state.detail.price, bidder: { id: 0, nick: '없음' } } }));
-      //   }
-      //   this.numberWithCommas(this.state.detail.price, this.state.detail.bidPrice);
-      //   this.makeTimer(this.state.detail.closing_time);
-      // });
-      this.setState({
-        detail: {
-          id: 2,
-          title: 'Nike x Dior',
-          text: '개쩌는 신발입니다. 개쩌는 신발입니다. 개쩌는 신발입니다. 개쩌는 신발입니다. 개쩌는 신발입니다. 개쩌는 신발입니다. 개쩌는 신발입니다. 개쩌는 신발입니다. 개쩌는 신발입니다. ',
-          price: 10000,
-          bidPrice: 50000,
-          closing_time: 1619055449,
-          category: '의류',
-          images: ['https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407', 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K', 'https://cdn.shopify.com/s/files/1/0047/5617/6984/products/image_2a4cc742-9f1c-4474-b417-f3b880be2f1c_grande.jpg?v=1594182161'],
-          comments: [
-            {
-              commentId: 1,
-              userId: 22,
-              nick: '이재용',
-              commentMessage: '와 개쩌네요',
-              createdAt: 1609055449,
-            },
-            {
-              commentId: 2,
-              userId: 23,
-              nick: '나매크인',
-              commentMessage: '와 개쩌네요222',
-              createdAt: 1609055449,
-            },
-            {
-              commentId: 3,
-              userId: 24,
-              nick: '이지부스트',
-              commentMessage: '와 개쩌네요3333',
-              createdAt: 1609055449,
-            },
-            {
-              commentId: 4,
-              userId: 25,
-              nick: '마르지엘라',
-              commentMessage: '와 개구리네요 개굴개굴',
-              createdAt: 1609055449,
-            },
-          ],
-          user: {
-            id: 22,
-            nick: '나매인',
-            pofile_image: 'https://i.pinimg.com/474x/bc/d4/ac/bcd4ac32cc7d3f98b5e54bde37d6b09e.jpg'
-          },
-          bidder: {
-            id: 33,
-            nick: '이재용'
-          }
+      const detail = await axios.post(`http://localhost:8088/api/goods/detail/${id}`);
+      this.setState({ detail }, () => {
+        if (detail.bidPrice === null) {
+          this.setState(state => ({ detail: { ...state.detail, bidPrice: state.detail.price, bidder: { id: 0, nick: '없음' } } }));
         }
-      }, () => {
         this.numberWithCommas(this.state.detail.price, this.state.detail.bidPrice);
         this.makeTimer(this.state.detail.closing_time);
       });
+      // this.setState({
+      //   detail: {
+      //     id: 2,
+      //     title: 'Nike x Dior',
+      //     text: '개쩌는 신발입니다. 개쩌는 신발입니다. 개쩌는 신발입니다. 개쩌는 신발입니다. 개쩌는 신발입니다. 개쩌는 신발입니다. 개쩌는 신발입니다. 개쩌는 신발입니다. 개쩌는 신발입니다. ',
+      //     price: 10000,
+      //     bidPrice: 50000,
+      //     closing_time: 1619055449,
+      //     category: '의류',
+      //     images: ['https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407', 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K', 'https://cdn.shopify.com/s/files/1/0047/5617/6984/products/image_2a4cc742-9f1c-4474-b417-f3b880be2f1c_grande.jpg?v=1594182161'],
+      //     comments: [
+      //       {
+      //         commentId: 1,
+      //         userId: 22,
+      //         nick: '이재용',
+      //         commentMessage: '와 개쩌네요',
+      //         createdAt: 1609055449,
+      //       },
+      //       {
+      //         commentId: 2,
+      //         userId: 23,
+      //         nick: '나매크인',
+      //         commentMessage: '와 개쩌네요222',
+      //         createdAt: 1609055449,
+      //       },
+      //       {
+      //         commentId: 3,
+      //         userId: 24,
+      //         nick: '이지부스트',
+      //         commentMessage: '와 개쩌네요3333',
+      //         createdAt: 1609055449,
+      //       },
+      //       {
+      //         commentId: 4,
+      //         userId: 25,
+      //         nick: '마르지엘라',
+      //         commentMessage: '와 개구리네요 개굴개굴',
+      //         createdAt: 1609055449,
+      //       },
+      //     ],
+      //     user: {
+      //       id: 22,
+      //       nick: '나매인',
+      //       pofile_image: 'https://i.pinimg.com/474x/bc/d4/ac/bcd4ac32cc7d3f98b5e54bde37d6b09e.jpg'
+      //     },
+      //     bidder: {
+      //       id: 33,
+      //       nick: '이재용'
+      //     }
+      //   }
+      // }, () => {
+      //   this.numberWithCommas(this.state.detail.price, this.state.detail.bidPrice);
+      //   this.makeTimer(this.state.detail.closing_time);
+      // });
     } catch (err) {
       console.error(err);
     }
@@ -167,22 +163,22 @@ export default class extends React.Component {
         alert('현재가보다 입찰가가 낮거나 같습니다');
         throw 'Post BidPrice Error';
       } else {
-        // let accessToken = localStorage.getItem('accessToken');
-        // const result = await axios.post(`http://localhost:8088/api/goods/bid`,
-        //   {
-        //     bidPrice: this.state.inputBidPrice,
-        //     goodsId: this.state.detail.id
-        //   },
-        //   {
-        //     withCredentials: true,
-        //     headers: {
-        //       Authorization: `bearer ${accessToken}`,
-        //     },
-        //   });
-        // this.setState(state => ({ detail: { ...state.detail, bidPrice: result.bidPrice, bidder: result.bidder } }));
-        // this.numberWithCommas(this.state.detail.price, result.bidPrice);
-        this.setState(state => ({ detail: { ...state.detail, bidPrice: this.state.inputBidPrice, bidder: this.state.userInfo } }));
-        this.numberWithCommas(this.state.detail.price, this.state.inputBidPrice);
+        let accessToken = localStorage.getItem('accessToken');
+        const result = await axios.post(`http://localhost:8088/api/goods/bid`,
+          {
+            bidPrice: this.state.inputBidPrice,
+            goodsId: this.state.detail.id
+          },
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `bearer ${accessToken}`,
+            },
+          });
+        this.setState(state => ({ detail: { ...state.detail, bidPrice: result.bidPrice, bidder: result.bidder } }));
+        this.numberWithCommas(this.state.detail.price, result.bidPrice);
+        // this.setState(state => ({ detail: { ...state.detail, bidPrice: this.state.inputBidPrice, bidder: this.state.userInfo } }));
+        // this.numberWithCommas(this.state.detail.price, this.state.inputBidPrice);
       }
     } catch (err) {
       console.error(err);
@@ -195,42 +191,42 @@ export default class extends React.Component {
         alert('입력하신 텍스트가 없습니다.');
         throw 'Post Comment Error';
       } else {
-        // let accessToken = localStorage.getItem('accessToken');
-        // const result = await axios.post(`http://localhost:8088/comments/addcomment`,
-        //   {
-        //     goodsId: this.state.detail.id,
-        //     commentMessage: this.state.comment,
-        //   },
-        //   {
-        //     withCredentials: true,
-        //     headers: {
-        //       Authorization: `bearer ${accessToken}`,
-        //     },
-        //   });
-        // this.setState(state => ({
-        //   comment: '',
-        //   detail: {
-        //     ...state.detail, comments: [...state.detail.comments,
-        //     {
-        //       commentId: result.commentId,
-        //       userId: result.user.id,
-        //       nick: result.user.nick,
-        //       commentMessage: result.commentMessage.comment
-        //     }]
-        //   }
-        // }));
+        let accessToken = localStorage.getItem('accessToken');
+        const result = await axios.post(`http://localhost:8088/comments/addcomment`,
+          {
+            goodsId: this.state.detail.id,
+            commentMessage: this.state.comment,
+          },
+          {
+            withCredentials: true,
+            headers: {
+              Authorization: `bearer ${accessToken}`,
+            },
+          });
         this.setState(state => ({
           comment: '',
           detail: {
             ...state.detail, comments: [...state.detail.comments,
             {
-              commentId: this.state.detail.comments[this.state.detail.comments.length - 1].commentId + 1,
-              userId: this.state.userInfo.id,
-              nick: this.state.userInfo.nick,
-              commentMessage: this.state.comment
+              commentId: result.commentId,
+              userId: result.user.id,
+              nick: result.user.nick,
+              commentMessage: result.commentMessage.comment
             }]
           }
         }));
+        // this.setState(state => ({
+        //   comment: '',
+        //   detail: {
+        //     ...state.detail, comments: [...state.detail.comments,
+        //     {
+        //       commentId: this.state.detail.comments[this.state.detail.comments.length - 1].commentId + 1,
+        //       userId: this.state.userInfo.id,
+        //       nick: this.state.userInfo.nick,
+        //       commentMessage: this.state.comment
+        //     }]
+        //   }
+        // }));
       }
     } catch (err) {
       console.error(err);
@@ -239,35 +235,19 @@ export default class extends React.Component {
 
   async editComment(commentId, index) {
     try {
-      // let accessToken = localStorage.getItem('accessToken');
-      // const result = await axios.post(`http://localhost:8080/comments/modified`,
-      //   {
-      //     commentId,
-      //     goodsId: this.state.detail.id,
-      //     commentMessage: this.state.editingComment
-      //   },
-      //   {
-      //     withCredentials: true,
-      //     headers: {
-      //       Authorization: `bearer ${accessToken}`,
-      //     },
-      //   });
-      // this.setState(state => ({
-      //   editing: null,
-      //   editingComment: '',
-      //   detail: {
-      //     ...state.detail, comments: [
-      //       ...state.detail.comments.slice(0, index),
-      //       {
-      //         commentId: result.id,
-      //         userId: result.user.id,
-      //         nick: result.user.nick,
-      //         commentMessage: result.commentMessage
-      //       },
-      //       ...state.detail.comments.slice(index + 1)
-      //     ]
-      //   }
-      // }));
+      let accessToken = localStorage.getItem('accessToken');
+      const result = await axios.post(`http://localhost:8080/comments/modified`,
+        {
+          commentId,
+          goodsId: this.state.detail.id,
+          commentMessage: this.state.editingComment
+        },
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `bearer ${accessToken}`,
+          },
+        });
       this.setState(state => ({
         editing: null,
         editingComment: '',
@@ -275,15 +255,31 @@ export default class extends React.Component {
           ...state.detail, comments: [
             ...state.detail.comments.slice(0, index),
             {
-              commentId,
-              userId: this.state.userInfo.id,
-              nick: this.state.userInfo.nick,
-              commentMessage: this.state.editingComment
+              commentId: result.id,
+              userId: result.user.id,
+              nick: result.user.nick,
+              commentMessage: result.commentMessage
             },
             ...state.detail.comments.slice(index + 1)
           ]
         }
       }));
+      // this.setState(state => ({
+      //   editing: null,
+      //   editingComment: '',
+      //   detail: {
+      //     ...state.detail, comments: [
+      //       ...state.detail.comments.slice(0, index),
+      //       {
+      //         commentId,
+      //         userId: this.state.userInfo.id,
+      //         nick: this.state.userInfo.nick,
+      //         commentMessage: this.state.editingComment
+      //       },
+      //       ...state.detail.comments.slice(index + 1)
+      //     ]
+      //   }
+      // }));
     } catch (err) {
       console.log(err);
     }
@@ -291,23 +287,23 @@ export default class extends React.Component {
 
   async deleteComment(commentId) {
     try {
-      // let accessToken = localStorage.getItem('accessToken');
-      // await axios.post(`http://localhost:8088/comments/delete`,
-      //   {
-      //     goodsId: this.state.detail.id,
-      //     commentId
-      //   },
-      //   {
-      //     withCredentials: true,
-      //     headers: {
-      //       Authorization: `bearer ${accessToken}`,
-      //     },
-      //   });
-      this.setState(state => ({
-        detail: {
-          ...state.detail, comments: state.detail.comments.filter(item => item.commentId !== commentId)
-        }
-      }));
+      let accessToken = localStorage.getItem('accessToken');
+      await axios.post(`http://localhost:8088/comments/delete`,
+        {
+          goodsId: this.state.detail.id,
+          commentId
+        },
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `bearer ${accessToken}`,
+          },
+        });
+      // this.setState(state => ({
+      //   detail: {
+      //     ...state.detail, comments: state.detail.comments.filter(item => item.commentId !== commentId)
+      //   }
+      // }));
     } catch (err) {
       console.error(err);
     }
@@ -315,19 +311,19 @@ export default class extends React.Component {
 
   async deletePost() {
     try {
-      // let accessToken = localStorage.getItem('accessToken');
-      // const response = await axios.post(`http://localhost:8088/goods/delete`,
-      //   {
-      //     goodsId: this.state.detail.id
-      //   },
-      //   {
-      //     withCredentials: true,
-      //     headers: {
-      //       Authorization: `bearer ${accessToken}`,
-      //     },
-      //   });
-      // this.props.history.push(response.data.redirect_url);
-      this.props.history.push('/');
+      let accessToken = localStorage.getItem('accessToken');
+      const response = await axios.post(`http://localhost:8088/goods/delete`,
+        {
+          goodsId: this.state.detail.id
+        },
+        {
+          withCredentials: true,
+          headers: {
+            Authorization: `bearer ${accessToken}`,
+          },
+        });
+      this.props.history.push(response.data.redirect_url);
+      // this.props.history.push('/');
     } catch (err) {
       console.error(err);
     }

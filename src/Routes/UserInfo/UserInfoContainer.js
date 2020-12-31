@@ -26,9 +26,10 @@ class UserInfoContainer extends Component {
 
 	async handleImageFileChange(e) {
 		const imageFile = e.target.files;
+		const accessToken = localStorage.getItem('accessToken');
 		try {
 			const response = await axios.patch(
-				'http://localhost:8080/auth/modifieduser',
+				'http://localhost:8088/auth/modifieduser',
 				{
 					nick: null,
 					image: imageFile,
@@ -36,7 +37,7 @@ class UserInfoContainer extends Component {
 				{
 					withCredentials: true,
 					headers: {
-						Authorization: `bearer ${this.props.accessToken}`,
+						Authorization: `bearer ${accessToken}`,
 						'content-type': 'multipart/form-data',
 					},
 				}
@@ -61,7 +62,7 @@ class UserInfoContainer extends Component {
 		} else {
 			try {
 				const response = await axios.patch(
-					'http://localhost:8080/auth/modifieduser',
+					'http://localhost:8088/auth/modifieduser',
 					{
 						nick: this.state.newNick,
 						image: null,
@@ -114,7 +115,7 @@ class UserInfoContainer extends Component {
 		} else {
 			try {
 				const response = await axios.post(
-					'http://localhost:8080/auth/modifiedpassword',
+					'http://localhost:8088/auth/modifiedpassword',
 					{
 						password: this.state.currentPassword,
 						newPassword: this.state.newPassword,
@@ -148,25 +149,35 @@ class UserInfoContainer extends Component {
 		this.setState({ [key]: e.target.value });
 	};
 
+	handleTimeStamp(closing_time) {
+		let d = new Date(closing_time * 1000);
+		let yyyy = d.getFullYear();
+		let mm = ('0' + (d.getMonth() + 1)).slice(-2);
+		let dd = ('0' + d.getDate()).slice(-2);
+		let time = `${yyyy}년 ${mm}월 ${dd}일`;
+		return time;
+	}
+
 	render() {
 		return (
 			<UserInfoPresenter
+				fileRef={this.fileRef}
 				userData={this.props.userData}
 				nickNameInput={this.state.nickNameInput}
 				passwordInput={this.state.passwordInput}
+				passwordCheck={this.state.passwordCheck}
+				newPasswordError={this.state.newPasswordError}
+				nickErrorMessage={this.state.nickErrorMessage}
+				passwordCheckError={this.state.passwordCheckError}
+				currentPasswordError={this.state.currentPasswordError}
+				handleTimeStamp={this.handleTimeStamp}
+				handleInputValue={this.handleInputValue.bind(this)}
 				handleNickNameInput={this.handleNickNameInput.bind(this)}
 				handlePasswordInput={this.handlePasswordInput.bind(this)}
-				handleInputValue={this.handleInputValue.bind(this)}
-				nickErrorMessage={this.state.nickErrorMessage}
-				currentPasswordError={this.state.currentPasswordError}
-				newPasswordError={this.state.newPasswordError}
-				passwordCheckError={this.state.passwordCheckError}
 				handleNickNameModify={this.handleNickNameModify.bind(this)}
-				fileRef={this.fileRef}
-				handleNewImageButtonClick={this.handleNewImageButtonClick.bind(this)}
-				handleImageFileChange={this.handleImageFileChange.bind(this)}
-				passwordCheck={this.state.passwordCheck}
 				handlePasswordModify={this.handlePasswordModify.bind(this)}
+				handleImageFileChange={this.handleImageFileChange.bind(this)}
+				handleNewImageButtonClick={this.handleNewImageButtonClick.bind(this)}
 			/>
 		);
 	}

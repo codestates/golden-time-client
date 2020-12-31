@@ -52,7 +52,7 @@ const Location = styled.div`
 `;
 
 const LocationName = styled.div`
-	font-size: 20px;
+	font-size: 15px;
 	font-weight: 800;
 `;
 
@@ -83,15 +83,15 @@ class Navi extends React.Component {
 	handleHome = () => {
 		this.setState({ search: '' });
 		this.props.handleSearchValue('');
-	}
+	};
 
-	handleInputValue = (key) => (e) => {
+	handleInputValue = key => e => {
 		this.setState({ [key]: e.target.value });
 	};
 
 	handleSearch = () => {
 		this.props.handleSearchValue(this.state.search);
-	}
+	};
 
 	handleIsModal = () => {
 		this.setState(state => ({ isModal: !state.isModal }));
@@ -101,11 +101,18 @@ class Navi extends React.Component {
 		const { currentLocation, userInfo, handleLocalLogin, handleLogout } = this.props;
 		return (
 			<Container>
-				<Link to="/">
-					<Home onClick={this.handleHome}>Golden Time</Home>
+				<Link to='/'>
+					<Home onClick={this.handleHome}>
+						<img src='/images/goldenTimeLogo.png' width='180px' height='90px' />
+					</Home>
 				</Link>
 
-				<Input type='text' placeholder={"찾으시는 상품을 입력하세요."} value={this.state.search} onChange={this.handleInputValue("search")} />
+				<Input
+					type='text'
+					placeholder={'찾으시는 상품을 입력하세요.'}
+					value={this.state.search}
+					onChange={this.handleInputValue('search')}
+				/>
 
 				<Link to="/">
 					<Search>
@@ -121,7 +128,7 @@ class Navi extends React.Component {
 
 				{userInfo ?
 					<>
-						<Link to="/user/userinfo">
+						<Link to='/user/userinfo'>
 							<Item>개인 페이지</Item>
 						</Link>
 
@@ -129,19 +136,22 @@ class Navi extends React.Component {
 							<Item onClick={handleLogout}>로그아웃</Item>
 						</Link>
 					</>
-					: <>
+					:
+					<>
 						<Item onClick={this.handleIsModal}>로그인</Item>
-						{this.state.isModal &&
+						{this.state.isModal ? (
 							<Login
 								isOpen={true}
 								close={this.handleIsModal}
 								handleLocalLogin={handleLocalLogin}
 							/>
-						}
+						) : (
+								<></>
+							)}
 					</>
 				}
-			</Container >
-		)
+			</Container>
+		);
 	}
 }
 

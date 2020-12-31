@@ -24,7 +24,7 @@ const Modal = styled.div`
 `;
 
 const LoginModal = styled.div`
-	width: 30rem;
+	width: 32rem;
 	height: 40rem;
 	background-color: #fff;
 	position: relative;
@@ -34,6 +34,7 @@ const LoginModal = styled.div`
 	padding: 20px;
 	transform: translateY(0);
 	animation: ${boxFade} 0.5s forwards;
+	border-radius: 6px;
 `;
 
 const LoginArea = styled.div`
@@ -46,9 +47,8 @@ const Title = styled.div`
 	top: 2em;
 	font-size: 1.5em;
 	font-weight: bold;
-	margin-top: 2em;
-	margin-bottom: 3em;
 	color: black;
+	margin-top: 1.5rem;
 `;
 
 const InputBox = styled.div`
@@ -97,36 +97,23 @@ const ErrorMessageArea = styled.div`
 `;
 
 const LoginButton = styled.button`
-	width: 70%;
-	font-size: 16px;
-	line-height: 24px;
-	letter-spacing: -0.16px;
-	height: 52px;
-	line-height: 50px;
-	font-weight: 700;
-	border-radius: 15px;
-	outline: 0;
-	color: white;
 	background-color: black;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	width: 70%;
+	border-radius: 40px;
+	font-size: 1rem;
+	line-height: 46px;
+	height: 3rem;
 	cursor: pointer;
 	margin-bottom: 1rem;
+	outline: 0;
 `;
 
-const SignUpButton = styled.button`
-	width: 70%;
-	font-size: 16px;
-	line-height: 24px;
-	letter-spacing: -0.16px;
-	height: 52px;
-	line-height: 50px;
-	font-weight: 700;
-	border: 0.5px solid black;
-	border-radius: 15px;
-	outline: 0;
-	color: black;
-	background-color: white;
-	cursor: pointer;
-	margin-bottom: 1rem;
+const SignUp = styled.p`
+	margin-top: 1rem;
+	font-weight: 600;
 `;
 
 const ButtonArea = styled.div`
@@ -143,16 +130,16 @@ const SocialArea = styled.div`
 `;
 
 const GoogleButton = styled.img`
-	width: 3rem;
-	height: 3rem;
+	width: 2.5rem;
+	height: 2.5rem;
 	border-radius: 50%;
 	margin-right: 1rem;
 	cursor: pointer;
 `;
 
 const KakaoButton = styled.img`
-	width: 3rem;
-	height: 3rem;
+	width: 2.5rem;
+	height: 2.5rem;
 	border-radius: 50%;
 	margin-left: 1rem;
 	cursor: pointer;
@@ -173,13 +160,21 @@ class Login extends Component {
 		};
 	}
 
+	componentDidMount() {
+		document.body.style.overflow = 'hidden';
+	}
+
+	componentWillUnmount() {
+		document.body.style.overflow = 'unset';
+	}
+
 	handleInputValue = key => e => {
 		this.setState({ [key]: e.target.value });
 	};
 
 	loginSubmit = async () => {
 		const { email, password } = this.state;
-		const localLoginUrl = 'http://localhost:8080/auth/signin';
+		const localLoginUrl = 'http://localhost:8088/auth/signin';
 
 		if (!email.length || !password.length) {
 			this.setState({
@@ -233,7 +228,13 @@ class Login extends Component {
 					<Modal onClick={close}>
 						<LoginModal onClick={e => e.stopPropagation()}>
 							<LoginArea>
-								<Title>로그인</Title>
+								<Title>
+									<img
+										src='/images/goldenTimeLogo.png'
+										width='250px'
+										height='120px'
+									/>
+								</Title>
 								<InputBox>
 									<Email onChange={this.handleInputValue('email')} />
 								</InputBox>
@@ -245,17 +246,17 @@ class Login extends Component {
 									<LoginButton onClick={this.loginSubmit}> Login </LoginButton>
 
 									<SignUpLink to='/user/signup' onClick={close}>
-										<SignUpButton> Signup </SignUpButton>
+										<SignUp>아직 회원이 아니신가요?</SignUp>
 									</SignUpLink>
 								</ButtonArea>
 
 								<SocialArea>
 									<GoogleButton
-										src='../images/googleLogin.png'
+										src='/images/googleLogin.png'
 										onClick={this.handleGoogleLogin}
 									/>
 									<KakaoButton
-										src='../images/kakaoLogin.png'
+										src='/images/kakaoLogin.png'
 										onClick={this.handleKakaoLogin}
 									/>
 								</SocialArea>
