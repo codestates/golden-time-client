@@ -4,10 +4,11 @@ import styled from 'styled-components';
 const Container = styled.div`
 	display: flex;
 	justify-content: center;
+	height: 90vh;
 `;
 
 const RegistArea = styled.div`
-	padding: 5rem 0 0 0;
+	padding: 6rem 0 0 0;
 	width: 30rem;
 	height: 50rem;
 	text-align: center;
@@ -28,8 +29,9 @@ const InputBox = styled.div`
 `;
 
 const InputTitle = styled.div`
-	font-size: 0.7rem;
+	font-size: 1rem;
 	font-weight: bold;
+	height: 1.8rem;
 `;
 
 const Email = styled.input.attrs({
@@ -104,18 +106,18 @@ const Button = styled.input.attrs({
 	type: 'button',
 	value: '가입하기',
 })`
-	width: 70%;
-	font-size: 16px;
-	line-height: 24px;
-	letter-spacing: -0.16px;
-	height: 3.2rem;
-	line-height: 50px;
-	font-weight: 700;
-	border-radius: 15px;
-	outline: 0;
-	color: white;
 	background-color: black;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	width: 70%;
+	border-radius: 40px;
+	font-size: 1rem;
+	line-height: 46px;
+	height: 3rem;
 	cursor: pointer;
+	margin-bottom: 1rem;
+	padding: 0;
 `;
 
 const ButtonArea = styled.div`

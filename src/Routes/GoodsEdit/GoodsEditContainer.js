@@ -24,7 +24,7 @@ class GoodsEditContainer extends Component {
 		const goodsId = this.props.match.params.id;
 		try {
 			const response = await axios.get(
-				`http://localhost:8080/goods/detail/${goodsId}`
+				`http://localhost:8088/goods/detail/${goodsId}`
 			);
 
 			const { id, title, text, price, images } = response.data;
@@ -92,7 +92,7 @@ class GoodsEditContainer extends Component {
 
 		try {
 			const response = await axios.patch(
-				'http://localhost:8080/goods/modified',
+				'http://localhost:8088/goods/modified',
 				formData,
 				{
 					withCredentials: true,
@@ -114,11 +114,11 @@ class GoodsEditContainer extends Component {
 				fileRef={this.fileRef}
 				goodsData={this.state.goodsData}
 				imagesPreviewUrls={this.state.imagesPreviewUrls}
-				handleInputValue={this.handleInputValue.bind(this)}
-				ImageUpLoadButtonClick={this.ImageUpLoadButtonClick.bind(this)}
-				handleImageChange={this.handleImageChange.bind(this)}
-				removeGoodsImage={this.removeGoodsImage.bind(this)}
 				handleSubmit={this.handleSubmit.bind(this)}
+				handleInputValue={this.handleInputValue.bind(this)}
+				removeGoodsImage={this.removeGoodsImage.bind(this)}
+				handleImageChange={this.handleImageChange.bind(this)}
+				ImageUpLoadButtonClick={this.ImageUpLoadButtonClick.bind(this)}
 			/>
 		);
 	}

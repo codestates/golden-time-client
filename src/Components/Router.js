@@ -13,6 +13,7 @@ import GoodsDetail from '../Routes/GoodsDetail';
 import GoodsEdit from '../Routes/GoodsEdit';
 import GoodsPost from '../Routes/GoodsPost';
 import MyGoods from '../Routes/MyGoods';
+import Footer from './Footer';
 import Navi from './Navi';
 import Temp from './Temp';
 import axios from 'axios';
@@ -58,7 +59,6 @@ class Router extends React.Component {
 	componentDidMount() {
 		console.log('첫 컴디드');
 		this.getLocation();
-
 		const url = new URL(window.location.href);
 		const authorizationCode = url.searchParams.get('code');
 		if (authorizationCode) {
@@ -84,7 +84,7 @@ class Router extends React.Component {
 
 	async handleGoogleLogin(authorizationCode) {
 		try {
-			const response = await axios.post('http://localhost:8080/auth/google', {
+			const response = await axios.post('http://localhost:8088/auth/google', {
 				authorizationCode,
 				area: this.state.currentLocation,
 			});
@@ -103,7 +103,7 @@ class Router extends React.Component {
 
 	async handleKakaoLogin(authorizationCode) {
 		try {
-			const response = await axios.post('http://localhost:8080/auth/kakao', {
+			const response = await axios.post('http://localhost:8088/auth/kakao', {
 				authorizationCode,
 				area: this.state.currentLocation,
 			});
@@ -122,7 +122,7 @@ class Router extends React.Component {
 
 	getUserInfo = async () => {
 		try {
-			const userInfo = await axios.get('http://localhost:8080/auth/user', {
+			const userInfo = await axios.get('http://localhost:8088/auth/user', {
 				withCredentials: true,
 				headers: {
 					Authorization: `bearer ${this.state.accessToken}`,
@@ -143,7 +143,7 @@ class Router extends React.Component {
 	async handleLogout() {
 		try {
 			const response = await axios.post(
-				'http://localhost:8080/auth/signout',
+				'http://localhost:8088/auth/signout',
 				{},
 				{
 					withCredentials: true,
@@ -155,7 +155,7 @@ class Router extends React.Component {
 			if (response.data.message === 'successfully LOGOUT!') {
 				localStorage.clear();
 				this.setState({ isLogin: false, accessToken: null });
-				this.props.history.push('/');
+				window.location.href = '/';
 			}
 		} catch (err) {
 			throw err;
@@ -177,7 +177,13 @@ class Router extends React.Component {
 	}
 
 	render() {
-		const { isLogin, userInfo, accessToken, search, currentLocation } = this.state;
+		const {
+			isLogin,
+			userInfo,
+			accessToken,
+			search,
+			currentLocation,
+		} = this.state;
 		return (
 			<BrowserRouter>
 				<>
@@ -238,6 +244,7 @@ class Router extends React.Component {
 						<Route path='/user/mygoods' render={() => <MyGoods />} />
 						<Redirect from='*' to='/' />
 					</Switch>
+					<Footer />
 				</>
 			</BrowserRouter>
 		);
