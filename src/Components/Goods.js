@@ -37,24 +37,28 @@ const ClosingTime = styled.div`
 `;
 
 function numberWithCommas(price) {
-  return `가격 : ${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} 원`;
+  return `${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
 }
 
 function makeTimer(closing_time) {
   let cur = new Date();
   let end = new Date(closing_time * 1000);
   let diff = end - cur;
-  const diffDays = Math.floor((end.getTime() - cur.getTime()) / (1000 * 60 * 60 * 24));
-  diff -= diffDays * (1000 * 60 * 60 * 24);
-  const diffHours = Math.floor(diff / (1000 * 60 * 60));
-  diff -= diffHours * (1000 * 60 * 60);
-  const diffMin = Math.floor(diff / (1000 * 60));
-  diff -= diffMin * (1000 * 60);
-  const diffSec = Math.floor(diff / 1000);
-  return (`남은시간 : ${diffDays < 10 ? `0${diffDays}` : diffDays}일 ${diffHours < 10 ? `0${diffHours}` : diffHours}시간 ${diffMin < 10 ? `0${diffMin}` : diffMin}분 ${diffSec < 10 ? `0${diffSec}` : diffSec}초`);
+  if (diff < 0) {
+    return "입찰 마감"
+  } else {
+    const diffDays = Math.floor((end.getTime() - cur.getTime()) / (1000 * 60 * 60 * 24));
+    diff -= diffDays * (1000 * 60 * 60 * 24);
+    const diffHours = Math.floor(diff / (1000 * 60 * 60));
+    diff -= diffHours * (1000 * 60 * 60);
+    const diffMin = Math.floor(diff / (1000 * 60));
+    diff -= diffMin * (1000 * 60);
+    const diffSec = Math.floor(diff / 1000);
+    return (`남은시간 : ${diffDays < 10 ? `0${diffDays}` : diffDays}일 ${diffHours < 10 ? `0${diffHours}` : diffHours}시간 ${diffMin < 10 ? `0${diffMin}` : diffMin}분 ${diffSec < 10 ? `0${diffSec}` : diffSec}초`);
+  }
 }
 
-const Goods = ({ id, src, title, price, closing_time, userInfo }) => (
+const Goods = ({ id, src, title, price, bidPrice, closing_time, userInfo }) => (
   <Link to={{
     pathname: `/goods/detail/${id}`,
     state: { userInfo }
@@ -62,7 +66,8 @@ const Goods = ({ id, src, title, price, closing_time, userInfo }) => (
     <Container>
       <Image src={src} />
       <Title>{title}</Title>
-      <Price>{numberWithCommas(price)}</Price>
+      <Price>{`시작가 : ${numberWithCommas(price)} 원`}</Price>
+      <Price>{`현재가 : ${numberWithCommas(bidPrice)} 원`}</Price>
       <ClosingTime>{makeTimer(closing_time)}</ClosingTime>
     </Container>
   </Link>

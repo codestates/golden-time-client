@@ -3,7 +3,6 @@ import { Link, withRouter } from 'react-router-dom';
 import { FaSearch } from 'react-icons/fa';
 import styled from 'styled-components';
 import Login from './Login';
-import axios from 'axios';
 
 const Container = styled.header`
 	position: fixed;
@@ -66,13 +65,13 @@ const Item = styled.div`
 	justify-content: center;
 	align-items: center;
 `;
-
 class Navi extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			search: '',
-			isModal: false
+			isModal: false,
+			currentLocation: null
 		}
 
 		this.handleHome = this.handleHome.bind(this);
@@ -99,6 +98,7 @@ class Navi extends React.Component {
 	};
 
 	render() {
+		const { currentLocation, userInfo, handleLocalLogin, handleLogout } = this.props;
 		return (
 			<Container>
 				<Link to="/">
@@ -107,26 +107,26 @@ class Navi extends React.Component {
 
 				<Input type='text' placeholder={"찾으시는 상품을 입력하세요."} value={this.state.search} onChange={this.handleInputValue("search")} />
 
-				<Link to="/123123">
-					<Search onClick={this.handleSearch}>
-						<FaSearch size="25" color='gray' />
+				<Link to="/">
+					<Search>
+						<FaSearch size="25" color='gray' onClick={this.handleSearch} />
 					</Search>
 				</Link>
 
-				{this.props.currentLocation ?
-					this.props.currentLocation === 'no' ? <Location>위치 정보를 받아올 수 없습니다.</Location> :
-						<Location>현재 위치는{'\u00A0'}<LocationName>{this.props.currentLocation}</LocationName>{'\u00A0'}입니다.</Location>
+				{currentLocation ?
+					currentLocation === 'no' ? <Location>위치 정보를 받아올 수 없습니다.</Location> :
+						<Location>현재 위치는{'\u00A0'}<LocationName>{currentLocation}</LocationName>{'\u00A0'}입니다.</Location>
 					: <Location>위치 정보를 확인하는 중입니다.</Location>
 				}
 
-				{this.props.isLogin ?
+				{userInfo ?
 					<>
 						<Link to="/user/userinfo">
 							<Item>개인 페이지</Item>
 						</Link>
 
 						<Link to="/">
-							<Item onClick={this.props.handleLogout}>로그아웃</Item>
+							<Item onClick={handleLogout}>로그아웃</Item>
 						</Link>
 					</>
 					: <>
@@ -135,7 +135,7 @@ class Navi extends React.Component {
 							<Login
 								isOpen={true}
 								close={this.handleIsModal}
-								handleLocalLogin={this.props.handleLocalLogin}
+								handleLocalLogin={handleLocalLogin}
 							/>
 						}
 					</>

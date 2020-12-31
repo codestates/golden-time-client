@@ -6,144 +6,178 @@ export default class extends React.Component {
     super(props);
     this.state = {
       goods: null,
-      currentLocation: null
+      loading: true
     }
     this.getGoodsData = this.getGoodsData.bind(this);
     this.getSearchGoodsData = this.getSearchGoodsData.bind(this);
   }
 
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   return (this.props.currentLocation !== nextProps.currentLocation || this.props.search !== nextProps.search);
-  // }
-
-  // componentWillUpdate() {
-  // }
-
-  componentDidMount() {
-    // console.log(123123);
-    // this.setState({ currentLocation: this.props.currentLocation });
-    this.getGoodsData();
-    // this.props.cuurentLocation === null
-    // if (this.props.currentLocation === 'no') {
-    //   if (this.props.search) {
-    //     this.getSearchGoodsData();
-    //   } else {
-    //     this.getGoodsData();
-    //   }
-    // } else if (this.props.currentLocation) {
-    //   if (this.props.search) {
-    //     this.getSearchGoodsData({ area: this.props.currentLocation });
-    //   } else {
-    //     this.getGoodsData({ area: this.props.currentLocation });
-    //   }
-    // }
-
+  shouldComponentUpdate(nextProps, nextState) {
+    const { currentLocation, search } = this.props;
+    return (currentLocation !== nextProps.currentLocation || search !== nextProps.search || this.state.goods !== nextState.goods);
   }
 
-  async getGoodsData(area) {
+  componentDidUpdate(prevProps) {
+    const { currentLocation, search } = this.props;
+    if (currentLocation === 'no' && (!this.state.goods || search !== prevProps.search)) {
+      if (search) {
+        console.log('serch');
+        this.getSearchGoodsData({ search });
+      } else {
+        this.getGoodsData();
+      }
+    } else if (currentLocation && (!this.state.goods || search !== prevProps.search)) {
+      if (search) {
+        console.log('serch');
+        this.getSearchGoodsData({
+          search,
+          area: currentLocation
+        });
+      } else {
+        this.getGoodsData({ area: currentLocation });
+      }
+    }
+  }
+
+  componentDidMount() {
+    const { currentLocation, search } = this.props;
+    if (currentLocation === 'no' && !this.state.goods) {
+      if (search) {
+        this.getSearchGoodsData({ search });
+      } else {
+        this.getGoodsData();
+      }
+    } else if (currentLocation && !this.state.goods) {
+      if (search) {
+        this.getSearchGoodsData({
+          search,
+          area: currentLocation
+        });
+      } else {
+        this.getGoodsData({ area: currentLocation });
+      }
+    }
+  }
+
+  async getGoodsData(condition) {
     try {
-      const goods = axios.post('http://localhost:4000/api/goods', area);
-      this.setState({ goods });
-      console.log('전체요청');
+      // const goods = axios.post('http://localhost:8088/api/goods', condition);
+      // this.setState({ goods });
       this.setState({
         goods: [{
           id: 1,
           src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
           title: 'Nike X Dior Air Jordan 1 Low',
           price: 10009000,
+          bidPrice: 9999999,
           closing_time: 1609055449
         }, {
           id: 2,
           src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
           title: 'Nike X Dior Air Jordan 1 Low',
           price: 10009000,
+          bidPrice: 9999999,
           closing_time: 1609055449
         }, {
           id: 3,
           src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
           title: 'Nike X Dior Air Jordan 1 Low',
           price: 10009000,
+          bidPrice: 9999999,
           closing_time: 1609055449
         }, {
           id: 4,
           src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
           title: 'Nike X Dior Air Jordan 1 Low',
           price: 10009000,
+          bidPrice: 9999999,
           closing_time: 1609055449
         }, {
           id: 5,
           src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
           title: 'Nike X Dior Air Jordan 1 Low',
           price: 10009000,
+          bidPrice: 9999999,
           closing_time: 1609055449
         }, {
           id: 6,
           src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
           title: 'Nike X Dior Air Jordan 1 Low',
           price: 10009000,
+          bidPrice: 9999999,
           closing_time: 1609055449
         }, {
           id: 7,
           src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
           title: 'Nike X Dior Air Jordan 1 Low',
           price: 10009000,
+          bidPrice: 9999999,
           closing_time: 1609055449
         }, {
           id: 8,
           src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
           title: 'Nike X Dior Air Jordan 1 Low',
           price: 10009000,
+          bidPrice: 9999999,
           closing_time: 1609055449
         }, {
           id: 9,
           src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
           title: 'Nike X Dior Air Jordan 1 Low',
           price: 10009000,
+          bidPrice: 9999999,
           closing_time: 1609055449
         }, {
           id: 10,
           src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
           title: 'Nike X Dior Air Jordan 1 Low',
           price: 10009000,
+          bidPrice: 9999999,
           closing_time: 1609055449
-        }]
+        }], loading: false
       });
-    } catch {
-      console.log('Data 수신에 실패하였습니다.');
+    } catch (err) {
+      console.error(err);
     }
   }
 
-  async getSearchGoodsData(area) {
+  async getSearchGoodsData(condition) {
     try {
-      // const goods = axios.post(`http://localhost:4000/search/${this.props.search}`, area);
+      // const goods = axios.post(`http://localhost:8088/search`, condition);
       // this.setState({ goods });
-      console.log('부분요청');
       this.setState({
         goods: [{
           id: 1,
           src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
           title: 'Nike X Dior Air Jordan 1 Low',
           price: 10009000,
+          bidPrice: 9999999,
           closing_time: 1609055449
         }, {
           id: 2,
           src: 'https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407',
           title: 'Nike X Dior Air Jordan 1 Low',
           price: 10009000,
+          bidPrice: 9999999,
           closing_time: 1609055449
-        }]
+        }], loading: false
       });
-    } catch {
-      console.log('Data 수신에 실패하였습니다.');
+    } catch (err) {
+      console.error(err);
     }
   }
 
   render() {
+    const { userInfo, currentLocation, search } = this.props;
+    const { loading, goods } = this.state;
     return (
-      <>
-        <>{this.props.currentLocation}</>
-        <HomePresenter userInfo={this.props.userInfo} currentLocation={this.props.currentLocation} goods={this.state.goods} />
-      </>
+      <HomePresenter
+        loading={loading}
+        goods={goods}
+        userInfo={userInfo}
+        currentLocation={currentLocation}
+        search={search}
+      />
     );
   }
 }

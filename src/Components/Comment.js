@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import axios from "axios";
 
 const Container = styled.div`
   display: flex;
@@ -79,90 +78,29 @@ const DeleteButton = styled.div`
   margin-left:10px;
 `;
 
-function makeTimer(createdAt) {
-  let end = new Date(createdAt * 1000);
-  return end;
-}
+// makeTimer(createdAt) {
+//   let end = new Date(createdAt * 1000);
+//   return end;
+// }
 
-class Comment extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      editing: false,
-      editComment: null,
-      postId: null,
-      commentId: null,
-      userInfo: {},
-      userId: null,
-      userNick: null,
-      commentMessage: null
-    }
-    this.editComment = this.editComment.bind(this);
-  }
-
-  componentDidMount() {
-    const { postId, userInfo, userId, commentId, userNick, commentMessage, createdAt } = this.props;
-    this.setState({ postId, userInfo, userId, commentId, userNick, commentMessage, createdAt });
-  }
-
-  handleCommentInputValue = (key) => (e) => {
-    this.setState({ [key]: e.target.value });
-  };
-
-  handleEditing = () => {
-    this.setState(state => ({ editing: !state.editing }));
-  };
-
-  editComment() {
-    try {
-      console.log('comment edit nework사용');
-      if (!this.state.editComment) {
-        alert('입력하신 텍스트가 없습니다.');
-        throw '코멘트 에러';
-      }
-      this.setState({ editing: false, commentMessage: this.state.editComment },
-        async () => {
-          // let accessToken = localStorage.getItem('accessToken');
-          // await axios.post(`http://localhost:8080/comments/modified`,
-          //   {
-          //     goodsId: this.state.postId,
-          //     commentId: this.state.commentId,
-          //     commentMessage: this.state.commentMessage,
-          //   },
-          //   {
-          //     withCredentials: true,
-          //     headers: {
-          //       Authorization: `bearer ${accessToken}`,
-          //     },
-          //   });
-        });
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  render() {
-    return (
-      <Container>
-        {this.state.editing ?
-          <>
-            <EditComment type='text' placeholder={this.state.commentMessage} onChange={this.handleCommentInputValue("editComment")} />
-            <EditButton onClick={this.editComment}>확인</EditButton>
-          </>
-          : <Text>{this.state.commentMessage}</Text>}
-        <User>{this.state.userNick}</User>
-        <ButtonContainer>
-          {this.state.userInfo.id === this.state.userId ?
-            <>
-              <EditButton onClick={this.handleEditing}>수정</EditButton>
-              <DeleteButton onClick={this.props.deleteComment.bind(null, this.state.commentId)}>삭제</DeleteButton>
-            </>
-            : <></>}
-        </ButtonContainer>
-      </Container>
-    )
-  }
-}
-
+const Comment = ({ index, commentId, userId, userNick, commentMessage, createdAt, handleCommentInputValue, handleEditing, editing, editComment, deleteComment, userInfo }) => (
+  <Container>
+    {editing === commentId ?
+      <>
+        <EditComment type='text' placeholder={commentMessage} onChange={handleCommentInputValue("editingComment")} />
+        <EditButton onClick={editComment.bind(null, commentId, index)}>확인</EditButton>
+      </>
+      : <Text>{commentMessage}</Text>}
+    <User>{userNick}</User>
+    <ButtonContainer>
+      {userInfo.id === userId ?
+        <>
+          <EditButton onClick={handleEditing.bind(null, commentId)}>수정</EditButton>
+          <DeleteButton onClick={deleteComment.bind(null, commentId)}>삭제</DeleteButton>
+        </>
+        : <></>}
+    </ButtonContainer>
+  </Container>
+);
 
 export default Comment;
