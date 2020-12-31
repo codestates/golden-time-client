@@ -43,7 +43,7 @@ export default class extends React.Component {
     const { currentLocation, search } = this.props;
     if (currentLocation === 'no' && !this.state.goods) {
       if (search) {
-        this.getSearchGoodsData({ search });
+        this.getSearchGoodsData({ search: this.props.match.id });
       } else {
         this.getGoodsData();
       }
@@ -61,8 +61,8 @@ export default class extends React.Component {
 
   async getGoodsData(condition) {
     try {
-      const goods = axios.post('http://localhost:8088/api/goods', condition);
-      this.setState({ goods });
+      const goods = await axios.post('http://localhost:8088/goods', condition);
+      this.setState({ goods: goods.data });
       // this.setState({
       //   goods: [{
       //     id: 1,
@@ -143,8 +143,8 @@ export default class extends React.Component {
 
   async getSearchGoodsData(condition) {
     try {
-      const goods = axios.post(`http://localhost:8088/search`, condition);
-      this.setState({ goods });
+      const goods = await axios.post(`http://localhost:8088/search`, condition);
+      this.setState({ goods: goods.data });
       // this.setState({
       //   goods: [{
       //     id: 1,

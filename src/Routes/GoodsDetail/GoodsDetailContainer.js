@@ -40,8 +40,8 @@ export default class extends React.Component {
 
   async getDetailData(id) {
     try {
-      const detail = await axios.post(`http://localhost:8088/api/goods/detail/${id}`);
-      this.setState({ detail }, () => {
+      const detail = await axios.post(`http://localhost:8088/goods/detail/${id}`);
+      this.setState({ detail: detail.data }, () => {
         if (detail.bidPrice === null) {
           this.setState(state => ({ detail: { ...state.detail, bidPrice: state.detail.price, bidder: { id: 0, nick: '없음' } } }));
         }
@@ -164,7 +164,7 @@ export default class extends React.Component {
         throw 'Post BidPrice Error';
       } else {
         let accessToken = localStorage.getItem('accessToken');
-        const result = await axios.post(`http://localhost:8088/api/goods/bid`,
+        const result = await axios.post(`http://localhost:8088/goods/bid`,
           {
             bidPrice: this.state.inputBidPrice,
             goodsId: this.state.detail.id
@@ -175,8 +175,8 @@ export default class extends React.Component {
               Authorization: `bearer ${accessToken}`,
             },
           });
-        this.setState(state => ({ detail: { ...state.detail, bidPrice: result.bidPrice, bidder: result.bidder } }));
-        this.numberWithCommas(this.state.detail.price, result.bidPrice);
+        this.setState(state => ({ detail: { ...state.detail, bidPrice: result.data.bidPrice, bidder: result.data.bidder } }));
+        this.numberWithCommas(this.state.detail.price, result.data.bidPrice);
         // this.setState(state => ({ detail: { ...state.detail, bidPrice: this.state.inputBidPrice, bidder: this.state.userInfo } }));
         // this.numberWithCommas(this.state.detail.price, this.state.inputBidPrice);
       }
@@ -208,10 +208,10 @@ export default class extends React.Component {
           detail: {
             ...state.detail, comments: [...state.detail.comments,
             {
-              commentId: result.commentId,
-              userId: result.user.id,
-              nick: result.user.nick,
-              commentMessage: result.commentMessage.comment
+              commentId: result.data.commentId,
+              userId: result.data.user.id,
+              nick: result.data.user.nick,
+              commentMessage: result.data.commentMessage.comment
             }]
           }
         }));
@@ -255,10 +255,10 @@ export default class extends React.Component {
           ...state.detail, comments: [
             ...state.detail.comments.slice(0, index),
             {
-              commentId: result.id,
-              userId: result.user.id,
-              nick: result.user.nick,
-              commentMessage: result.commentMessage
+              commentId: result.data.id,
+              userId: result.data.user.id,
+              nick: result.data.user.nick,
+              commentMessage: result.data.commentMessage
             },
             ...state.detail.comments.slice(index + 1)
           ]
@@ -312,7 +312,7 @@ export default class extends React.Component {
   async deletePost() {
     try {
       let accessToken = localStorage.getItem('accessToken');
-      const response = await axios.post(`http://localhost:8088/goods/delete`,
+      const result = await axios.post(`http://localhost:8088/goods/delete`,
         {
           goodsId: this.state.detail.id
         },
@@ -322,7 +322,7 @@ export default class extends React.Component {
             Authorization: `bearer ${accessToken}`,
           },
         });
-      this.props.history.push(response.data.redirect_url);
+      this.props.history.push(result.data.redirect_url);
       // this.props.history.push('/');
     } catch (err) {
       console.error(err);
