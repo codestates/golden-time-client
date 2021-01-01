@@ -206,7 +206,7 @@ class Login extends Component {
 
 	handleGoogleLogin = () => {
 		const clientId =
-			'995004087715-hrt2q4rjjqbs3q7fg0j84nokjd9287be.apps.googleusercontent.com';
+			'153084653210-rv3oct12c4a2319k42rqn3hp2tlnadjk.apps.googleusercontent.com';
 		const redirectUri = 'http://localhost:3000';
 		const scope = 'email+profile';
 		const googleLoginUrl = `https://accounts.google.com/o/oauth2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code`;

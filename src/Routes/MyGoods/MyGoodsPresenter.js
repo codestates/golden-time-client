@@ -72,7 +72,9 @@ const GoodsItem = styled.li`
 
 const GoodsImage = styled.img`
 	width: 15rem;
-	border-radius: 50px;
+	height: 15rem;
+	border-radius: 15px;
+	border: 0.5px solid lightgray;
 	&:hover {
 		opacity: 0.6;
 	}
@@ -154,7 +156,7 @@ const MyGoodsPresenter = ({ goodsList, numberWithCommas, makeTimer }) => (
 									<GoodsTitle>{item.title}</GoodsTitle>
 									<GoodsPrice>{numberWithCommas(item.price)}</GoodsPrice>
 									<GoodsClosingTime>
-										{makeTimer(item.closing_time)}
+										{makeTimer(Date.parse(item.closing_time))}
 									</GoodsClosingTime>
 								</GoodsItem>
 							</Link>

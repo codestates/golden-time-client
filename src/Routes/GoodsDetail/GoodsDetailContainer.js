@@ -43,7 +43,7 @@ export default class extends React.Component {
 			const detail = await axios.get(
 				`http://localhost:8088/goods/detail/${id}`
 			);
-			console.log('디테일d', detail.data);
+			console.log('디테일dd', detail.data);
 			this.setState({ detail: detail.data }, () => {
 				if (detail.data.bidPrice === null) {
 					this.setState(state => ({
@@ -131,7 +131,7 @@ export default class extends React.Component {
 
 	makeTimer(closing_time) {
 		let cur = new Date();
-		let end = new Date(closing_time * 1000);
+		let end = new Date(Date.parse(closing_time));
 		let diff = end - cur;
 		let result = '';
 		if (diff < 0) {
@@ -158,7 +158,7 @@ export default class extends React.Component {
 	}
 
 	handleNextImage() {
-		if (this.state.imageNum < this.state.detail.images.length - 1) {
+		if (this.state.imageNum < this.state.detail.goodsImages.length - 1) {
 			this.setState(state => ({ imageNum: state.imageNum + 1 }));
 		}
 	}
