@@ -46,9 +46,9 @@ class NaviContainer extends React.Component {
 				const authorizationCode = url.searchParams.get('code');
 				if (authorizationCode) {
 					if (String(url.search).includes('google')) {
-						this.handleGoogleLogin(authorizationCode, currentLocation);
+						await this.handleGoogleLogin(authorizationCode, currentLocation);
 					} else {
-						this.handleKakaoLogin(authorizationCode, currentLocation);
+						await this.handleKakaoLogin(authorizationCode, currentLocation);
 					}
 				}
 				const accessToken = localStorage.getItem('accessToken');
@@ -90,7 +90,6 @@ class NaviContainer extends React.Component {
 			});
 			if (response.data.access_token) {
 				localStorage.setItem('accessToken', response.data.access_token);
-				this.getUserInfo(response.data.access_token);
 				this.props.history.push('/');
 			}
 		} catch (err) {
@@ -106,7 +105,6 @@ class NaviContainer extends React.Component {
 			});
 			if (response.data.access_token) {
 				localStorage.setItem('accessToken', response.data.access_token);
-				this.getUserInfo(response.data.access_token);
 				this.props.history.push('/');
 			}
 		} catch (err) {

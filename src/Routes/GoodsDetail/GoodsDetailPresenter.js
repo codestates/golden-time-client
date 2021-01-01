@@ -205,7 +205,7 @@ const GoodsDetailPresenter = ({
 	detail: {
 		id,
 		categoryId,
-		images = [],
+		goodsImages = [],
 		title,
 		text,
 		comments = [],
@@ -236,7 +236,9 @@ const GoodsDetailPresenter = ({
 						color='rgb(186,185,184)'
 						onClick={handleBeforeImage}
 					/>
-					<Image src={images[imageNum]} />
+					{goodsImages.length && (
+						<Image src={goodsImages[imageNum].imagePath} />
+					)}
 					<FaRegCaretSquareRight
 						size='50'
 						color='rgb(186,185,184)'
