@@ -19,21 +19,30 @@ class UserInfoContainer extends Component {
 
 	fileRef = React.createRef();
 
+	componentDidMount() {
+		console.log(JSON.parse(localStorage.getItem('userInfo')));
+		const userData = JSON.parse(localStorage.getItem('userInfo'));
+		console.log(typeof userData.provider);
+	}
+
 	handleNewImageButtonClick(e) {
 		e.preventDefault();
 		this.fileRef.current.click();
 	}
 
 	async handleImageFileChange(e) {
-		const imageFile = e.target.files;
+		const imageFile = Array.from(e.target.files);
 		const accessToken = localStorage.getItem('accessToken');
+		const formData = new FormData();
+		for (let i = 0; i < imageFile.length; i++) {
+			console.log(imageFile[i], imageFile[i].name);
+			formData.append('img', imageFile[i], imageFile[i].name);
+		}
+
 		try {
 			const response = await axios.patch(
 				'http://localhost:8088/auth/modifieduser',
-				{
-					nick: null,
-					image: imageFile,
-				},
+				formData,
 				{
 					withCredentials: true,
 					headers: {
@@ -42,7 +51,7 @@ class UserInfoContainer extends Component {
 					},
 				}
 			);
-			this.props.modifyUserInfo(response.data.access_token);
+			this.getUserInfo(accessToken);
 		} catch (err) {
 			throw err;
 		}
@@ -60,22 +69,22 @@ class UserInfoContainer extends Component {
 			});
 			return;
 		} else {
+			const accessToken = localStorage.getItem('accessToken');
 			try {
 				const response = await axios.patch(
 					'http://localhost:8088/auth/modifieduser',
 					{
 						nick: this.state.newNick,
-						image: null,
 					},
 					{
 						withCredentials: true,
 						headers: {
-							Authorization: `bearer ${this.props.accessToken}`,
+							Authorization: `bearer ${accessToken}`,
 						},
 					}
 				);
-				this.setState({ ...this.state, nickNameInput: false });
-				this.props.modifyUserInfo(response.data.access_token);
+				localStorage.setItem('accessToken', response.data.access_token);
+				this.getUserInfo(response.data.access_token);
 			} catch (err) {
 				throw err;
 			}
@@ -114,6 +123,7 @@ class UserInfoContainer extends Component {
 			});
 		} else {
 			try {
+				const accessToken = localStorage.getItem('accessToken');
 				const response = await axios.post(
 					'http://localhost:8088/auth/modifiedpassword',
 					{
@@ -123,7 +133,7 @@ class UserInfoContainer extends Component {
 					{
 						withCredentials: true,
 						headers: {
-							Authorization: `bearer ${this.props.accessToken}`,
+							Authorization: `bearer ${accessToken}`,
 						},
 					}
 				);
@@ -150,7 +160,7 @@ class UserInfoContainer extends Component {
 	};
 
 	handleTimeStamp(closing_time) {
-		let d = new Date(closing_time * 1000);
+		let d = new Date(closing_time);
 		let yyyy = d.getFullYear();
 		let mm = ('0' + (d.getMonth() + 1)).slice(-2);
 		let dd = ('0' + d.getDate()).slice(-2);
@@ -158,11 +168,27 @@ class UserInfoContainer extends Component {
 		return time;
 	}
 
+	async getUserInfo(accessToken) {
+		try {
+			const userInfo = await axios.get('http://localhost:8088/auth/user', {
+				withCredentials: true,
+				headers: {
+					Authorization: `bearer ${accessToken}`,
+				},
+			});
+			console.log('유저 인d포adwddㅇ', userInfo);
+			localStorage.setItem('userInfo', JSON.stringify(userInfo.data));
+			this.setState({ nickNameInput: false });
+		} catch (err) {
+			throw err;
+		}
+	}
+
 	render() {
 		return (
 			<UserInfoPresenter
 				fileRef={this.fileRef}
-				userData={this.props.userData}
+				userData={JSON.parse(localStorage.getItem('userInfo'))}
 				nickNameInput={this.state.nickNameInput}
 				passwordInput={this.state.passwordInput}
 				passwordCheck={this.state.passwordCheck}

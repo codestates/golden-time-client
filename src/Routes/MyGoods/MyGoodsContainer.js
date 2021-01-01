@@ -29,16 +29,16 @@ class MyGoodsContainer extends Component {
 
 	makeTimer(closing_time) {
 		let cur = new Date();
-		let end = new Date(closing_time * 1000);
+		let end = new Date(closing_time);
 		let diff = end - cur;
 		const diffDays = Math.floor(
-			(end.getTime() - cur.getTime()) / (1000 * 60 * 60 * 24)
+			(end.getTime() - cur.getTime()) / (60 * 60 * 24)
 		);
-		diff -= diffDays * (1000 * 60 * 60 * 24);
-		const diffHours = Math.floor(diff / (1000 * 60 * 60));
-		diff -= diffHours * (1000 * 60 * 60);
-		const diffMin = Math.floor(diff / (1000 * 60));
-		diff -= diffMin * (1000 * 60);
+		diff -= diffDays * (60 * 60 * 24);
+		const diffHours = Math.floor(diff / (60 * 60));
+		diff -= diffHours * (60 * 60);
+		const diffMin = Math.floor(diff / 60);
+		diff -= diffMin * 60;
 		const diffSec = Math.floor(diff / 1000);
 		return `종료일 : ${diffDays < 10 ? `0${diffDays}` : diffDays}일 ${
 			diffHours < 10 ? `0${diffHours}` : diffHours

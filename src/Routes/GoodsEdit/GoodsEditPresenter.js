@@ -168,10 +168,10 @@ const GoodsEditPresenter = ({
 					<InfoText>현재 이미지</InfoText>
 					<ImageContent>
 						<GoodsImages>
-							{goodsData.images.length ? (
-								goodsData.images.map((url, i) => (
+							{goodsData.goodsImages.length ? (
+								goodsData.goodsImages.map((image, i) => (
 									<ImagePreview key={i}>
-										<GoodsImage src={url} />
+										<GoodsImage src={image.imagePath} />
 									</ImagePreview>
 								))
 							) : (
@@ -220,30 +220,19 @@ const GoodsEditPresenter = ({
 				</ImageArea>
 				<InfoArea>
 					<InfoText>상품명</InfoText>
-					{goodsData.title.length ? (
+					{goodsData.title && (
 						<InfoInput
 							type='text'
 							defaultValue={goodsData.title}
-							onChange={handleInputValue('newTitle')}
-						/>
-					) : (
-						<InfoInput
-							type='text'
-							defaultValue='Nike X Dior Air Jordan 1 Low'
 							onChange={handleInputValue('newTitle')}
 						/>
 					)}
 				</InfoArea>
 				<InfoArea>
 					<InfoText>상세 설명</InfoText>
-					{goodsData.text.length ? (
+					{goodsData.text && (
 						<InfoTextArea
 							defaultValue={goodsData.text}
-							onChange={handleInputValue('newText')}
-						/>
-					) : (
-						<InfoTextArea
-							defaultValue='리셀가 1000만원'
 							onChange={handleInputValue('newText')}
 						/>
 					)}

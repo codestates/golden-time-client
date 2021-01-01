@@ -195,7 +195,7 @@ class Login extends Component {
 				}
 			);
 			this.props.handleLocalLogin(response.data.access_token);
-			this.props.history.push(response.data.redirect_url);
+			this.props.close();
 		} catch (err) {
 			this.setState({
 				...this.state,
