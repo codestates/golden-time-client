@@ -14,7 +14,33 @@ class SignupContainer extends React.Component {
 			passwordCheck: '',
 			nick: '',
 			errorMessage: '',
+			currentLocation: null,
 		};
+	}
+	componentDidMount() {
+		this.getLocation();
+	}
+
+	getLocation() {
+		try {
+			navigator.geolocation.getCurrentPosition(async position => {
+				const x = position.coords.longitude;
+				const y = position.coords.latitude;
+				const result = await axios.get(
+					`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}`,
+					{
+						headers: {
+							Authorization: `KakaoAK ffb53639ffe1e1521cd3006a5a09ee3d`,
+						},
+					}
+				);
+				const currentLocation =
+					result.data.documents[0].address.region_2depth_name;
+				this.setState({ currentLocation });
+			});
+		} catch (err) {
+			throw err;
+		}
 	}
 
 	handleInputValue = key => e => {
@@ -23,7 +49,7 @@ class SignupContainer extends React.Component {
 
 	handleSubmit = async () => {
 		const { email, password, nick } = this.state;
-		const signUpUrl = 'http://localhost:8088/auth/signup';
+		const signUpUrl = 'http://52.78.33.112:8080/auth/signup';
 
 		if (!isEmail(this.state.email)) {
 			this.setState({
@@ -55,7 +81,7 @@ class SignupContainer extends React.Component {
 				email,
 				password,
 				nick,
-				area: this.props.currentLocation,
+				area: this.state.currentLocation,
 			});
 			this.props.history.push(response.data.redirect_url);
 		} catch (err) {

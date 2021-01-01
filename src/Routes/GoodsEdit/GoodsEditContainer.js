@@ -14,7 +14,7 @@ class GoodsEditContainer extends Component {
 			title: '',
 			text: '',
 			price: '',
-			images: [],
+			goodsImages: [],
 		},
 	};
 
@@ -27,11 +27,12 @@ class GoodsEditContainer extends Component {
 				`http://localhost:8088/goods/detail/${goodsId}`
 			);
 
-			const { id, title, text, price, images } = response.data;
-
+			const { id, title, text, price, goodsImages } = response.data;
 			this.setState({
 				...this.state,
-				goodsData: { id, title, text, price, images },
+				newTitle: title,
+				newText: text,
+				goodsData: { id, title, text, price, goodsImages },
 			});
 		} catch (err) {
 			throw err;
@@ -80,7 +81,6 @@ class GoodsEditContainer extends Component {
 
 	async handleSubmit() {
 		const { files, newTitle, newText } = this.state;
-
 		const accessToken = localStorage.getItem('accessToken');
 		const formData = new FormData();
 		for (let i = 0; i < files.length; i++) {
@@ -89,7 +89,6 @@ class GoodsEditContainer extends Component {
 		formData.append('title', newTitle);
 		formData.append('text', newText);
 		formData.append('goodsId', this.state.goodsData.id);
-
 		try {
 			const response = await axios.patch(
 				'http://localhost:8088/goods/modified',
@@ -102,7 +101,7 @@ class GoodsEditContainer extends Component {
 					},
 				}
 			);
-			this.props.history.push(response.data.redirect_url);
+			this.props.history.push(`/goods/detail/${this.state.goodsData.id}`);
 		} catch (err) {
 			throw err;
 		}

@@ -72,8 +72,9 @@ const ProfileImageArea = styled.div`
 `;
 
 const ProfileImage = styled.img`
-	width: 100px;
-	height: 100px;
+	width: 110px;
+	height: 110px;
+	border-radius: 50%;
 `;
 
 const ProfileContent = styled.div`
@@ -323,11 +324,8 @@ const UserInfoPresenter = ({
 				<ContentTitle>프로필 정보</ContentTitle>
 				<UserProfile>
 					<ProfileImageArea>
-						{userData.profile ? (
-							<ProfileImage
-								src={`http://localhost:8088/uploads/${userData.profile}`}
-								alt='프로필 이미지'
-							/>
+						{userData.profileImage ? (
+							<ProfileImage src={userData.profileImage} alt='프로필 이미지' />
 						) : (
 							<img src='../images/defaultUser.png' alt='프로필 이미지' />
 						)}
@@ -385,57 +383,52 @@ const UserInfoPresenter = ({
 					<InfoArea>
 						<InfoTitle>가입일</InfoTitle>
 						<InfoText>
-							{userData.createdAt
-								? handleTimeStamp(userData.createdAt)
-								: handleTimeStamp(1609326350)}
+							{userData.createdAt && handleTimeStamp(userData.createdAt)}
 						</InfoText>
 					</InfoArea>
 
-					{userData.provider === 'local' ||
-						(!userData.provider &&
-							(!passwordInput ? (
-								<InfoArea>
-									<InfoTitle>비밀번호 관리</InfoTitle>
-									<ModifyButton
+					{userData.provider === 'local' &&
+						(!passwordInput ? (
+							<InfoArea>
+								<InfoTitle>비밀번호 관리</InfoTitle>
+								<ModifyButton
+									onClick={() => {
+										handlePasswordInput(passwordInput);
+									}}
+								/>
+							</InfoArea>
+						) : (
+							<PasswordModifyArea>
+								<InfoTitle>비밀번호 변경</InfoTitle>
+								<PasswordAreaTitle>현재 비밀번호</PasswordAreaTitle>
+								<CurrentPasswordInput
+									onChange={handleInputValue('currentPassword')}
+								/>
+								<ErrorMessageArea>{currentPasswordError}</ErrorMessageArea>
+								<br />
+								<PasswordAreaTitle>새 비밀번호</PasswordAreaTitle>
+								<NewPasswordInput onChange={handleInputValue('newPassword')} />
+								<ErrorMessageArea>{newPasswordError}</ErrorMessageArea>
+								<br />
+								<PasswordAreaTitle>새 비밀번호 확인</PasswordAreaTitle>
+								<NewPasswordCheck
+									onChange={handleInputValue('newPasswordCheck')}
+								/>
+								<ErrorMessageArea>{passwordCheckError}</ErrorMessageArea>
+								<ButtonArea>
+									<InputCloseButton
 										onClick={() => {
 											handlePasswordInput(passwordInput);
 										}}
 									/>
-								</InfoArea>
-							) : (
-								<PasswordModifyArea>
-									<InfoTitle>비밀번호 변경</InfoTitle>
-									<PasswordAreaTitle>현재 비밀번호</PasswordAreaTitle>
-									<CurrentPasswordInput
-										onChange={handleInputValue('currentPassword')}
+									<InputSubmitButton
+										onClick={() => {
+											handlePasswordModify();
+										}}
 									/>
-									<ErrorMessageArea>{currentPasswordError}</ErrorMessageArea>
-									<br />
-									<PasswordAreaTitle>새 비밀번호</PasswordAreaTitle>
-									<NewPasswordInput
-										onChange={handleInputValue('newPassword')}
-									/>
-									<ErrorMessageArea>{newPasswordError}</ErrorMessageArea>
-									<br />
-									<PasswordAreaTitle>새 비밀번호 확인</PasswordAreaTitle>
-									<NewPasswordCheck
-										onChange={handleInputValue('newPasswordCheck')}
-									/>
-									<ErrorMessageArea>{passwordCheckError}</ErrorMessageArea>
-									<ButtonArea>
-										<InputCloseButton
-											onClick={() => {
-												handlePasswordInput(passwordInput);
-											}}
-										/>
-										<InputSubmitButton
-											onClick={() => {
-												handlePasswordModify();
-											}}
-										/>
-									</ButtonArea>
-								</PasswordModifyArea>
-							)))}
+								</ButtonArea>
+							</PasswordModifyArea>
+						))}
 				</ProfileInfo>
 			</ProfileArea>
 		</Content>

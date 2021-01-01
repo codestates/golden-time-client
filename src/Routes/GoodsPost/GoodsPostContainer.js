@@ -69,7 +69,6 @@ class GoodsPostContainer extends Component {
 	async handleSubmit(e) {
 		e.preventDefault();
 		const { files, title, text, price, categoryId, closing_time } = this.state;
-		let ms = Date.parse(closing_time);
 
 		if (!files.length) {
 			this.setState({
@@ -102,7 +101,7 @@ class GoodsPostContainer extends Component {
 			formData.append('title', title);
 			formData.append('text', text);
 			formData.append('price', price);
-			formData.append('closing_time', String(ms));
+			formData.append('closing_time', closing_time);
 			formData.append('categoryId', categoryId);
 
 			try {
