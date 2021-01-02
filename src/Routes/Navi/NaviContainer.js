@@ -23,6 +23,10 @@ class NaviContainer extends React.Component {
 	}
 
 	componentDidMount() {
+		const userInfo = localStorage.getItem('userInfo');
+		if (userInfo) {
+			this.setState({ isLogin: true });
+		}
 		this.getLocation();
 	}
 
@@ -39,6 +43,11 @@ class NaviContainer extends React.Component {
 						},
 					}
 				);
+				// 1. 위치가 안들어왔을 때 --> 회원가입 or 로그인 -> catch에 잡힘
+				// 2. 위치를 못받을 때 --> 회원가입 or 로그인 -> catch에 잡힘
+				// 3. 위치가 들아왔을 때 -> 정상
+
+				// 1. 로그인 / 회원가입 -> 분기처리
 				const currentLocation =
 					result.data.documents[0].address.region_2depth_name;
 				this.setState({ currentLocation });
@@ -56,8 +65,8 @@ class NaviContainer extends React.Component {
 					this.getUserInfo(accessToken);
 				}
 			});
-		} catch {
-			return false;
+		} catch (err) {
+			console.error(err);
 		}
 	}
 

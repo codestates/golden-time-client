@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaRegCaretSquareRight, FaRegCaretSquareLeft } from 'react-icons/fa';
-import 'react-awesome-slider/dist/styles.css';
 import styled from 'styled-components';
 import Comment from '../../Components/Comment';
 
@@ -258,33 +257,35 @@ const GoodsDetailPresenter = ({
 					<Seller>{`판매자 : ${user.nick}`}</Seller>
 					<ClosingTime>{closing_time}</ClosingTime>
 					<Text>{text}</Text>
-					{userInfo.id === user.id ? (
+					{userInfo ? userInfo.id === user.id ? (
 						<ButtonContainer>
 							<EditButton to={`/goods/edit/${id}`}>수정</EditButton>
 							<DeleteButton onClick={deletePost}>삭제</DeleteButton>
 						</ButtonContainer>
 					) : (
-						closing_time !== '입찰 마감' && (
-							<BidContainer>
-								<Input
-									type='number'
-									placeholder={'입찰가격을 입력하세요.'}
-									onChange={handleInputValue('inputBidPrice')}
-								/>
-								<Ask onClick={postBidPrice}>입찰</Ask>
-							</BidContainer>
+							closing_time !== '입찰 마감' && (
+								<BidContainer>
+									<Input
+										type='number'
+										placeholder={'입찰가격을 입력하세요.'}
+										onChange={handleInputValue('inputBidPrice')}
+									/>
+									<Ask onClick={postBidPrice}>입찰</Ask>
+								</BidContainer>
+							)
 						)
-					)}
+						: "비회원은 입찰에 참여하실 수 없습니다."}
+
 				</ContentsContainer>
 			</SubContainer>
 			<CommentContainer>
 				{comments.map((item, index) => (
 					<Comment
-						key={item.commentId}
+						key={item.id}
 						index={index}
 						commentId={item.id}
-						userId={item.userId}
-						userNick={item.nick}
+						userId={item.user.id}
+						userNick={item.user.nick}
 						commentMessage={item.commentMessage}
 						createdAt={item.createdAt}
 						handleCommentInputValue={handleCommentInputValue}
@@ -295,15 +296,17 @@ const GoodsDetailPresenter = ({
 						userInfo={userInfo}
 					/>
 				))}
-				<CommentInputContainer>
-					<InputComment
-						type='text'
-						placeholder={'댓글을 입력하세요.'}
-						value={comment}
-						onChange={handleCommentInputValue('comment')}
-					/>
-					<SubmitComment onClick={postComment}>입력</SubmitComment>
-				</CommentInputContainer>
+				{userInfo ?
+					<CommentInputContainer>
+						<InputComment
+							type='text'
+							placeholder={'댓글을 입력하세요.'}
+							value={comment}
+							onChange={handleCommentInputValue('comment')}
+						/>
+						<SubmitComment onClick={postComment}>입력</SubmitComment>
+					</CommentInputContainer>
+					: '비회원은 댓글을 입력할 수 없습니다.'}
 			</CommentContainer>
 		</MainContainer>
 	);

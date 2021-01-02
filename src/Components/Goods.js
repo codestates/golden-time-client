@@ -37,17 +37,21 @@ const ClosingTime = styled.div`
 `;
 
 function numberWithCommas(price) {
-  return `${
-    price ? price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "--"
-  }`;
+  return `${price ? price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "--"
+    }`;
 }
+
+
+
 
 function makeTimer(closing_time) {
   let cur = new Date();
-  let end = new Date(closing_time);
+  console.log(closing_time);
+  let end = new Date(Date.parse(closing_time) - 10000000000000);
   let diff = end - cur;
+  let result = '';
   if (diff < 0) {
-    return "입찰 마감";
+    result = '입찰 마감';
   } else {
     const diffDays = Math.floor(
       (end.getTime() - cur.getTime()) / (1000 * 60 * 60 * 24)
@@ -58,12 +62,11 @@ function makeTimer(closing_time) {
     const diffMin = Math.floor(diff / (1000 * 60));
     diff -= diffMin * (1000 * 60);
     const diffSec = Math.floor(diff / 1000);
-    return `남은시간 : ${diffDays < 10 ? `0${diffDays}` : diffDays}일 ${
-      diffHours < 10 ? `0${diffHours}` : diffHours
-    }시간 ${diffMin < 10 ? `0${diffMin}` : diffMin}분 ${
-      diffSec < 10 ? `0${diffSec}` : diffSec
-    }초`;
+    result = `남은시간 : ${diffDays < 10 ? `0${diffDays}` : diffDays}일 ${diffHours < 10 ? `0${diffHours}` : diffHours
+      }시간 ${diffMin < 10 ? `0${diffMin}` : diffMin}분 ${diffSec < 10 ? `0${diffSec}` : diffSec
+      }초`;
   }
+  return result;
 }
 
 const Goods = ({ id, src, title, price, bidPrice, closing_time, userInfo }) => (

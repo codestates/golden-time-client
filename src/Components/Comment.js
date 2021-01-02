@@ -110,10 +110,10 @@ const Comment = ({
 				</EditButton>
 			</>
 		) : (
-			<Text>{commentMessage}</Text>
-		)}
+				<Text>{commentMessage}</Text>
+			)}
 		<User>{userNick}</User>
-		<ButtonContainer>
+		{userInfo && <ButtonContainer>
 			{userInfo.id === userId ? (
 				<>
 					<EditButton onClick={handleEditing.bind(null, commentId)}>
@@ -127,9 +127,11 @@ const Comment = ({
 					</DeleteButton>
 				</>
 			) : (
-				<></>
-			)}
+					<></>
+				)}
 		</ButtonContainer>
+		}
+
 	</Container>
 );
 
