@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaRegCaretSquareRight, FaRegCaretSquareLeft } from 'react-icons/fa';
+import 'react-awesome-slider/dist/styles.css';
 import styled from 'styled-components';
 import Comment from '../../Components/Comment';
 
@@ -22,56 +23,40 @@ const SubContainer = styled.div`
 const ImageContainer = styled.div`
 	width: 50%;
 	display: flex;
-	/* align-self:flex-start; */
-	/* justify-content: center; */
 	align-items: center;
 `;
 
 const Image = styled.img`
-	width: 500px;
-	height: 500px;
-	border-radius: 30px;
+	width: 25rem;
+	height: 25rem;
+	border-radius: 15px;
 	margin-left: 5px;
 	margin-right: 5px;
 `;
 
 const ContentsContainer = styled.div`
 	width: 50%;
-	margin-left: 50px;
 	display: flex;
 	flex-direction: column;
-	/* justify-content: center;
-  align-items: center; */
+	padding: 2rem;
 `;
 
 const Title = styled.div`
-	font-size: 50px;
-	font-weight: 800;
+	font-size: 2rem;
+	font-weight: 600;
 	margin-bottom: 20px;
 	display: flex;
 	align-items: flex-end;
 `;
 
 const Category = styled.div`
-	font-size: 15px;
+	font-size: 0.9rem;
 	color: gray;
-	margin: 1rem;
-`;
-
-const Seller = styled.div`
-	font-size: 30px;
-	font-weight: 600;
-	margin-bottom: 20px;
-`;
-
-const Price = styled.span`
-	font-size: 30px;
-	font-weight: 600;
-	margin-bottom: 20px;
+	margin-left: 0.5rem;
 `;
 
 const BidPrice = styled.span`
-	font-size: 30px;
+	font-size: 1.7rem;
 	font-weight: 600;
 	margin-bottom: 20px;
 	display: flex;
@@ -79,13 +64,25 @@ const BidPrice = styled.span`
 `;
 
 const Bidder = styled.span`
-	font-size: 20px;
+	font-size: 1rem;
 	font-weight: 400;
 	margin-left: 10px;
 `;
 
+const Price = styled.span`
+	font-size: 1.5rem;
+	font-weight: 500;
+	margin-bottom: 20px;
+`;
+
+const Seller = styled.div`
+	font-size: 1.5rem;
+	font-weight: 500;
+	margin-bottom: 20px;
+`;
+
 const ClosingTime = styled.div`
-	font-size: 30px;
+	font-size: 1.5rem;
 	font-weight: 600;
 	color: rgb(211, 30, 49);
 	margin-bottom: 20px;
@@ -93,11 +90,14 @@ const ClosingTime = styled.div`
 `;
 
 const Text = styled.div`
-	font-size: 20px;
+	font-size: 0.9rem;
 	font-weight: 400;
 	width: 75%;
 	line-height: 30px;
 	margin-bottom: 20px;
+	height: 8rem;
+	border: solid 1px lightgray;
+	border-radius: 10px;
 `;
 
 const BidContainer = styled.div`
@@ -250,12 +250,12 @@ const GoodsDetailPresenter = ({
 						{title}
 						<Category>{`(${categoryId})`}</Category>
 					</Title>
-					<Seller>{`판매자 : ${user.nick}`}</Seller>
-					<Price>{`시작가 : ${price} 원`}</Price>
 					<BidPrice>
 						{`현재가 : ${bidPrice} 원`}
 						<Bidder>{`(입찰 예정자 : ${bidder.nick})`}</Bidder>
 					</BidPrice>
+					<Price>{`시작가 : ${price} 원`}</Price>
+					<Seller>{`판매자 : ${user.nick}`}</Seller>
 					<ClosingTime>{closing_time}</ClosingTime>
 					<Text>{text}</Text>
 					{userInfo.id === user.id ? (
@@ -282,7 +282,7 @@ const GoodsDetailPresenter = ({
 					<Comment
 						key={item.commentId}
 						index={index}
-						commentId={item.commentId}
+						commentId={item.id}
 						userId={item.userId}
 						userNick={item.nick}
 						commentMessage={item.commentMessage}

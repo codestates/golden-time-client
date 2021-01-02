@@ -43,7 +43,6 @@ export default class extends React.Component {
 			const detail = await axios.get(
 				`http://localhost:8088/goods/detail/${id}`
 			);
-			console.log('디테일dd', detail.data);
 			this.setState({ detail: detail.data }, () => {
 				if (detail.data.bidPrice === null) {
 					this.setState(state => ({
@@ -60,60 +59,6 @@ export default class extends React.Component {
 				);
 				this.makeTimer(this.state.detail.closing_time);
 			});
-			// this.setState({
-			//   detail: {
-			//     id: 2,
-			//     title: 'Nike x Dior',
-			//     text: '개쩌는 신발입니다. 개쩌는 신발입니다. 개쩌는 신발입니다. 개쩌는 신발입니다. 개쩌는 신발입니다. 개쩌는 신발입니다. 개쩌는 신발입니다. 개쩌는 신발입니다. 개쩌는 신발입니다. ',
-			//     price: 10000,
-			//     bidPrice: 50000,
-			//     closing_time: 1619055449,
-			//     category: '의류',
-			//     images: ['https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407', 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMS41IC0xMC4yMzE3NCAyMyAyMC40NjM0OCI+CiAgPHRpdGxlPlJlYWN0IExvZ288L3RpdGxlPgogIDxjaXJjbGUgY3g9IjAiIGN5PSIwIiByPSIyLjA1IiBmaWxsPSIjNjFkYWZiIi8+CiAgPGcgc3Ryb2tlPSIjNjFkYWZiIiBzdHJva2Utd2lkdGg9IjEiIGZpbGw9Im5vbmUiPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIi8+CiAgICA8ZWxsaXBzZSByeD0iMTEiIHJ5PSI0LjIiIHRyYW5zZm9ybT0icm90YXRlKDYwKSIvPgogICAgPGVsbGlwc2Ugcng9IjExIiByeT0iNC4yIiB0cmFuc2Zvcm09InJvdGF0ZSgxMjApIi8+CiAgPC9nPgo8L3N2Zz4K', 'https://cdn.shopify.com/s/files/1/0047/5617/6984/products/image_2a4cc742-9f1c-4474-b417-f3b880be2f1c_grande.jpg?v=1594182161'],
-			//     comments: [
-			//       {
-			//         commentId: 1,
-			//         userId: 22,
-			//         nick: '이재용',
-			//         commentMessage: '와 개쩌네요',
-			//         createdAt: 1609055449,
-			//       },
-			//       {
-			//         commentId: 2,
-			//         userId: 23,
-			//         nick: '나매크인',
-			//         commentMessage: '와 개쩌네요222',
-			//         createdAt: 1609055449,
-			//       },
-			//       {
-			//         commentId: 3,
-			//         userId: 24,
-			//         nick: '이지부스트',
-			//         commentMessage: '와 개쩌네요3333',
-			//         createdAt: 1609055449,
-			//       },
-			//       {
-			//         commentId: 4,
-			//         userId: 25,
-			//         nick: '마르지엘라',
-			//         commentMessage: '와 개구리네요 개굴개굴',
-			//         createdAt: 1609055449,
-			//       },
-			//     ],
-			//     user: {
-			//       id: 22,
-			//       nick: '나매인',
-			//       pofile_image: 'https://i.pinimg.com/474x/bc/d4/ac/bcd4ac32cc7d3f98b5e54bde37d6b09e.jpg'
-			//     },
-			//     bidder: {
-			//       id: 33,
-			//       nick: '이재용'
-			//     }
-			//   }
-			// }, () => {
-			//   this.numberWithCommas(this.state.detail.price, this.state.detail.bidPrice);
-			//   this.makeTimer(this.state.detail.closing_time);
-			// });
 		} catch (err) {
 			console.error(err);
 		}
@@ -237,6 +182,7 @@ export default class extends React.Component {
 						},
 					}
 				);
+				console.log('resuddlt', result);
 				this.setState(state => ({
 					comment: '',
 					detail: {
@@ -247,23 +193,11 @@ export default class extends React.Component {
 								commentId: result.data.commentId,
 								userId: result.data.user.id,
 								nick: result.data.user.nick,
-								commentMessage: result.data.commentMessage.comment,
+								commentMessage: result.data.commentMessage,
 							},
 						],
 					},
 				}));
-				// this.setState(state => ({
-				//   comment: '',
-				//   detail: {
-				//     ...state.detail, comments: [...state.detail.comments,
-				//     {
-				//       commentId: this.state.detail.comments[this.state.detail.comments.length - 1].commentId + 1,
-				//       userId: this.state.userInfo.id,
-				//       nick: this.state.userInfo.nick,
-				//       commentMessage: this.state.comment
-				//     }]
-				//   }
-				// }));
 			}
 		} catch (err) {
 			console.error(err);
@@ -273,8 +207,8 @@ export default class extends React.Component {
 	async editComment(commentId, index) {
 		try {
 			let accessToken = localStorage.getItem('accessToken');
-			const result = await axios.post(
-				`http://localhost:8080/comments/modified`,
+			const result = await axios.patch(
+				`http://localhost:8088/comments/modifiedcomment`,
 				{
 					commentId,
 					goodsId: this.state.detail.id,
@@ -304,48 +238,31 @@ export default class extends React.Component {
 					],
 				},
 			}));
-			// this.setState(state => ({
-			//   editing: null,
-			//   editingComment: '',
-			//   detail: {
-			//     ...state.detail, comments: [
-			//       ...state.detail.comments.slice(0, index),
-			//       {
-			//         commentId,
-			//         userId: this.state.userInfo.id,
-			//         nick: this.state.userInfo.nick,
-			//         commentMessage: this.state.editingComment
-			//       },
-			//       ...state.detail.comments.slice(index + 1)
-			//     ]
-			//   }
-			// }));
 		} catch (err) {
 			console.log(err);
 		}
 	}
 
 	async deleteComment(commentId) {
+		console.log(this.state.detail.id);
+		console.log('댓글 번d호d', commentId);
 		try {
 			let accessToken = localStorage.getItem('accessToken');
-			await axios.post(
-				`http://localhost:8088/comments/delete`,
-				{
-					goodsId: this.state.detail.id,
-					commentId,
+			console.log(accessToken);
+			await axios({
+				url: `http://localhost:8088/comments/deleteComment`,
+				method: 'delete',
+				data: { goodsId: this.state.detail.id, commentId },
+				headers: { Authorization: `bearer ${accessToken}` },
+			});
+			/* 	this.setState(state => ({
+				detail: {
+					...state.detail,
+					comments: state.detail.comments.filter(
+						item => item.commentId !== commentId
+					),
 				},
-				{
-					withCredentials: true,
-					headers: {
-						Authorization: `bearer ${accessToken}`,
-					},
-				}
-			);
-			// this.setState(state => ({
-			//   detail: {
-			//     ...state.detail, comments: state.detail.comments.filter(item => item.commentId !== commentId)
-			//   }
-			// }));
+			})); */
 		} catch (err) {
 			console.error(err);
 		}
@@ -367,7 +284,6 @@ export default class extends React.Component {
 				}
 			);
 			this.props.history.push(result.data.redirect_url);
-			// this.props.history.push('/');
 		} catch (err) {
 			console.error(err);
 		}

@@ -150,8 +150,8 @@ const MyGoodsPresenter = ({ goodsList, numberWithCommas, makeTimer }) => (
 				<GoodsList>
 					{goodsList.length ? (
 						goodsList.map(item => (
-							<Link to={`/goods/detail/${item.id}`}>
-								<GoodsItem key={item.id}>
+							<Link to={`/goods/detail/${item.id}`} key={item.id}>
+								<GoodsItem>
 									<GoodsImage src={item.thumbnail} />
 									<GoodsTitle>{item.title}</GoodsTitle>
 									<GoodsPrice>{numberWithCommas(item.price)}</GoodsPrice>
