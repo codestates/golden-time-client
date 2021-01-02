@@ -13,17 +13,25 @@ const Container = styled.div`
 
 const Notice = styled.div`
   width: 100vw;
-  height:300px;
-  background-color: rgb(99,126,168);
+  height: 300px;
+  background-color: rgb(99, 126, 168);
 `;
 
-const HomePresenter = ({ loading, goods, userInfo, currentLocation, search }) => {
+const HomePresenter = ({
+  loading,
+  goods,
+  userInfo,
+  currentLocation,
+  search,
+}) => {
   return (
     <Container>
       <Notice />
-      {loading ? <Loader />
-        : <Session currentLocation={currentLocation} search={search} >
-          {goods.map(item => (
+      {loading ? (
+        <Loader />
+      ) : (
+        <Session currentLocation={currentLocation} search={search}>
+          {goods.map((item) => (
             <Goods
               key={item.id}
               id={item.id}
@@ -31,14 +39,14 @@ const HomePresenter = ({ loading, goods, userInfo, currentLocation, search }) =>
               title={item.title}
               price={item.price}
               bidPrice={item.bidPrice}
-              closing_time={item.closing_time}
+              closing_time={Date.parse(item.closing_time)}
               userInfo={userInfo}
             />
           ))}
         </Session>
-      }
-    </Container >
+      )}
+    </Container>
   );
-}
+};
 
 export default HomePresenter;
