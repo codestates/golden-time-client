@@ -20,7 +20,7 @@ const Container = styled.header`
 `;
 
 const Home = styled.div`
-  width: 300px;
+  width: 20%;
   padding-right: 1rem;
   font-family: "Bangers";
   font-size: 50px;
@@ -102,12 +102,12 @@ const NaviPresenter = ({
     ) : currentLocation === false ? (
       <Location>위치 정보를 받아올 수 없습니다.</Location>
     ) : (
-      <Location>
-        현재 위치는{"\u00A0"}
-        <LocationName>{currentLocation}</LocationName>
-        {"\u00A0"}입니다.
-      </Location>
-    )}
+          <Location>
+            현재 위치는{"\u00A0"}
+            <LocationName>{currentLocation}</LocationName>
+            {"\u00A0"}입니다.
+          </Location>
+        )}
 
     {isLogin ? (
       <>
@@ -120,17 +120,17 @@ const NaviPresenter = ({
         </Link>
       </>
     ) : (
-      <>
-        <Item onClick={handleIsModal}>로그인</Item>
-        {isModal && (
-          <Login
-            isOpen={true}
-            close={handleIsModal}
-            handleLocalLogin={handleLocalLogin}
-          />
-        )}
-      </>
-    )}
+        <>
+          <Item onClick={handleIsModal}>로그인</Item>
+          {isModal && (
+            <Login
+              isOpen={true}
+              close={handleIsModal}
+              handleLocalLogin={handleLocalLogin}
+            />
+          )}
+        </>
+      )}
   </Container>
 );
 

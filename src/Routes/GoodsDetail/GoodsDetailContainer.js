@@ -34,7 +34,12 @@ export default class extends React.Component {
 	}
 
 	componentDidMount() {
-		this.setState({ userInfo: JSON.parse(localStorage.getItem('userInfo')) });
+		const userInfo = JSON.parse(localStorage.getItem('userInfo'));
+		if (userInfo) {
+			this.setState({ userInfo });
+		} else {
+			this.setState({ userInfo: null });
+		}
 		this.getDetailData(this.props.match.params.id);
 	}
 
@@ -66,9 +71,8 @@ export default class extends React.Component {
 
 	numberWithCommas(price, bidPrice) {
 		price = `${price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')}`;
-		bidPrice = `${
-			bidPrice ? bidPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '-'
-		}`;
+		bidPrice = `${bidPrice ? bidPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') : '-'
+			}`;
 		this.setState(state => ({
 			convertedData: { ...state.convertedData, price, bidPrice },
 		}));
@@ -76,7 +80,8 @@ export default class extends React.Component {
 
 	makeTimer(closing_time) {
 		let cur = new Date();
-		let end = new Date(Date.parse(closing_time));
+		console.log(closing_time);
+		let end = new Date(Date.parse(closing_time) - 10000000000000);
 		let diff = end - cur;
 		let result = '';
 		if (diff < 0) {
@@ -91,11 +96,9 @@ export default class extends React.Component {
 			const diffMin = Math.floor(diff / (1000 * 60));
 			diff -= diffMin * (1000 * 60);
 			const diffSec = Math.floor(diff / 1000);
-			result = `남은시간 : ${diffDays < 10 ? `0${diffDays}` : diffDays}일 ${
-				diffHours < 10 ? `0${diffHours}` : diffHours
-			}시간 ${diffMin < 10 ? `0${diffMin}` : diffMin}분 ${
-				diffSec < 10 ? `0${diffSec}` : diffSec
-			}초`;
+			result = `남은시간 : ${diffDays < 10 ? `0${diffDays}` : diffDays}일 ${diffHours < 10 ? `0${diffHours}` : diffHours
+				}시간 ${diffMin < 10 ? `0${diffMin}` : diffMin}분 ${diffSec < 10 ? `0${diffSec}` : diffSec
+				}초`;
 		}
 		this.setState(state => ({
 			convertedData: { ...state.convertedData, closing_time: result },
@@ -182,7 +185,6 @@ export default class extends React.Component {
 						},
 					}
 				);
-				console.log('resuddlt', result);
 				this.setState(state => ({
 					comment: '',
 					detail: {
@@ -190,9 +192,8 @@ export default class extends React.Component {
 						comments: [
 							...state.detail.comments,
 							{
-								commentId: result.data.commentId,
-								userId: result.data.user.id,
-								nick: result.data.user.nick,
+								id: result.data.commentId,
+								user: { ...state.detail.comments, id: result.data.user.id, nick: result.data.user.nick },
 								commentMessage: result.data.commentMessage,
 							},
 						],
@@ -229,9 +230,8 @@ export default class extends React.Component {
 					comments: [
 						...state.detail.comments.slice(0, index),
 						{
-							commentId: result.data.id,
-							userId: result.data.user.id,
-							nick: result.data.user.nick,
+							id: result.data.id,
+							user: { ...state.detail.comments, id: result.data.user.id, nick: result.data.user.nick },
 							commentMessage: result.data.commentMessage,
 						},
 						...state.detail.comments.slice(index + 1),
@@ -244,25 +244,22 @@ export default class extends React.Component {
 	}
 
 	async deleteComment(commentId) {
-		console.log(this.state.detail.id);
-		console.log('댓글 번d호d', commentId);
 		try {
 			let accessToken = localStorage.getItem('accessToken');
-			console.log(accessToken);
 			await axios({
 				url: `http://localhost:8088/comments/deleteComment`,
 				method: 'delete',
 				data: { goodsId: this.state.detail.id, commentId },
 				headers: { Authorization: `bearer ${accessToken}` },
 			});
-			/* 	this.setState(state => ({
+			this.setState(state => ({
 				detail: {
 					...state.detail,
 					comments: state.detail.comments.filter(
-						item => item.commentId !== commentId
-					),
+						item => item.id !== commentId
+					)
 				},
-			})); */
+			}));
 		} catch (err) {
 			console.error(err);
 		}
@@ -283,7 +280,6 @@ export default class extends React.Component {
 					},
 				}
 			);
-			this.props.history.push(result.data.redirect_url);
 		} catch (err) {
 			console.error(err);
 		}

@@ -30,21 +30,21 @@ const HomePresenter = ({
       {loading ? (
         <Loader />
       ) : (
-        <Session currentLocation={currentLocation} search={search}>
-          {goods.map((item) => (
-            <Goods
-              key={item.id}
-              id={item.id}
-              src={item.src}
-              title={item.title}
-              price={item.price}
-              bidPrice={item.bidPrice}
-              closing_time={Date.parse(item.closing_time)}
-              userInfo={userInfo}
-            />
-          ))}
-        </Session>
-      )}
+          <Session currentLocation={currentLocation} search={search}>
+            {goods.map((item) => (
+              <Goods
+                key={item.id}
+                id={item.id}
+                src={item.thumbnail}
+                title={item.title}
+                price={item.price}
+                bidPrice={item.bidPrice}
+                closing_time={item.closing_time}
+                userInfo={userInfo}
+              />
+            ))}
+          </Session>
+        )}
     </Container>
   );
 };
