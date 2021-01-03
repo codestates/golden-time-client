@@ -3,36 +3,36 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
-  flex-direction: column;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
 `;
 
 const Image = styled.img`
   width: 280px;
   height: 280px;
-  border-radius: 50px;
+  border-radius: 15px;
+  border: 0.5px solid rgb(232,232,232);
+  margin-bottom: 20px;
 `;
 
 const Title = styled.div`
   font-size: 15px;
-  font-weight: 400;
-  margin-left: 5px;
-  margin-top: 10px;
+  font-weight: 600;
+  margin-left: 10px;
   margin-bottom: 10px;
 `;
 
 const Price = styled.span`
   font-size: 15px;
   font-weight: 600;
-  margin-left: 5px;
-  margin-bottom: 6px;
+  margin-left: 10px;
+  margin-bottom: 10px;
 `;
 
 const ClosingTime = styled.div`
   font-size: 15px;
   font-weight: 600;
-  margin-left: 5px;
+  margin-left: 10px;
   color: rgb(211, 30, 49);
 `;
 
@@ -41,13 +41,10 @@ function numberWithCommas(price) {
     }`;
 }
 
-
-
-
 function makeTimer(closing_time) {
   let cur = new Date();
   console.log(closing_time);
-  let end = new Date(Date.parse(closing_time) - 10000000000000);
+  let end = new Date(Date.parse(closing_time));
   let diff = end - cur;
   let result = '';
   if (diff < 0) {
@@ -62,9 +59,10 @@ function makeTimer(closing_time) {
     const diffMin = Math.floor(diff / (1000 * 60));
     diff -= diffMin * (1000 * 60);
     const diffSec = Math.floor(diff / 1000);
-    result = `남은시간 : ${diffDays < 10 ? `0${diffDays}` : diffDays}일 ${diffHours < 10 ? `0${diffHours}` : diffHours
-      }시간 ${diffMin < 10 ? `0${diffMin}` : diffMin}분 ${diffSec < 10 ? `0${diffSec}` : diffSec
-      }초`;
+    result = `남은시간 : ${diffDays === 0 ? '' : `${diffDays}일`} ${diffHours === 0 ? '' : `${diffHours}시간`} ${diffMin}분`;
+    // result = `남은시간 : ${diffDays < 10 ? `0${diffDays}` : diffDays}일 ${diffHours < 10 ? `0${diffHours}` : diffHours
+    //   }시간 ${diffMin < 10 ? `0${diffMin}` : diffMin}분 ${diffSec < 10 ? `0${diffSec}` : diffSec
+    //   }초`;
   }
   return result;
 }
@@ -79,7 +77,6 @@ const Goods = ({ id, src, title, price, bidPrice, closing_time, userInfo }) => (
     <Container>
       <Image src={src} />
       <Title>{title}</Title>
-      <Price>{`시작가 : ${numberWithCommas(price)} 원`}</Price>
       <Price>{`현재가 : ${numberWithCommas(bidPrice)} 원`}</Price>
       <ClosingTime>{makeTimer(closing_time)}</ClosingTime>
     </Container>

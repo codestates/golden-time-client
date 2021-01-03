@@ -20,6 +20,7 @@ class NaviContainer extends React.Component {
 		this.handleLogout = this.handleLogout.bind(this);
 		this.handleInputValue = this.handleInputValue.bind(this);
 		this.handleIsModal = this.handleIsModal.bind(this);
+		this.onKeyPress = this.onKeyPress.bind(this);
 	}
 
 	componentDidMount() {
@@ -121,6 +122,12 @@ class NaviContainer extends React.Component {
 		}
 	}
 
+	onKeyPress = event => {
+		if (event.key === 'Enter') {
+			this.props.history.push(`/${this.state.search}`)
+		}
+	};
+
 	async handleLogout() {
 		try {
 			const accessToken = localStorage.getItem('accessToken');
@@ -164,6 +171,7 @@ class NaviContainer extends React.Component {
 				handleInputValue={this.handleInputValue}
 				handleLogout={this.handleLogout}
 				handleIsModal={this.handleIsModal}
+				onKeyPress={this.onKeyPress}
 			/>
 		);
 	}

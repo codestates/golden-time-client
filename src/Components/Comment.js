@@ -3,85 +3,86 @@ import styled from 'styled-components';
 
 const Container = styled.div`
 	display: flex;
-	justify-content: space-between;
-	border-bottom: 0.5px solid black;
+	flex-direction: column;
+	padding-bottom: 10px;
+	border-bottom: 0.5px solid rgb(232,232,232);
+`;
+
+const UserContainer = styled.div`
+	margin-top: 10px;
+	padding-left: 10px;
+	display: flex;
+	align-items: center;
+`;
+
+const UserName = styled.div`
+	font-size:15px;
+	font-weight: 800;
+	margin-right:10px;
+`;
+
+const CommentDate = styled.div`
+	font-size:15px;
+	font-weight:400;
+	margin-right:10px;
+`;
+
+const EditButton = styled.div`
+	width: 50px;
+	height: 20px;
+	border-radius: 15px;
+	font-size: 15px;
+	font-weight: 400;
+	background-color: gray;
+	color:white;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-right:10px;
+`;
+
+const DeleteButton = styled.div`
+	width: 50px;
+	height: 20px;
+	border-radius: 15px;
+	font-size: 15px;
+	font-weight: 400;
+	background-color: rgb(239,98,83);
+	color:white;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 
 const Text = styled.div`
-	width: 60%;
-	height: 50px;
+	padding-left: 10px;
+	width: 800px;
+	height: 40px;
 	display: flex;
-	justify-content: center;
 	align-items: center;
 `;
 
-const User = styled.div`
-	width: 10%;
-	height: 50px;
+const EditContainer = styled.div`
+	margin-top: 10px;
+	padding-left: 5px;
 	display: flex;
-	justify-content: center;
-	align-items: center;
-`;
-
-const Time = styled.div`
-	width: 10%;
-	height: 50px;
-	display: flex;
-	justify-content: center;
 	align-items: center;
 `;
 
 const EditComment = styled.input`
 	background-color: rgb(244, 244, 244);
 	border-radius: 20px;
-	width: 60%;
-	height: 50px;
+	margin-right: 20px;
+	width: 800px;
+	height: 40px;
 	border: 0;
 `;
 
-const ButtonContainer = styled.div`
-	width: 10%;
-	height: 50px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-`;
-
-const EditButton = styled.div`
-	width: 50px;
-	height: 25px;
-	border-radius: 15px;
-	font-size: 15px;
-	font-weight: 600;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	align-self: center;
-	border: 0.5px solid black;
-	background-color: white;
-	cursor: pointer;
-`;
-
-const DeleteButton = styled.div`
-	width: 50px;
-	height: 25px;
-	border-radius: 15px;
-	font-size: 15px;
-	font-weight: 600;
-	display: flex;
-	justify-content: center;
-	align-self: center;
-	align-items: center;
-	border: 0.5px solid black;
-	background-color: white;
-	cursor: pointer;
-	margin-left: 10px;
-`;
-
-// makeTimer(createdAt) {
-//   let end = new Date(createdAt * 1000);
-//   return end;
-// }
+const formatTime = (createdAt) => {
+	return createdAt.slice(0, 10);
+}
 
 const Comment = ({
 	index,
@@ -98,23 +99,10 @@ const Comment = ({
 	userInfo,
 }) => (
 	<Container>
-		{editing === commentId ? (
-			<>
-				<EditComment
-					type='text'
-					placeholder={commentMessage}
-					onChange={handleCommentInputValue('editingComment')}
-				/>
-				<EditButton onClick={editComment.bind(null, commentId, index)}>
-					확인
-				</EditButton>
-			</>
-		) : (
-				<Text>{commentMessage}</Text>
-			)}
-		<User>{userNick}</User>
-		{userInfo && <ButtonContainer>
-			{userInfo.id === userId ? (
+		<UserContainer>
+			<UserName>{userNick}</UserName>
+			<CommentDate>{formatTime(createdAt)}</CommentDate>
+			{userInfo && userInfo.id === userId &&
 				<>
 					<EditButton onClick={handleEditing.bind(null, commentId)}>
 						수정
@@ -126,12 +114,22 @@ const Comment = ({
 						삭제
 					</DeleteButton>
 				</>
-			) : (
-					<></>
-				)}
-		</ButtonContainer>
+			}
+		</UserContainer>
+		{editing === commentId ?
+			<EditContainer>
+				<EditComment
+					type='text'
+					placeholder={commentMessage}
+					onChange={handleCommentInputValue('editingComment')}
+				/>
+				<EditButton onClick={editComment.bind(null, commentId, index)}>
+					확인
+				</EditButton>
+			</EditContainer>
+			:
+			<Text>{commentMessage}</Text>
 		}
-
 	</Container>
 );
 
