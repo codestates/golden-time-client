@@ -42,12 +42,9 @@ class MyGoodsContainer extends Component {
 			diff -= diffHours * (1000 * 60 * 60);
 			const diffMin = Math.floor(diff / (1000 * 60));
 			diff -= diffMin * (1000 * 60);
-			const diffSec = Math.floor(diff / 1000);
-			return `남은시간 : ${diffDays < 10 ? `0${diffDays}` : diffDays}일 ${
-				diffHours < 10 ? `0${diffHours}` : diffHours
-			}시간 ${diffMin < 10 ? `0${diffMin}` : diffMin}분 ${
-				diffSec < 10 ? `0${diffSec}` : diffSec
-			}초`;
+			return `남은시간 : ${diffDays === 0 ? '' : `${diffDays}일`} ${
+				diffHours === 0 ? '' : `${diffHours}시간`
+			} ${diffMin}분`;
 		}
 	}
 
