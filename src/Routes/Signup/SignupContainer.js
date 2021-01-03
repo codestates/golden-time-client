@@ -83,7 +83,7 @@ class SignupContainer extends React.Component {
 				nick,
 				area: this.state.currentLocation,
 			});
-			this.props.history.push(response.data.redirect_url);
+			this.props.handleModalChange();
 		} catch (err) {
 			this.setState({ ...this.state, errorMessage: '중복된 이메일입니다.' });
 			return;
@@ -97,6 +97,7 @@ class SignupContainer extends React.Component {
 				errorMessage={errorMessage}
 				handleInputValue={this.handleInputValue.bind(this)}
 				handleSubmit={this.handleSubmit.bind(this)}
+				handleModalChange={this.props.handleModalChange}
 			/>
 		);
 	}
