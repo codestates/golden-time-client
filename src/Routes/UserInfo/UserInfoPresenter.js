@@ -17,6 +17,7 @@ const SideMenu = styled.div`
 const Title = styled.div`
 	font-size: 2rem;
 	font-weight: bold;
+	color: 222;
 `;
 
 const LinkArea = styled.div`
@@ -28,6 +29,7 @@ const SelectedLink = styled.div`
 	font-weight: bold;
 	margin-top: 1rem;
 	margin-bottom: 1rem;
+	color: #222;
 `;
 
 const UnSelectedLink = styled.div`
@@ -39,7 +41,8 @@ const UnSelectedLink = styled.div`
 
 const Content = styled.div`
 	padding: 2rem;
-	width: 85%;
+	width: 100%;
+	display: flex;
 `;
 
 const ContentTitle = styled.div`
@@ -48,12 +51,14 @@ const ContentTitle = styled.div`
 	border-bottom: 3px solid #222;
 	font-size: 1.5rem;
 	font-weight: bold;
+	color: 222;
 `;
 
 const ProfileArea = styled.div`
-	width: 50%;
+	width: 70%;
 	height: 100%;
-	padding-top: 3em;
+	padding-top: 2.8em;
+	padding-left: 10rem;
 	position: relative;
 `;
 
@@ -62,7 +67,7 @@ const UserProfile = styled.div`
 	margin-top: 1rem;
 	border-radius: 13px;
 	border: solid 0.5px lightgray;
-	height: 10rem;
+	height: 12rem;
 	padding: 30px 0 20px;
 `;
 
@@ -72,16 +77,16 @@ const ProfileImageArea = styled.div`
 `;
 
 const ProfileImage = styled.img`
-	width: 110px;
-	height: 110px;
+	width: 9rem;
+	height: 9rem;
 	border-radius: 50%;
 `;
 
 const ProfileContent = styled.div`
 	display: flex;
 	flex-direction: column;
-	padding: 1rem 1rem 0 1rem;
-	font-size: 1.2rem;
+	padding: 2rem 1rem 0 1rem;
+	font-size: 1.5rem;
 	font-weight: bold;
 `;
 
@@ -106,8 +111,8 @@ const NewImageButton = styled.input.attrs({
 	text-align: center;
 	background-color: white;
 	border-radius: 6px;
-	border: 1px solid black;
-	color: black;
+	border: 1px solid #d3d3d3;
+	color: rgba(34, 34, 34, 0.8);
 	outline: 0;
 	height: 2rem;
 	font-weight: bold;
@@ -125,6 +130,7 @@ const ProfileInfoTitle = styled.div`
 	margin-top: 2rem;
 	font-size: 1.3rem;
 	font-weight: bold;
+	color: #222;
 `;
 
 const InfoArea = styled.div`
@@ -146,7 +152,7 @@ const InfoText = styled.p`
 	font-weight: bold;
 	line-height: 19px;
 	letter-spacing: -0.07px;
-	color: black;
+	color: #222;
 `;
 
 const ModifyButton = styled.input.attrs({
@@ -165,8 +171,8 @@ const ModifyButton = styled.input.attrs({
 	text-align: center;
 	background-color: white;
 	border-radius: 6px;
-	border: 1px solid black;
-	color: black;
+	border: 1px solid #d3d3d3;
+	color: rgba(34, 34, 34, 0.8);
 	outline: 0;
 	height: 2rem;
 	font-weight: 700;
@@ -207,8 +213,8 @@ const InputCloseButton = styled.input.attrs({
 	background-color: white;
 	outline: 0;
 	border-radius: 6px;
-	border: solid 2px black;
-	color: black;
+	border: 1px solid #d3d3d3;
+	color: rgba(34, 34, 34, 0.8);
 	padding: 0 38px;
 	height: 2rem;
 	cursor: pointer;
@@ -309,7 +315,7 @@ const UserInfoPresenter = ({
 }) => (
 	<Container>
 		<SideMenu>
-			<Title>MyPage</Title>
+			<Title>MY PAGE</Title>
 			<LinkArea>
 				<Link to='/user/userinfo'>
 					<SelectedLink>프로필 정보</SelectedLink>
@@ -327,7 +333,10 @@ const UserInfoPresenter = ({
 						{userData.profileImage ? (
 							<ProfileImage src={userData.profileImage} alt='프로필 이미지' />
 						) : (
-							<img src='../images/defaultUser.png' alt='프로필 이미지' />
+							<ProfileImage
+								src='../images/defaultUser.png'
+								alt='프로필 이미지'
+							/>
 						)}
 					</ProfileImageArea>
 					<ProfileContent>

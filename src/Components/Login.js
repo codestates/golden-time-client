@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled, { keyframes } from 'styled-components';
 import axios from 'axios';
 import { Link, withRouter } from 'react-router-dom';
+import SignUpContainer from '../Routes/Signup';
 const boxFade = keyframes`
 from {
 		opacity: 0;
@@ -57,7 +58,7 @@ const InputBox = styled.div`
 
 const Email = styled.input.attrs({
 	type: 'email',
-	placeholder: '이메일 주소',
+	placeholder: '이메일',
 })`
 	padding: 7px 0 8px;
 	width: 100%;
@@ -97,12 +98,13 @@ const ErrorMessageArea = styled.div`
 `;
 
 const LoginButton = styled.button`
-	background-color: black;
+	background-color: #222;
 	color: white;
 	font-weight: bold;
 	text-align: center;
 	width: 70%;
 	border-radius: 40px;
+	border: solid 1px #222;
 	font-size: 1rem;
 	line-height: 46px;
 	height: 3rem;
@@ -114,6 +116,8 @@ const LoginButton = styled.button`
 const SignUp = styled.p`
 	margin-top: 1rem;
 	font-weight: 600;
+	color: #222;
+	cursor: pointer;
 `;
 
 const ButtonArea = styled.div`
@@ -145,11 +149,6 @@ const KakaoButton = styled.img`
 	cursor: pointer;
 `;
 
-const SignUpLink = styled(Link)`
-	color: inherit;
-	text-decoration: inherit;
-`;
-
 class Login extends Component {
 	constructor(props) {
 		super(props);
@@ -157,6 +156,7 @@ class Login extends Component {
 			email: '',
 			password: '',
 			errorMessage: '',
+			signUp: false,
 		};
 	}
 
@@ -220,48 +220,64 @@ class Login extends Component {
 		window.location.assign(kakaoLoginUrl);
 	};
 
+	handleModalChange = () => {
+		this.setState({ ...this.state, signUp: false });
+	};
+
 	render() {
 		const { isOpen, close } = this.props;
 		return (
 			<>
 				{isOpen ? (
 					<Modal onClick={close}>
-						<LoginModal onClick={e => e.stopPropagation()}>
-							<LoginArea>
-								<Title>
-									<img
-										src='/images/goldenTimeLogo.png'
-										width='250px'
-										height='120px'
-									/>
-								</Title>
-								<InputBox>
-									<Email onChange={this.handleInputValue('email')} />
-								</InputBox>
-								<InputBox>
-									<Password onChange={this.handleInputValue('password')} />
-								</InputBox>
-								<ErrorMessageArea>{this.state.errorMessage}</ErrorMessageArea>
-								<ButtonArea>
-									<LoginButton onClick={this.loginSubmit}> Login </LoginButton>
+						{!this.state.signUp ? (
+							<LoginModal onClick={e => e.stopPropagation()}>
+								<LoginArea>
+									<Title>
+										<img
+											src='/images/goldenTimeLogo.png'
+											width='250px'
+											height='120px'
+										/>
+									</Title>
+									<InputBox>
+										<Email onChange={this.handleInputValue('email')} />
+									</InputBox>
+									<InputBox>
+										<Password onChange={this.handleInputValue('password')} />
+									</InputBox>
+									<ErrorMessageArea>{this.state.errorMessage}</ErrorMessageArea>
+									<ButtonArea>
+										<LoginButton onClick={this.loginSubmit}>
+											{' '}
+											Login{' '}
+										</LoginButton>
 
-									<SignUpLink to='/user/signup' onClick={close}>
-										<SignUp>아직 회원이 아니신가요?</SignUp>
-									</SignUpLink>
-								</ButtonArea>
+										<SignUp
+											onClick={() => {
+												this.setState({ ...this.state, signUp: true });
+											}}>
+											아직 회원이 아니신가요?
+										</SignUp>
+									</ButtonArea>
 
-								<SocialArea>
-									<GoogleButton
-										src='/images/googleLogin.png'
-										onClick={this.handleGoogleLogin}
-									/>
-									<KakaoButton
-										src='/images/kakaoLogin.png'
-										onClick={this.handleKakaoLogin}
-									/>
-								</SocialArea>
-							</LoginArea>
-						</LoginModal>
+									<SocialArea>
+										<GoogleButton
+											src='/images/googleLogin.png'
+											onClick={this.handleGoogleLogin}
+										/>
+										<KakaoButton
+											src='/images/kakaoLogin.png'
+											onClick={this.handleKakaoLogin}
+										/>
+									</SocialArea>
+								</LoginArea>
+							</LoginModal>
+						) : (
+							<SignUpContainer
+								handleModalChange={this.handleModalChange.bind(this)}
+							/>
+						)}
 					</Modal>
 				) : null}
 			</>

@@ -16,10 +16,9 @@ class GoodsPostContainer extends Component {
 		errorMessage: '',
 	};
 
-	fileRef = React.createRef();
+	fileRef = React.createRef(null);
 
 	ImageUpLoadButtonClick(e) {
-		e.preventDefault();
 		this.fileRef.current.click();
 	}
 

@@ -2,7 +2,6 @@ import React from "react";
 import { BrowserRouter, Route, Redirect, Switch } from "react-router-dom";
 import Navi from "../Routes/Navi";
 import Home from "../Routes/Home";
-import Signup from "../Routes/Signup";
 import UserInfo from "../Routes/UserInfo";
 import MyGoods from "../Routes/MyGoods";
 import GoodsDetail from "../Routes/GoodsDetail";
@@ -15,7 +14,6 @@ const App = () => (
       <Navi />
       <Switch>
         <Route exact path={["/", "/:str"]} component={Home} />
-        <Route path="/user/signup" component={Signup} />
         <Route path="/user/userinfo" component={UserInfo} />
         <Route path="/user/mygoods" component={MyGoods} />
         <Route path="/goods/detail/:id" component={GoodsDetail} />
