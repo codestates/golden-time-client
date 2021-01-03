@@ -7,7 +7,6 @@ export default class extends React.Component {
 		this.state = {
 			userInfo: {},
 			detail: {},
-			imageNum: 0,
 			convertedData: {
 				price: null,
 				bidPrice: null,
@@ -21,8 +20,6 @@ export default class extends React.Component {
 		this.getDetailData = this.getDetailData.bind(this);
 		this.numberWithCommas = this.numberWithCommas.bind(this);
 		this.makeTimer = this.makeTimer.bind(this);
-		this.handleNextImage = this.handleNextImage.bind(this);
-		this.handleBeforeImage = this.handleBeforeImage.bind(this);
 		this.handleEditing = this.handleEditing.bind(this);
 		this.handleInputValue = this.handleInputValue.bind(this);
 		this.handleCommentInputValue = this.handleCommentInputValue.bind(this);
@@ -81,7 +78,7 @@ export default class extends React.Component {
 	makeTimer(closing_time) {
 		let cur = new Date();
 		console.log(closing_time);
-		let end = new Date(Date.parse(closing_time) - 10000000000000);
+		let end = new Date(Date.parse(closing_time));
 		let diff = end - cur;
 		let result = '';
 		if (diff < 0) {
@@ -96,25 +93,14 @@ export default class extends React.Component {
 			const diffMin = Math.floor(diff / (1000 * 60));
 			diff -= diffMin * (1000 * 60);
 			const diffSec = Math.floor(diff / 1000);
-			result = `남은시간 : ${diffDays < 10 ? `0${diffDays}` : diffDays}일 ${diffHours < 10 ? `0${diffHours}` : diffHours
-				}시간 ${diffMin < 10 ? `0${diffMin}` : diffMin}분 ${diffSec < 10 ? `0${diffSec}` : diffSec
-				}초`;
+			result = `남은시간 : ${diffDays === 0 ? '' : `${diffDays}일`} ${diffHours === 0 ? '' : `${diffHours}시간`} ${diffMin}분`;
+			// result = `남은시간 : ${diffDays < 10 ? `0${diffDays}` : diffDays}일 ${diffHours < 10 ? `0${diffHours}` : diffHours
+			// 	}시간 ${diffMin < 10 ? `0${diffMin}` : diffMin}분 ${diffSec < 10 ? `0${diffSec}` : diffSec
+			// 	}초`;
 		}
 		this.setState(state => ({
 			convertedData: { ...state.convertedData, closing_time: result },
 		}));
-	}
-
-	handleNextImage() {
-		if (this.state.imageNum < this.state.detail.goodsImages.length - 1) {
-			this.setState(state => ({ imageNum: state.imageNum + 1 }));
-		}
-	}
-
-	handleBeforeImage() {
-		if (this.state.imageNum > 0) {
-			this.setState(state => ({ imageNum: state.imageNum - 1 }));
-		}
 	}
 
 	handleEditing = commentId => {
@@ -233,6 +219,7 @@ export default class extends React.Component {
 							id: result.data.id,
 							user: { ...state.detail.comments, id: result.data.user.id, nick: result.data.user.nick },
 							commentMessage: result.data.commentMessage,
+							createdAt: result.data.updatedAt
 						},
 						...state.detail.comments.slice(index + 1),
 					],
@@ -280,6 +267,7 @@ export default class extends React.Component {
 					},
 				}
 			);
+			this.props.history.push('/');
 		} catch (err) {
 			console.error(err);
 		}
@@ -289,7 +277,7 @@ export default class extends React.Component {
 		const {
 			userInfo,
 			detail,
-			imageNum,
+			// imageNum,
 			convertedData,
 			comment,
 			editingComment,
@@ -299,15 +287,12 @@ export default class extends React.Component {
 			<GoodsDetailPresenter
 				userInfo={userInfo}
 				detail={detail}
-				imageNum={imageNum}
 				convertedData={convertedData}
 				comment={comment}
 				editingComment={editingComment}
 				editing={editing}
 				handleInputValue={this.handleInputValue}
 				handleCommentInputValue={this.handleCommentInputValue}
-				handleNextImage={this.handleNextImage}
-				handleBeforeImage={this.handleBeforeImage}
 				handleEditing={this.handleEditing}
 				postBidPrice={this.postBidPrice}
 				postComment={this.postComment}

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FaRegCaretSquareRight, FaRegCaretSquareLeft } from 'react-icons/fa';
 import styled from 'styled-components';
 import Comment from '../../Components/Comment';
+import Footer from "../../Components/Footer";
+import Image from "../../Components/Image";
 
 const MainContainer = styled.div`
 	display: flex;
@@ -13,123 +14,117 @@ const MainContainer = styled.div`
 `;
 
 const SubContainer = styled.div`
-	width: 1200px;
+	width: 1100px;
 	height: 500px;
 	display: flex;
 	justify-content: center;
 `;
 
-const ImageContainer = styled.div`
-	width: 50%;
-	display: flex;
-	align-items: center;
-`;
-
-const Image = styled.img`
-	width: 25rem;
-	height: 25rem;
-	border-radius: 15px;
-	margin-left: 5px;
-	margin-right: 5px;
-`;
-
 const ContentsContainer = styled.div`
-	width: 50%;
+	margin-left: 100px;
+	width: 500px;
 	display: flex;
 	flex-direction: column;
-	padding: 2rem;
 `;
 
 const Title = styled.div`
-	font-size: 2rem;
-	font-weight: 600;
-	margin-bottom: 20px;
+	font-size: 30px;
+	font-weight: 800;
+	margin-bottom: 10px;
+	padding-left: 5px;
 	display: flex;
-	align-items: flex-end;
 `;
 
 const Category = styled.div`
-	font-size: 0.9rem;
+	font-size: 15px;;
 	color: gray;
-	margin-left: 0.5rem;
-`;
-
-const BidPrice = styled.span`
-	font-size: 1.7rem;
-	font-weight: 600;
-	margin-bottom: 20px;
-	display: flex;
-	align-items: center;
-`;
-
-const Bidder = styled.span`
-	font-size: 1rem;
-	font-weight: 400;
 	margin-left: 10px;
-`;
-
-const Price = styled.span`
-	font-size: 1.5rem;
-	font-weight: 500;
-	margin-bottom: 20px;
+	margin-bottom: 5px;
+	align-self: flex-end;
 `;
 
 const Seller = styled.div`
-	font-size: 1.5rem;
-	font-weight: 500;
+	font-size: 15px;
 	margin-bottom: 20px;
+	border-bottom: 0.5px solid rgb(232,232,232);
+	padding-bottom: 20px;
+	padding-left: 5px;
+`;
+
+const Price = styled.span`
+	font-size: 20px;
+	font-weight: 400;
+	margin-bottom: 15px;
+	padding-left: 5px;
+`;
+
+const BidPrice = styled.span`
+	font-size: 20px;
+	font-weight: 600;
+	margin-bottom: 15px;
+	display: flex;
+	align-items: center;
+	padding-left: 5px;
+`;
+
+const Bidder = styled.span`
+	font-size: 15px;
+	margin-left: 10px;
 `;
 
 const ClosingTime = styled.div`
-	font-size: 1.5rem;
+	font-size: 20px;
 	font-weight: 600;
 	color: rgb(211, 30, 49);
 	margin-bottom: 20px;
-	/* border-bottom: 0.5px solid gray; */
+	padding-left: 5px;
+	border-bottom: 0.5px solid rgb(232,232,232);
+	padding-bottom: 20px;
 `;
 
 const Text = styled.div`
-	font-size: 0.9rem;
-	font-weight: 400;
-	width: 75%;
+	width: 500px;
+	height: 150px;
+	overflow : auto;
+	font-size: 15px;
 	line-height: 30px;
+	padding-left: 5px;
+	padding-bottom: 20px;
+	border-bottom: 0.5px solid rgb(232,232,232);
 	margin-bottom: 20px;
-	height: 8rem;
-	border: solid 1px lightgray;
-	border-radius: 10px;
 `;
 
 const BidContainer = styled.div`
 	display: flex;
-	margin-bottom: 10px;
+	padding-left: 5px;
 `;
 
 const Input = styled.input`
 	background-color: rgb(244, 244, 244);
+	padding-left: 20px;
 	border-radius: 10px;
 	width: 200px;
 	height: 40px;
-	margin-left: 40%;
 `;
 
 const Ask = styled.div`
+	background-color: rgb(239,98,83);
 	width: 80px;
 	height: 40px;
 	border-radius: 15px;
+	color:white;
 	font-size: 20px;
 	font-weight: 600;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border: 0.5px solid black;
-	background-color: white;
 	cursor: pointer;
 	margin-left: 20px;
 `;
 
 const ButtonContainer = styled.div`
 	display: flex;
-	align-items: center;
+	padding-left: 5px;
 `;
 
 const EditButton = styled(Link)`
@@ -141,10 +136,9 @@ const EditButton = styled(Link)`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border: 0.5px solid rgb(99, 126, 168);
-	background-color: white;
+	background-color: rgb(99,126,168);
+	color:white;
 	cursor: pointer;
-	margin-left: 50%;
 `;
 
 const DeleteButton = styled.div`
@@ -156,36 +150,49 @@ const DeleteButton = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border: 0.5px solid rgb(240, 19, 72);
-	background-color: white;
+	background-color: rgb(239,98,83);
+	color: white;
 	cursor: pointer;
 	margin-left: 20px;
 `;
 
 const CommentContainer = styled.div`
+	border-top: 0.5px solid gray;
 	margin-top: 30px;
-	width: 60vw;
+	width: 1100px;
 	display: flex;
 	flex-direction: column;
 `;
 
-const CommentInputContainer = styled.div`
+const CommentTitle = styled.div`
+	width: 1100px;
+	font-size: 30px;
+	font-weight: 800;
+	padding-left: 5px;
 	margin-top: 20px;
-	margin-bottom: 20px;
+	padding-bottom:20px;
+	margin-bottom:20px;
+	border-bottom: 0.5px solid rgb(232,232,232);
+`;
+
+const CommentInputContainer = styled.div`
+	padding-left: 5px;
 	display: flex;
-	justify-content: space-between;
+	border-bottom: 0.5px solid rgb(232,232,232);
+	padding-bottom:20px;
 `;
 
 const InputComment = styled.input`
+	padding-left: 20px;
 	background-color: rgb(244, 244, 244);
 	border-radius: 20px;
-	width: 80%;
+	width: 800px;
 	height: 50px;
 	border: 0;
 `;
 
 const SubmitComment = styled.div`
-	width: 20%;
+	width: 250px;
 	height: 50px;
 	border-radius: 15px;
 	font-size: 20px;
@@ -193,10 +200,10 @@ const SubmitComment = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	border: 0.5px solid black;
-	background-color: white;
 	cursor: pointer;
 	margin-left: 20px;
+	background-color: rgb(34,34,34);
+	color:white;
 `;
 
 const GoodsDetailPresenter = ({
@@ -211,14 +218,11 @@ const GoodsDetailPresenter = ({
 		user = {},
 		bidder = {},
 	},
-	imageNum,
 	convertedData: { price, bidPrice, closing_time },
 	comment,
 	editing,
 	handleInputValue,
 	handleCommentInputValue,
-	handleNextImage,
-	handleBeforeImage,
 	handleEditing,
 	postBidPrice,
 	postComment,
@@ -229,32 +233,19 @@ const GoodsDetailPresenter = ({
 	return (
 		<MainContainer>
 			<SubContainer>
-				<ImageContainer>
-					<FaRegCaretSquareLeft
-						size='50'
-						color='rgb(186,185,184)'
-						onClick={handleBeforeImage}
-					/>
-					{goodsImages.length && (
-						<Image src={goodsImages[imageNum].imagePath} />
-					)}
-					<FaRegCaretSquareRight
-						size='50'
-						color='rgb(186,185,184)'
-						onClick={handleNextImage}
-					/>
-				</ImageContainer>
+				<Image goodsImages={goodsImages} />
 				<ContentsContainer>
 					<Title>
 						{title}
 						<Category>{`(${categoryId})`}</Category>
 					</Title>
+					<Seller>{`판매자 : ${user.nick}`}</Seller>
+					<Price>{`시작가 : ${price} 원`}</Price>
 					<BidPrice>
 						{`현재가 : ${bidPrice} 원`}
 						<Bidder>{`(입찰 예정자 : ${bidder.nick})`}</Bidder>
 					</BidPrice>
-					<Price>{`시작가 : ${price} 원`}</Price>
-					<Seller>{`판매자 : ${user.nick}`}</Seller>
+
 					<ClosingTime>{closing_time}</ClosingTime>
 					<Text>{text}</Text>
 					{userInfo ? userInfo.id === user.id ? (
@@ -279,6 +270,18 @@ const GoodsDetailPresenter = ({
 				</ContentsContainer>
 			</SubContainer>
 			<CommentContainer>
+				<CommentTitle>상품문의</CommentTitle>
+				{userInfo &&
+					<CommentInputContainer>
+						<InputComment
+							type='text'
+							placeholder={'댓글을 입력하세요.'}
+							value={comment}
+							onChange={handleCommentInputValue('comment')}
+						/>
+						<SubmitComment onClick={postComment}>문의하기</SubmitComment>
+					</CommentInputContainer>
+				}
 				{comments.map((item, index) => (
 					<Comment
 						key={item.id}
@@ -296,18 +299,9 @@ const GoodsDetailPresenter = ({
 						userInfo={userInfo}
 					/>
 				))}
-				{userInfo ?
-					<CommentInputContainer>
-						<InputComment
-							type='text'
-							placeholder={'댓글을 입력하세요.'}
-							value={comment}
-							onChange={handleCommentInputValue('comment')}
-						/>
-						<SubmitComment onClick={postComment}>입력</SubmitComment>
-					</CommentInputContainer>
-					: '비회원은 댓글을 입력할 수 없습니다.'}
+
 			</CommentContainer>
+			<Footer />
 		</MainContainer>
 	);
 };

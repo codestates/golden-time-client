@@ -9,18 +9,18 @@ const Container = styled.header`
   top: 0;
   left: 0;
   right: 0;
-  width: 100%;
-  height: 100px;
+  height: 120px;
   padding: 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: white;
   z-index: 10;
+  border-bottom:0.5px solid rgb(232,232,232);
 `;
 
 const Home = styled.div`
-  width: 20%;
+  width: 300px;
   padding-right: 1rem;
   font-family: "Bangers";
   font-size: 50px;
@@ -30,7 +30,7 @@ const Home = styled.div`
 const Input = styled.input`
   background-color: rgb(244, 244, 244);
   border-radius: 20px;
-  width: 80%;
+  width: 1000px;
   height: 50px;
   border: 0;
 `;
@@ -44,6 +44,7 @@ const Search = styled.div`
 `;
 
 const Location = styled.div`
+white-space: nowrap;
   width: 300px;
   font-size: 15px;
   display: flex;
@@ -75,7 +76,7 @@ const NaviPresenter = ({
   handleInputValue,
   handleLogout,
   handleIsModal,
-  history,
+  onKeyPress
 }) => (
   <Container>
     <Link to="/">
@@ -87,7 +88,7 @@ const NaviPresenter = ({
     <Input
       type="text"
       placeholder={"찾으시는 상품을 입력하세요."}
-      // value={search}
+      onKeyPress={onKeyPress}
       onChange={handleInputValue("search")}
     />
 
