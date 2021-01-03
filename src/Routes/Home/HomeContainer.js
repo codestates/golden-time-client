@@ -1,8 +1,9 @@
-import React from "react";
-import axios from "axios";
-import HomePresenter from "./HomePresenter";
+import React from 'react';
+import axios from 'axios';
+import HomePresenter from './HomePresenter';
 
 export default class HomeContainer extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -17,9 +18,15 @@ export default class HomeContainer extends React.Component {
     this.handlePostGoods = this.handlePostGoods.bind(this);
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return (nextState.goods !== this.state.goods || nextState.currentLocation !== this.state.currentLocation || nextState.str !== this.state.str || nextProps.match.params.str !== this.props.match.params.str);
-  }
+
+	shouldComponentUpdate(nextProps, nextState) {
+		return (
+			nextState.goods !== this.state.goods ||
+			nextState.currentLocation !== this.state.currentLocation ||
+			nextState.str !== this.state.str ||
+			nextProps.match.params.str !== this.props.match.params.str
+		);
+	}
 
   componentDidUpdate(prevProps) {
     const { goods, currentLocation } = this.state;
@@ -142,4 +149,5 @@ export default class HomeContainer extends React.Component {
       />
     );
   }
+
 }

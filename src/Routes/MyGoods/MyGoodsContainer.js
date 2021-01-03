@@ -10,7 +10,9 @@ class MyGoodsContainer extends Component {
 	async componentDidMount() {
 		const accessToken = localStorage.getItem('accessToken');
 
+
 		const response = await axios.get('https://www.goldentime.ml/goods/mygoods', {
+
 			withCredentials: true,
 			headers: {
 				Authorization: `bearer ${accessToken}`,

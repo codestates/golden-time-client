@@ -41,7 +41,9 @@ class UserInfoContainer extends Component {
 
 		try {
 			const response = await axios.patch(
+
 				'https://www.goldentime.ml/auth/modifieduser',
+
 				formData,
 				{
 					withCredentials: true,
@@ -73,6 +75,7 @@ class UserInfoContainer extends Component {
 			try {
 				const response = await axios.patch(
 					'https://www.goldentime.ml/auth/modifieduser',
+
 					{
 						nick: this.state.newNick,
 					},
@@ -125,7 +128,9 @@ class UserInfoContainer extends Component {
 			try {
 				const accessToken = localStorage.getItem('accessToken');
 				const response = await axios.post(
+
 					'https://www.goldentime.ml/auth/modifiedpassword',
+
 					{
 						password: this.state.currentPassword,
 						newPassword: this.state.newPassword,
@@ -170,7 +175,9 @@ class UserInfoContainer extends Component {
 
 	async getUserInfo(accessToken) {
 		try {
+
 			const userInfo = await axios.get('https://www.goldentime.ml/auth/user', {
+
 				withCredentials: true,
 				headers: {
 					Authorization: `bearer ${accessToken}`,

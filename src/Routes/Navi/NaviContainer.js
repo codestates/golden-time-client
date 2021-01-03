@@ -71,7 +71,9 @@ class NaviContainer extends React.Component {
 
 	async getUserInfo(accessToken) {
 		try {
+
 			const userInfo = await axios.get('https://www.goldentime.ml/auth/user', {
+
 				withCredentials: true,
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
@@ -92,10 +94,12 @@ class NaviContainer extends React.Component {
 
 	async handleGoogleLogin(authorizationCode, currentLocation) {
 		try {
+
 			const response = await axios.post('https://www.goldentime.ml/auth/google', {
 				authorizationCode,
 				area: currentLocation,
 			});
+
 			if (response.data.access_token) {
 				localStorage.setItem('accessToken', response.data.access_token);
 				window.location.href = "https://d8vvnifrux96q.cloudfront.net";
@@ -107,7 +111,9 @@ class NaviContainer extends React.Component {
 
 	async handleKakaoLogin(authorizationCode, currentLocation) {
 		try {
+
 			const response = await axios.post('https://www.goldentime.ml/auth/kakao', {
+
 				authorizationCode,
 				area: currentLocation,
 			});
@@ -122,7 +128,9 @@ class NaviContainer extends React.Component {
 
 	onKeyPress = event => {
 		if (event.key === 'Enter') {
+
 			this.props.history.push(`/str/${this.state.search}`)
+
 		}
 	};
 
@@ -130,7 +138,9 @@ class NaviContainer extends React.Component {
 		try {
 			const accessToken = localStorage.getItem('accessToken');
 			const response = await axios.post(
+
 				'https://www.goldentime.ml/auth/signout',
+
 				{},
 				{
 					withCredentials: true,
