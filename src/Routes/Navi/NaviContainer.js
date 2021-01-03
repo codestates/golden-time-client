@@ -73,7 +73,7 @@ class NaviContainer extends React.Component {
 
 	async getUserInfo(accessToken) {
 		try {
-			const userInfo = await axios.get('http://localhost:8088/auth/user', {
+			const userInfo = await axios.get('http://52.78.33.112:8080/auth/user', {
 				withCredentials: true,
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
@@ -94,10 +94,13 @@ class NaviContainer extends React.Component {
 
 	async handleGoogleLogin(authorizationCode, currentLocation) {
 		try {
-			const response = await axios.post('http://localhost:8088/auth/google', {
-				authorizationCode,
-				area: currentLocation,
-			});
+			const response = await axios.post(
+				'http://52.78.33.112:8080/auth/google',
+				{
+					authorizationCode,
+					area: currentLocation,
+				}
+			);
 			if (response.data.access_token) {
 				localStorage.setItem('accessToken', response.data.access_token);
 				this.props.history.push('/');
@@ -109,7 +112,7 @@ class NaviContainer extends React.Component {
 
 	async handleKakaoLogin(authorizationCode, currentLocation) {
 		try {
-			const response = await axios.post('http://localhost:8088/auth/kakao', {
+			const response = await axios.post('http://52.78.33.112:8080/auth/kakao', {
 				authorizationCode,
 				area: currentLocation,
 			});
@@ -124,7 +127,7 @@ class NaviContainer extends React.Component {
 
 	onKeyPress = event => {
 		if (event.key === 'Enter') {
-			this.props.history.push(`/${this.state.search}`)
+			this.props.history.push(`/${this.state.search}`);
 		}
 	};
 
@@ -132,7 +135,7 @@ class NaviContainer extends React.Component {
 		try {
 			const accessToken = localStorage.getItem('accessToken');
 			const response = await axios.post(
-				'http://localhost:8088/auth/signout',
+				'http://52.78.33.112:8080/auth/signout',
 				{},
 				{
 					withCredentials: true,

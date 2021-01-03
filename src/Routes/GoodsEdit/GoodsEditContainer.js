@@ -24,7 +24,7 @@ class GoodsEditContainer extends Component {
 		const goodsId = this.props.match.params.id;
 		try {
 			const response = await axios.get(
-				`http://localhost:8088/goods/detail/${goodsId}`
+				`http://52.78.33.112:8080/goods/detail/${goodsId}`
 			);
 
 			const { id, title, text, price, goodsImages } = response.data;
@@ -91,7 +91,7 @@ class GoodsEditContainer extends Component {
 		formData.append('goodsId', this.state.goodsData.id);
 		try {
 			const response = await axios.patch(
-				'http://localhost:8088/goods/modified',
+				'http://52.78.33.112:8080/goods/modified',
 				formData,
 				{
 					withCredentials: true,

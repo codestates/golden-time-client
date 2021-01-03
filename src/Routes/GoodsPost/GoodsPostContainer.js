@@ -105,7 +105,7 @@ class GoodsPostContainer extends Component {
 
 			try {
 				const result = await axios.post(
-					'http://localhost:8088/goods/addgoods',
+					'http://52.78.33.112:8080/goods/addgoods',
 					formData,
 					{
 						withCredentials: true,

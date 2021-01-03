@@ -49,7 +49,7 @@ class SignupContainer extends React.Component {
 
 	handleSubmit = async () => {
 		const { email, password, nick } = this.state;
-		const signUpUrl = 'http://localhost:8088/auth/signup';
+		const signUpUrl = 'http://52.78.33.112:8080/auth/signup';
 
 		if (!isEmail(this.state.email)) {
 			this.setState({
