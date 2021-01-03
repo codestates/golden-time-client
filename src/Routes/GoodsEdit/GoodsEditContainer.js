@@ -18,7 +18,7 @@ class GoodsEditContainer extends Component {
 		},
 	};
 
-	fileRef = React.createRef();
+	fileRef = React.createRef(null);
 
 	async componentDidMount() {
 		const goodsId = this.props.match.params.id;
@@ -39,8 +39,8 @@ class GoodsEditContainer extends Component {
 		}
 	}
 
-	ImageUpLoadButtonClick(e) {
-		e.preventDefault();
+	ImageUpLoadButtonClick() {
+		console.log('dwad');
 		this.fileRef.current.click();
 	}
 

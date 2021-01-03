@@ -3,7 +3,15 @@ import styled from 'styled-components';
 import 'react-datepicker/dist/react-datepicker.css';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import ko from 'date-fns/locale/ko';
+import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Navigation, Pagination } from 'swiper';
+import 'swiper/swiper-bundle.css';
+import '../GoodsEdit/swiper.css';
 registerLocale('ko', ko);
+
+SwiperCore.use([Navigation, Pagination]);
 
 const Container = styled.div`
 	display: flex;
@@ -13,7 +21,7 @@ const Container = styled.div`
 `;
 
 const Content = styled.div`
-	width: 50%;
+	width: 55%;
 	height: 100%;
 `;
 
@@ -48,7 +56,7 @@ const InfoArea = styled.div`
 
 const InfoText = styled.p`
 	font-size: 1rem;
-	font-weight: bold;
+	font-weight: 500;
 	margin-bottom: 0.5rem;
 `;
 
@@ -59,7 +67,7 @@ const InfoInput = styled.input`
 	font-size: 15px;
 	line-height: 22px;
 	resize: none;
-	border-radius: 10px;
+	border-radius: 6px;
 	background-color: rgb(244, 244, 244);
 	outline: 0;
 	&::-webkit-outer-spin-button,
@@ -70,13 +78,13 @@ const InfoInput = styled.input`
 `;
 
 const InfoTextArea = styled.textarea`
-	width: 60%;
-	height: 10rem;
+	width: 80%;
+	height: 14rem;
 	font-size: 0.8rem;
 	line-height: 22px;
 	border: 0;
 	resize: none;
-	border-radius: 10px;
+	border-radius: 6px;
 	outline: 0;
 	background-color: rgb(244, 244, 244);
 `;
@@ -84,6 +92,7 @@ const InfoTextArea = styled.textarea`
 const GoodsImage = styled.img`
 	width: 12rem;
 	height: 12rem;
+	border-radius: 6px;
 `;
 
 const ImageFileInput = styled.input.attrs({ type: 'file' })`
@@ -97,12 +106,30 @@ const GoodsImages = styled.ul`
 	flex-wrap: wrap;
 `;
 
+const SwiperGoodsImage = styled.img`
+	width: 25rem;
+	height: 25rem;
+	border-radius: 6px;
+`;
+
 const ImageUpLoadButton = styled.li`
 	width: 12rem;
 	height: 12rem;
 	cursor: pointer;
 	margin-right: 1rem;
 	margin-bottom: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	background-color: rgb(244, 244, 244);
+	border-radius: 6px;
+`;
+
+const ImageUpLoadText = styled.span`
+	color: gray;
+	margin-top: 0.5rem;
 `;
 
 const ImagePreview = styled.li`
@@ -110,6 +137,7 @@ const ImagePreview = styled.li`
 	height: 12rem;
 	margin-right: 1rem;
 	margin-bottom: 1rem;
+	border-radius: 6px;
 `;
 
 const ImageRemoveButton = styled.button`
@@ -127,6 +155,13 @@ const ImageRemoveButton = styled.button`
 	outline: 0;
 `;
 
+const ImageSwiperArea = styled.div`
+	margin-top: 1.3rem;
+	border-bottom: solid 1px lightgray;
+	padding-bottom: 0.5rem;
+	height: auto;
+`;
+
 const Button = styled.input.attrs({
 	type: 'button',
 	value: '등록하기',
@@ -141,7 +176,7 @@ const Button = styled.input.attrs({
 	border-radius: 40px;
 	outline: 0;
 	color: white;
-	background-color: black;
+	background-color: #222;
 	cursor: pointer;
 	padding: 0;
 `;
@@ -163,14 +198,14 @@ const CatagorySelect = styled.select`
 	padding-left: 0.3rem;
 	width: 15%;
 	height: 2rem;
-	font-size: 0.8rem;
+	font-size: 1rem;
 	line-height: 22px;
 	resize: none;
-	border-radius: 10px;
+	border-radius: 6px;
 	border: 0;
 	outline: 0;
 	background-color: rgb(244, 244, 244);
-	font-weight: 700;
+	font-weight: 400;
 `;
 
 const WonText = styled.span`
@@ -188,10 +223,11 @@ const DateSelectButton = styled.button`
 	cursor: pointer;
 	padding: 0;
 	border-radius: 6px;
-	color: black;
+	color: #222;
 	border: 0;
 	height: 3rem;
-	font-weight: 700;
+	font-size: 1rem;
+	font-weight: 500;
 `;
 
 const now = new Date();
@@ -223,11 +259,12 @@ const GoodsPostPresenter = ({
 					<InfoText>상품 이미지</InfoText>
 					<ImageContent>
 						<GoodsImages>
-							<ImageUpLoadButton>
-								<GoodsImage
-									src='/images/imageUpload.png'
-									onClick={ImageUpLoadButtonClick}
-								/>
+							<ImageUpLoadButton
+								onClick={() => {
+									ImageUpLoadButtonClick();
+								}}>
+								<FontAwesomeIcon icon={faCamera} size='3x' color='lightgray' />
+								<ImageUpLoadText>이미지 등록</ImageUpLoadText>
 								<ImageFileInput
 									ref={fileRef}
 									multiple
@@ -249,6 +286,26 @@ const GoodsPostPresenter = ({
 						</GoodsImages>
 					</ImageContent>
 				</ImageArea>
+				{imagesPreviewUrls.length ? (
+					<ImageSwiperArea>
+						<InfoText>이미지 미리보기</InfoText>
+						<Swiper
+							tag='section'
+							navigation
+							pagination
+							spaceBetween={0}
+							slidesPerView={1}>
+							{imagesPreviewUrls.map((image, i) => (
+								<SwiperSlide key={i}>
+									<SwiperGoodsImage src={image.url} />
+								</SwiperSlide>
+							))}
+						</Swiper>
+					</ImageSwiperArea>
+				) : (
+					''
+				)}
+
 				<InfoArea>
 					<InfoText>상품명</InfoText>
 					<InfoInput type='text' onChange={handleInputValue('title')} />

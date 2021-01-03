@@ -1,26 +1,42 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const Container = styled.div`
-	display: flex;
-	justify-content: center;
-	height: 90vh;
+import styled, { keyframes } from 'styled-components';
+const boxFade = keyframes`
+from {
+		opacity: 0;
+		transform: translateY(0);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(50px);
+	}
+`;
+const SignUpModal = styled.div`
+	width: 32rem;
+	height: 46rem;
+	background-color: #fff;
+	position: relative;
+	z-index: 100;
+	box-sizing: border-box;
+	margin: 50px auto;
+	padding: 20px;
+	transform: translateY(0);
+	animation: ${boxFade} 0.5s forwards;
+	border-radius: 6px;
 `;
 
 const RegistArea = styled.div`
-	padding: 6rem 0 0 0;
-	width: 30rem;
-	height: 50rem;
+	width: 100%;
+	height: 100%;
 	text-align: center;
-	align-items: center;
 `;
 
-const Title = styled.div`
+const Logo = styled.div`
 	top: 2em;
-	font-size: 2em;
+	font-size: 1.5em;
 	font-weight: bold;
-	margin-top: 2em;
-	margin-bottom: 3em;
+	color: black;
+	margin-top: 1.5rem;
+	margin-bottom: 3rem;
 `;
 
 const InputBox = styled.div`
@@ -30,8 +46,9 @@ const InputBox = styled.div`
 
 const InputTitle = styled.div`
 	font-size: 1rem;
-	font-weight: bold;
+	font-weight: 500;
 	height: 1.8rem;
+	color: #222;
 `;
 
 const Email = styled.input.attrs({
@@ -70,7 +87,7 @@ const Password = styled.input.attrs({
 
 const PasswordCheck = styled.input.attrs({
 	type: 'password',
-	placeholder: '비밀번호 확인',
+	placeholder: '비밀번호를 한번 더 입력해주세요.',
 })`
 	padding: 7px 0 8px;
 	width: 100%;
@@ -87,7 +104,7 @@ const PasswordCheck = styled.input.attrs({
 
 const NickName = styled.input.attrs({
 	type: 'text',
-	placeholder: '닉네임',
+	placeholder: '사용하실 닉네임을 입력해주세요.',
 })`
 	padding: 7px 0 8px;
 	width: 100%;
@@ -106,7 +123,7 @@ const Button = styled.input.attrs({
 	type: 'button',
 	value: '가입하기',
 })`
-	background-color: black;
+	background-color: #222;
 	color: white;
 	font-weight: bold;
 	text-align: center;
@@ -116,7 +133,6 @@ const Button = styled.input.attrs({
 	line-height: 46px;
 	height: 3rem;
 	cursor: pointer;
-	margin-bottom: 1rem;
 	padding: 0;
 `;
 
@@ -133,13 +149,28 @@ const ErrorMessageArea = styled.div`
 	font-size: 0.8rem;
 `;
 
-const SignupPresenter = ({ handleInputValue, errorMessage, handleSubmit }) => {
+const Login = styled.span`
+	margin-top: 1rem;
+	color: #222;
+	font-size: 1rem;
+	font-weight: bold;
+	cursor: pointer;
+`;
+
+const SignupPresenter = ({
+	handleInputValue,
+	errorMessage,
+	handleSubmit,
+	handleModalChange,
+}) => {
 	return (
-		<Container>
+		<SignUpModal onClick={e => e.stopPropagation()}>
 			<RegistArea>
-				<Title>회원가입</Title>
+				<Logo>
+					<img src='/images/goldenTimeLogo.png' width='250px' height='120px' />
+				</Logo>
 				<InputBox>
-					<InputTitle>이메일 주소</InputTitle>
+					<InputTitle>이메일</InputTitle>
 					<Email onChange={handleInputValue('email')} />
 				</InputBox>
 				<InputBox>
@@ -154,13 +185,13 @@ const SignupPresenter = ({ handleInputValue, errorMessage, handleSubmit }) => {
 					<InputTitle>비밀번호 확인</InputTitle>
 					<PasswordCheck onChange={handleInputValue('passwordCheck')} />
 				</InputBox>
-
 				<ErrorMessageArea>{errorMessage}</ErrorMessageArea>
 				<ButtonArea>
 					<Button onClick={handleSubmit} />
 				</ButtonArea>
+				<Login onClick={handleModalChange}>Login</Login>
 			</RegistArea>
-		</Container>
+		</SignUpModal>
 	);
 };
 

@@ -1,5 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { faCamera } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import SwiperCore, { Navigation, Pagination } from 'swiper';
+import 'swiper/swiper-bundle.css';
+import './swiper.css';
+
+SwiperCore.use([Navigation, Pagination]);
 
 const Container = styled.div`
 	display: flex;
@@ -9,7 +17,7 @@ const Container = styled.div`
 `;
 
 const Content = styled.div`
-	width: 50%;
+	width: 55%;
 	height: 100%;
 `;
 
@@ -18,6 +26,7 @@ const TitleArea = styled.div`
 	font-size: 2rem;
 	font-weight: bold;
 	padding-bottom: 16px;
+	color: #222;
 	border-bottom: 3px solid #222;
 `;
 
@@ -45,7 +54,7 @@ const InfoArea = styled.div`
 
 const InfoText = styled.p`
 	font-size: 1rem;
-	font-weight: bold;
+	font-weight: 500;
 	margin-bottom: 0.5rem;
 `;
 
@@ -82,6 +91,13 @@ const InfoTextArea = styled.textarea`
 const GoodsImage = styled.img`
 	width: 12rem;
 	height: 12rem;
+	border-radius: 6px;
+`;
+
+const SwiperGoodsImage = styled.img`
+	width: 25rem;
+	height: 25rem;
+	border-radius: 6px;
 `;
 
 const ImageFileInput = styled.input`
@@ -95,19 +111,32 @@ const GoodsImages = styled.ul`
 	flex-wrap: wrap;
 `;
 
+const ImagePreview = styled.li`
+	width: 12rem;
+	height: 12rem;
+	margin-right: 1rem;
+	margin-bottom: 1rem;
+	border-radius: 6px;
+`;
+
 const ImageUpLoadButton = styled.li`
 	width: 12rem;
 	height: 12rem;
 	cursor: pointer;
 	margin-right: 1rem;
 	margin-bottom: 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	background-color: rgb(244, 244, 244);
+	border-radius: 6px;
 `;
 
-const ImagePreview = styled.li`
-	width: 12rem;
-	height: 12rem;
-	margin-right: 1rem;
-	margin-bottom: 1rem;
+const ImageUpLoadText = styled.span`
+	color: gray;
+	margin-top: 0.5rem;
 `;
 
 const ImageRemoveButton = styled.button`
@@ -166,36 +195,32 @@ const GoodsEditPresenter = ({
 			<InputArea>
 				<ImageArea>
 					<InfoText>현재 이미지</InfoText>
-					<ImageContent>
-						<GoodsImages>
-							{goodsData.goodsImages.length ? (
-								goodsData.goodsImages.map((image, i) => (
-									<ImagePreview key={i}>
-										<GoodsImage src={image.imagePath} />
-									</ImagePreview>
-								))
-							) : (
-								<>
-									<ImagePreview>
-										<GoodsImage src='https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407' />
-									</ImagePreview>
-									<ImagePreview>
-										<GoodsImage src='https://shop2.daumcdn.net/thumb/R500x500.q90/?fname=http%3A%2F%2Fshop2.daumcdn.net%2Fshophow%2Fp%2FT10419351659.jpg%3Fut%3D20200904154407' />
-									</ImagePreview>
-								</>
-							)}
-						</GoodsImages>
-					</ImageContent>
+					<Swiper
+						tag='section'
+						wrapperTag='ul'
+						navigation
+						pagination
+						spaceBetween={0}
+						slidesPerView={1}>
+						{goodsData.goodsImages.length &&
+							goodsData.goodsImages.map((image, i) => (
+								<SwiperSlide key={i} tag='li'>
+									<SwiperGoodsImage src={image.imagePath} />
+								</SwiperSlide>
+							))}
+					</Swiper>
 				</ImageArea>
 				<ImageArea>
 					<InfoText>이미지 수정</InfoText>
 					<ImageContent>
 						<GoodsImages>
-							<ImageUpLoadButton>
-								<GoodsImage
-									src='/images/imageUpload.png'
-									onClick={ImageUpLoadButtonClick}
-								/>
+							<ImageUpLoadButton
+								onClick={() => {
+									console.log('awdawd');
+									ImageUpLoadButtonClick();
+								}}>
+								<FontAwesomeIcon icon={faCamera} size='3x' color='lightgray' />
+								<ImageUpLoadText>이미지 등록</ImageUpLoadText>
 								<ImageFileInput
 									type='file'
 									ref={fileRef}
