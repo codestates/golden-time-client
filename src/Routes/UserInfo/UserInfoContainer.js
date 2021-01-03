@@ -41,7 +41,7 @@ class UserInfoContainer extends Component {
 
 		try {
 			const response = await axios.patch(
-				'http://localhost:8088/auth/modifieduser',
+				'http://52.78.33.112:8080/auth/modifieduser',
 				formData,
 				{
 					withCredentials: true,
@@ -72,7 +72,7 @@ class UserInfoContainer extends Component {
 			const accessToken = localStorage.getItem('accessToken');
 			try {
 				const response = await axios.patch(
-					'http://localhost:8088/auth/modifieduser',
+					'http://52.78.33.112:8080/auth/modifieduser',
 					{
 						nick: this.state.newNick,
 					},
@@ -125,7 +125,7 @@ class UserInfoContainer extends Component {
 			try {
 				const accessToken = localStorage.getItem('accessToken');
 				const response = await axios.post(
-					'http://localhost:8088/auth/modifiedpassword',
+					'http://52.78.33.112:8080/auth/modifiedpassword',
 					{
 						password: this.state.currentPassword,
 						newPassword: this.state.newPassword,
@@ -170,7 +170,7 @@ class UserInfoContainer extends Component {
 
 	async getUserInfo(accessToken) {
 		try {
-			const userInfo = await axios.get('http://localhost:8088/auth/user', {
+			const userInfo = await axios.get('http://52.78.33.112:8080/auth/user', {
 				withCredentials: true,
 				headers: {
 					Authorization: `bearer ${accessToken}`,

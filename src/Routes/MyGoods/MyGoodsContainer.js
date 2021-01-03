@@ -10,7 +10,7 @@ class MyGoodsContainer extends Component {
 	async componentDidMount() {
 		const accessToken = localStorage.getItem('accessToken');
 
-		const response = await axios.get('http://localhost:8088/goods/mygoods', {
+		const response = await axios.get('http://52.78.33.112:8080/goods/mygoods', {
 			withCredentials: true,
 			headers: {
 				Authorization: `bearer ${accessToken}`,
