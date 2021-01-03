@@ -14,6 +14,7 @@ export default class HomeContainer extends React.Component {
     this.getLocation = this.getLocation.bind(this);
     this.getGoodsData = this.getGoodsData.bind(this);
     this.getSearchGoodsData = this.getSearchGoodsData.bind(this);
+    this.handlePostGoods = this.handlePostGoods.bind(this);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
@@ -42,8 +43,6 @@ export default class HomeContainer extends React.Component {
     } else if (currentLocation === "no" && !isLoggedIn && (!goods || str !== prevStr)) {
       if (str) {
         this.getSearchGoodsData(str);
-      } else {
-        this.getGoodsData();
       }
     }
   }
@@ -72,14 +71,15 @@ export default class HomeContainer extends React.Component {
     } else if (currentLocation === "no" && !isLoggedIn && !goods) {
       if (str) {
         this.getSearchGoodsData(str);
-      } else {
-        this.getGoodsData();
       }
     }
   }
 
-  getLocation() {
+  async getLocation() {
     try {
+      // const location = await axios.get('http://ip-api.com/json');
+      // const x = location.data.lon;
+      // const y = location.data.lat;
       navigator.geolocation.getCurrentPosition(async position => {
         const x = position.coords.longitude;
         const y = position.coords.latitude;
@@ -102,8 +102,9 @@ export default class HomeContainer extends React.Component {
   }
 
   async getGoodsData(area = null) {
+    console.log("자료요청");
     const goodsList = await axios.post(
-      "http://localhost:8088/goods",
+      "https://www.goldentime.ml/goods",
       { area },
       { withCredentials: true }
     );
@@ -113,11 +114,20 @@ export default class HomeContainer extends React.Component {
   async getSearchGoodsData(str, area = null) {
     console.log('검색어 요청');
     const searchData = await axios.post(
-      "http://localhost:8088/search",
+      "https://www.goldentime.ml/search",
       { area, str },
       { withCredentials: true }
     );
     this.setState({ goods: searchData.data, loading: false });
+  }
+
+  handlePostGoods() {
+    const userInfo = localStorage.getItem('userInfo');
+    if (userInfo) {
+      this.props.history.push('/goods/post');
+    } else {
+      alert('로그인이 필요합니다.');
+    }
   }
 
   render() {
@@ -128,6 +138,7 @@ export default class HomeContainer extends React.Component {
         goods={goods}
         currentLocation={currentLocation}
         search={str}
+        handlePostGoods={this.handlePostGoods}
       />
     );
   }

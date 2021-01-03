@@ -24,7 +24,7 @@ class GoodsEditContainer extends Component {
 		const goodsId = this.props.match.params.id;
 		try {
 			const response = await axios.get(
-				`http://localhost:8088/goods/detail/${goodsId}`
+				`https://www.goldentime.ml/goods/detail/${goodsId}`
 			);
 
 			const { id, title, text, price, goodsImages } = response.data;
@@ -91,7 +91,7 @@ class GoodsEditContainer extends Component {
 		formData.append('goodsId', this.state.goodsData.id);
 		try {
 			const response = await axios.patch(
-				'http://localhost:8088/goods/modified',
+				'https://www.goldentime.ml/goods/modified',
 				formData,
 				{
 					withCredentials: true,

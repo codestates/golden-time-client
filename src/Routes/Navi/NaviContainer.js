@@ -12,7 +12,7 @@ class NaviContainer extends React.Component {
 			isModal: false,
 			search: '',
 		};
-		this.getLocation = this.getLocation.bind(this);
+		// this.getLocation = this.getLocation.bind(this);
 		this.getUserInfo = this.getUserInfo.bind(this);
 		this.handleLocalLogin = this.handleLocalLogin.bind(this);
 		this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
@@ -31,11 +31,14 @@ class NaviContainer extends React.Component {
 		this.getLocation();
 	}
 
-	getLocation() {
+	async getLocation() {
 		try {
-			navigator.geolocation.getCurrentPosition(async position => {
+			window.navigator.geolocation.getCurrentPosition(async position => {
 				const x = position.coords.longitude;
 				const y = position.coords.latitude;
+				// const location = await axios.get('http://ip-api.com/json');
+				// const x = location.data.lon;
+				// const y = location.data.lat;
 				const result = await axios.get(
 					`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}`,
 					{
@@ -44,11 +47,6 @@ class NaviContainer extends React.Component {
 						},
 					}
 				);
-				// 1. 위치가 안들어왔을 때 --> 회원가입 or 로그인 -> catch에 잡힘
-				// 2. 위치를 못받을 때 --> 회원가입 or 로그인 -> catch에 잡힘
-				// 3. 위치가 들아왔을 때 -> 정상
-
-				// 1. 로그인 / 회원가입 -> 분기처리
 				const currentLocation =
 					result.data.documents[0].address.region_2depth_name;
 				this.setState({ currentLocation });
@@ -73,7 +71,7 @@ class NaviContainer extends React.Component {
 
 	async getUserInfo(accessToken) {
 		try {
-			const userInfo = await axios.get('http://localhost:8088/auth/user', {
+			const userInfo = await axios.get('https://www.goldentime.ml/auth/user', {
 				withCredentials: true,
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
@@ -88,19 +86,19 @@ class NaviContainer extends React.Component {
 
 	handleLocalLogin(access_token) {
 		localStorage.setItem('accessToken', access_token);
-		this.props.history.push('/');
 		this.getUserInfo(access_token);
+		window.location.href = "https://d8vvnifrux96q.cloudfront.net";
 	}
 
 	async handleGoogleLogin(authorizationCode, currentLocation) {
 		try {
-			const response = await axios.post('http://localhost:8088/auth/google', {
+			const response = await axios.post('https://www.goldentime.ml/auth/google', {
 				authorizationCode,
 				area: currentLocation,
 			});
 			if (response.data.access_token) {
 				localStorage.setItem('accessToken', response.data.access_token);
-				this.props.history.push('/');
+				window.location.href = "https://d8vvnifrux96q.cloudfront.net";
 			}
 		} catch (err) {
 			throw err;
@@ -109,13 +107,13 @@ class NaviContainer extends React.Component {
 
 	async handleKakaoLogin(authorizationCode, currentLocation) {
 		try {
-			const response = await axios.post('http://localhost:8088/auth/kakao', {
+			const response = await axios.post('https://www.goldentime.ml/auth/kakao', {
 				authorizationCode,
 				area: currentLocation,
 			});
 			if (response.data.access_token) {
 				localStorage.setItem('accessToken', response.data.access_token);
-				this.props.history.push('/');
+				window.location.href = "https://d8vvnifrux96q.cloudfront.net";
 			}
 		} catch (err) {
 			throw err;
@@ -124,7 +122,7 @@ class NaviContainer extends React.Component {
 
 	onKeyPress = event => {
 		if (event.key === 'Enter') {
-			this.props.history.push(`/${this.state.search}`)
+			this.props.history.push(`/str/${this.state.search}`)
 		}
 	};
 
@@ -132,7 +130,7 @@ class NaviContainer extends React.Component {
 		try {
 			const accessToken = localStorage.getItem('accessToken');
 			const response = await axios.post(
-				'http://localhost:8088/auth/signout',
+				'https://www.goldentime.ml/auth/signout',
 				{},
 				{
 					withCredentials: true,
@@ -144,7 +142,7 @@ class NaviContainer extends React.Component {
 			if (response.data.message === 'successfully LOGOUT!') {
 				localStorage.clear();
 				this.setState({ isLogin: false });
-				this.props.history.push('/');
+				window.location.href = "https://d8vvnifrux96q.cloudfront.net";
 			}
 		} catch (err) {
 			throw err;

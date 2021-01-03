@@ -13,7 +13,7 @@ const App = () => (
     <>
       <Navi />
       <Switch>
-        <Route exact path={["/", "/:str"]} component={Home} />
+        <Route exact path={["/", "/str/:str"]} component={Home} />
         <Route path="/user/userinfo" component={UserInfo} />
         <Route path="/user/mygoods" component={MyGoods} />
         <Route path="/goods/detail/:id" component={GoodsDetail} />

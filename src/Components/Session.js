@@ -22,7 +22,7 @@ const Title = styled.span`
   font-weight: 800;
 `;
 
-const PostButton = styled(Link)`
+const PostButton = styled.div`
 	width: 200px;
 	height: 50px;
 	border-radius: 15px;
@@ -46,7 +46,7 @@ const Grid = styled.div`
 
 const userInfo = localStorage.getItem('userInfo');
 
-const Section = ({ currentLocation, search, children }) => (
+const Section = ({ currentLocation, search, children, handlePostGoods }) => (
   <Container>
     <TitleContainer>
       <Title>
@@ -54,11 +54,9 @@ const Section = ({ currentLocation, search, children }) => (
           `전국에서 '${search}' 검색 결과` : `전국에서 판매중인 상품`
           : search ? `${currentLocation}에서 '${search}' 검색 결과` : `${currentLocation}에서 판매중인 상품`}
       </Title>
-      {userInfo &&
-        <PostButton to="/goods/post">
-          상품등록
+      <PostButton onClick={handlePostGoods}>
+        상품등록
         </PostButton>
-      }
     </TitleContainer>
     <Grid>{children}</Grid>
   </Container>

@@ -92,7 +92,7 @@ const NaviPresenter = ({
       onChange={handleInputValue("search")}
     />
 
-    <Link to={`/${search}`}>
+    <Link to={`/str/${search}`}>
       <Search>
         <FaSearch size="25" color="gray" />
       </Search>
@@ -116,9 +116,7 @@ const NaviPresenter = ({
           <Item>마이 페이지</Item>
         </Link>
 
-        <Link to="/">
-          <Item onClick={handleLogout}>로그아웃</Item>
-        </Link>
+        <Item onClick={handleLogout}>로그아웃</Item>
       </>
     ) : (
         <>

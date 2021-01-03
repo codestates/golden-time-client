@@ -174,7 +174,7 @@ class Login extends Component {
 
 	loginSubmit = async () => {
 		const { email, password } = this.state;
-		const localLoginUrl = 'http://localhost:8088/auth/signin';
+		const localLoginUrl = 'https://www.goldentime.ml/auth/signin';
 
 		if (!email.length || !password.length) {
 			this.setState({
@@ -206,8 +206,8 @@ class Login extends Component {
 
 	handleGoogleLogin = () => {
 		const clientId =
-			'153084653210-rv3oct12c4a2319k42rqn3hp2tlnadjk.apps.googleusercontent.com';
-		const redirectUri = 'http://localhost:3000';
+			'995004087715-sibdgorb2eiuhtec390gk2862k277fm5.apps.googleusercontent.com';
+		const redirectUri = 'https://d8vvnifrux96q.cloudfront.net';
 		const scope = 'email+profile';
 		const googleLoginUrl = `https://accounts.google.com/o/oauth2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&response_type=code`;
 		window.location.assign(googleLoginUrl);
@@ -215,7 +215,7 @@ class Login extends Component {
 
 	handleKakaoLogin = () => {
 		const clientId = 'd4217ea18c8d9c948ba3f75c4c6b2629';
-		const redirectUri = 'http://localhost:3000';
+		const redirectUri = 'https://d8vvnifrux96q.cloudfront.net';
 		const kakaoLoginUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=code`;
 		window.location.assign(kakaoLoginUrl);
 	};
@@ -274,10 +274,10 @@ class Login extends Component {
 								</LoginArea>
 							</LoginModal>
 						) : (
-							<SignUpContainer
-								handleModalChange={this.handleModalChange.bind(this)}
-							/>
-						)}
+								<SignUpContainer
+									handleModalChange={this.handleModalChange.bind(this)}
+								/>
+							)}
 					</Modal>
 				) : null}
 			</>
