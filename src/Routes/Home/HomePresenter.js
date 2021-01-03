@@ -18,7 +18,8 @@ const HomePresenter = ({
   goods,
   userInfo,
   currentLocation,
-  search
+  search,
+  handlePostGoods
 }) => {
   return (
     <Container>
@@ -26,19 +27,20 @@ const HomePresenter = ({
       {loading ?
         <Loader />
         :
-        <Session currentLocation={currentLocation} search={search} children={goods.map((item) => (
-          <Goods
-            key={item.id}
-            id={item.id}
-            src={item.thumbnail}
-            title={item.title}
-            price={item.price}
-            bidPrice={item.bidPrice}
-            closing_time={item.closing_time}
-            userInfo={userInfo}
-          />
-        ))}>
-
+        <Session currentLocation={currentLocation} handlePostGoods={handlePostGoods} search={search}>
+          {goods.map((item) => (
+            <Goods
+              key={item.id}
+              id={item.id}
+              src={item.thumbnail}
+              title={item.title}
+              price={item.price}
+              bidPrice={item.bidPrice}
+              closing_time={item.closing_time}
+              userInfo={userInfo}
+            />
+          ))}
+          {goods.length === 0 && `${currentLocation}에서 판매 중인 상품이 없습니다`}
         </Session>
       }
       <Footer />

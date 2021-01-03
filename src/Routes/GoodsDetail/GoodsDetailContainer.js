@@ -43,7 +43,9 @@ export default class extends React.Component {
 	async getDetailData(id) {
 		try {
 			const detail = await axios.get(
-				`http://http://52.78.33.112:8080/goods/detail/${id}`
+
+				`https://www.goldentime.ml/goods/detail/${id}`
+
 			);
 			this.setState({ detail: detail.data }, () => {
 				if (detail.data.bidPrice === null) {
@@ -122,7 +124,9 @@ export default class extends React.Component {
 			} else {
 				let accessToken = localStorage.getItem('accessToken');
 				const result = await axios.patch(
-					`http://52.78.33.112:8080/goods/bid`,
+
+					`https://www.goldentime.ml/goods/bid`,
+
 					{
 						bidPrice: this.state.inputBidPrice,
 						goodsId: this.state.detail.id,
@@ -156,7 +160,9 @@ export default class extends React.Component {
 			} else {
 				let accessToken = localStorage.getItem('accessToken');
 				const result = await axios.post(
-					`http://52.78.33.112:8080/comments/addcomment`,
+
+					`https://www.goldentime.ml/comments/addcomment`,
+
 					{
 						goodsId: this.state.detail.id,
 						commentMessage: this.state.comment,
@@ -182,7 +188,8 @@ export default class extends React.Component {
 									nick: result.data.user.nick,
 								},
 								commentMessage: result.data.commentMessage,
-								createdAt: result.data.createdAt,
+								createdAt: result.data.createdAt
+
 							},
 						],
 					},
@@ -197,7 +204,9 @@ export default class extends React.Component {
 		try {
 			let accessToken = localStorage.getItem('accessToken');
 			const result = await axios.patch(
-				`http://52.78.33.112:8080/comments/modifiedcomment`,
+
+				`https://www.goldentime.ml/comments/modifiedcomment`,
+
 				{
 					commentId,
 					goodsId: this.state.detail.id,
@@ -240,7 +249,8 @@ export default class extends React.Component {
 		try {
 			let accessToken = localStorage.getItem('accessToken');
 			await axios({
-				url: `http://52.78.33.112:8080/comments/deleteComment`,
+				url: `https://www.goldentime.ml/comments/deleteComment`,
+
 				method: 'delete',
 				data: { goodsId: this.state.detail.id, commentId },
 				headers: { Authorization: `bearer ${accessToken}` },
@@ -260,7 +270,9 @@ export default class extends React.Component {
 		try {
 			let accessToken = localStorage.getItem('accessToken');
 			const result = await axios.post(
-				`http://52.78.33.112:8080/goods/delete`,
+
+				`https://www.goldentime.ml/goods/delete`,
+
 				{
 					goodsId: this.state.detail.id,
 				},
