@@ -105,7 +105,9 @@ class GoodsPostContainer extends Component {
 
 			try {
 				const result = await axios.post(
+
 					'https://www.goldentime.ml/goods/addgoods',
+
 					formData,
 					{
 						withCredentials: true,

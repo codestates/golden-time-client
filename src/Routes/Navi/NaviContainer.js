@@ -21,10 +21,10 @@ class NaviContainer extends React.Component {
 		this.handleInputValue = this.handleInputValue.bind(this);
 		this.handleIsModal = this.handleIsModal.bind(this);
 		this.onKeyPress = this.onKeyPress.bind(this);
+		this.onSearchClick = this.onSearchClick.bind(this);
 	}
 
 	componentDidMount() {
-		console.log('new new test');
 		const userInfo = localStorage.getItem('userInfo');
 		if (userInfo) {
 			this.setState({ isLogin: true });
@@ -34,13 +34,9 @@ class NaviContainer extends React.Component {
 
 	getLocation() {
 		try {
-			console.log("위치요청");
 			navigator.geolocation.getCurrentPosition(async position => {
 				const x = position.coords.longitude;
 				const y = position.coords.latitude;
-				// const location = await axios.get('http://ip-api.com/json');
-				// const x = location.data.lon;
-				// const y = location.data.lat;
 				const result = await axios.get(
 					`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}`,
 					{
@@ -54,7 +50,6 @@ class NaviContainer extends React.Component {
 				this.setState({ currentLocation });
 				const url = new URL(window.location.href);
 				const authorizationCode = url.searchParams.get('code');
-				console.log(authorizationCode);
 				if (authorizationCode) {
 					if (String(url.search).includes('google')) {
 						await this.handleGoogleLogin(authorizationCode, currentLocation);
@@ -95,11 +90,13 @@ class NaviContainer extends React.Component {
 
 	async handleGoogleLogin(authorizationCode, currentLocation) {
 		try {
-			const response = await axios.post('https://www.goldentime.ml/auth/google', {
-				authorizationCode,
-				area: currentLocation,
-			});
-			console.log("구글응답" + response);
+			const response = await axios.post(
+				'https://www.goldentime.ml/auth/google',
+				{
+					authorizationCode,
+					area: currentLocation,
+				}
+			);
 			if (response.data.access_token) {
 				localStorage.setItem('accessToken', response.data.access_token);
 				window.location.href = '/';
@@ -111,11 +108,13 @@ class NaviContainer extends React.Component {
 
 	async handleKakaoLogin(authorizationCode, currentLocation) {
 		try {
-			const response = await axios.post('https://www.goldentime.ml/auth/kakao', {
-				authorizationCode,
-				area: currentLocation,
-			});
-			console.log("카카오응답" + response);
+			const response = await axios.post(
+				'https://www.goldentime.ml/auth/kakao',
+				{
+					authorizationCode,
+					area: currentLocation,
+				}
+			);
 			if (response.data.access_token) {
 				localStorage.setItem('accessToken', response.data.access_token);
 				window.location.href = '/';
@@ -127,8 +126,14 @@ class NaviContainer extends React.Component {
 
 	onKeyPress = event => {
 		if (event.key === 'Enter') {
-			window.location.href = `/${this.state.search}`;
+			window.location.href = `/str/${this.state.search}`;
 		}
+		this.setState({ search: '' });
+	};
+
+	onSearchClick = () => {
+		window.location.href = `/str/${this.state.search}`;
+		this.setState({ search: '' });
 	};
 
 	async handleLogout() {
@@ -136,6 +141,7 @@ class NaviContainer extends React.Component {
 			const accessToken = localStorage.getItem('accessToken');
 			const response = await axios.post(
 				'https://www.goldentime.ml/auth/signout',
+
 				{},
 				{
 					withCredentials: true,
@@ -175,6 +181,7 @@ class NaviContainer extends React.Component {
 				handleLogout={this.handleLogout}
 				handleIsModal={this.handleIsModal}
 				onKeyPress={this.onKeyPress}
+				onSearchClick={this.onSearchClick}
 			/>
 		);
 	}

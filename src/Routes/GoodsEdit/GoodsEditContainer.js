@@ -40,7 +40,6 @@ class GoodsEditContainer extends Component {
 	}
 
 	ImageUpLoadButtonClick() {
-		console.log('dwad');
 		this.fileRef.current.click();
 	}
 
@@ -92,6 +91,7 @@ class GoodsEditContainer extends Component {
 		try {
 			const response = await axios.patch(
 				'https://www.goldentime.ml/goods/modified',
+
 				formData,
 				{
 					withCredentials: true,

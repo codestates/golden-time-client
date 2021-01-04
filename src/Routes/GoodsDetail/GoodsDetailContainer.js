@@ -77,7 +77,6 @@ export default class extends React.Component {
 
 	makeTimer(closing_time) {
 		let cur = new Date();
-		console.log(closing_time);
 		let end = new Date(Date.parse(closing_time));
 		let diff = end - cur;
 		let result = '';
@@ -92,11 +91,8 @@ export default class extends React.Component {
 			diff -= diffHours * (1000 * 60 * 60);
 			const diffMin = Math.floor(diff / (1000 * 60));
 			diff -= diffMin * (1000 * 60);
-			const diffSec = Math.floor(diff / 1000);
-			result = `남은시간 : ${diffDays === 0 ? '' : `${diffDays}일`} ${diffHours === 0 ? '' : `${diffHours}시간`} ${diffMin}분`;
-			// result = `남은시간 : ${diffDays < 10 ? `0${diffDays}` : diffDays}일 ${diffHours < 10 ? `0${diffHours}` : diffHours
-			// 	}시간 ${diffMin < 10 ? `0${diffMin}` : diffMin}분 ${diffSec < 10 ? `0${diffSec}` : diffSec
-			// 	}초`;
+			result = `남은시간 : ${diffDays === 0 ? '' : `${diffDays}일`} ${diffHours === 0 ? '' : `${diffHours}시간`
+				} ${diffMin}분`;
 		}
 		this.setState(state => ({
 			convertedData: { ...state.convertedData, closing_time: result },
@@ -124,6 +120,7 @@ export default class extends React.Component {
 				let accessToken = localStorage.getItem('accessToken');
 				const result = await axios.patch(
 					`https://www.goldentime.ml/goods/bid`,
+
 					{
 						bidPrice: this.state.inputBidPrice,
 						goodsId: this.state.detail.id,
@@ -143,8 +140,6 @@ export default class extends React.Component {
 					},
 				}));
 				this.numberWithCommas(this.state.detail.price, result.data.bidPrice);
-				// this.setState(state => ({ detail: { ...state.detail, bidPrice: this.state.inputBidPrice, bidder: this.state.userInfo } }));
-				// this.numberWithCommas(this.state.detail.price, this.state.inputBidPrice);
 			}
 		} catch (err) {
 			console.error(err);
@@ -160,6 +155,7 @@ export default class extends React.Component {
 				let accessToken = localStorage.getItem('accessToken');
 				const result = await axios.post(
 					`https://www.goldentime.ml/comments/addcomment`,
+
 					{
 						goodsId: this.state.detail.id,
 						commentMessage: this.state.comment,
@@ -179,9 +175,13 @@ export default class extends React.Component {
 							...state.detail.comments,
 							{
 								id: result.data.commentId,
-								user: { ...state.detail.comments, id: result.data.user.id, nick: result.data.user.nick },
+								user: {
+									...state.detail.comments,
+									id: result.data.user.id,
+									nick: result.data.user.nick,
+								},
 								commentMessage: result.data.commentMessage,
-								createdAt: result.data.createdAt
+								createdAt: result.data.createdAt,
 							},
 						],
 					},
@@ -197,6 +197,7 @@ export default class extends React.Component {
 			let accessToken = localStorage.getItem('accessToken');
 			const result = await axios.patch(
 				`https://www.goldentime.ml/comments/modifiedcomment`,
+
 				{
 					commentId,
 					goodsId: this.state.detail.id,
@@ -218,16 +219,20 @@ export default class extends React.Component {
 						...state.detail.comments.slice(0, index),
 						{
 							id: result.data.id,
-							user: { ...state.detail.comments, id: result.data.user.id, nick: result.data.user.nick },
+							user: {
+								...state.detail.comments,
+								id: result.data.user.id,
+								nick: result.data.user.nick,
+							},
 							commentMessage: result.data.commentMessage,
-							createdAt: result.data.updatedAt
+							createdAt: result.data.updatedAt,
 						},
 						...state.detail.comments.slice(index + 1),
 					],
 				},
 			}));
 		} catch (err) {
-			console.log(err);
+			console.error(err);
 		}
 	}
 
@@ -236,6 +241,7 @@ export default class extends React.Component {
 			let accessToken = localStorage.getItem('accessToken');
 			await axios({
 				url: `https://www.goldentime.ml/comments/deleteComment`,
+
 				method: 'delete',
 				data: { goodsId: this.state.detail.id, commentId },
 				headers: { Authorization: `bearer ${accessToken}` },
@@ -243,9 +249,7 @@ export default class extends React.Component {
 			this.setState(state => ({
 				detail: {
 					...state.detail,
-					comments: state.detail.comments.filter(
-						item => item.id !== commentId
-					)
+					comments: state.detail.comments.filter(item => item.id !== commentId),
 				},
 			}));
 		} catch (err) {
@@ -258,6 +262,7 @@ export default class extends React.Component {
 			let accessToken = localStorage.getItem('accessToken');
 			const result = await axios.post(
 				`https://www.goldentime.ml/goods/delete`,
+
 				{
 					goodsId: this.state.detail.id,
 				},
@@ -278,7 +283,6 @@ export default class extends React.Component {
 		const {
 			userInfo,
 			detail,
-			// imageNum,
 			convertedData,
 			comment,
 			editingComment,

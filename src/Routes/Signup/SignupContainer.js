@@ -49,7 +49,9 @@ class SignupContainer extends React.Component {
 
 	handleSubmit = async () => {
 		const { email, password, nick } = this.state;
+
 		const signUpUrl = 'https://www.goldentime.ml/auth/signup';
+
 
 		if (!isEmail(this.state.email)) {
 			this.setState({
