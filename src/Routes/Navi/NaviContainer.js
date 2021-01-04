@@ -12,7 +12,7 @@ class NaviContainer extends React.Component {
 			isModal: false,
 			search: '',
 		};
-		// this.getLocation = this.getLocation.bind(this);
+		this.getLocation = this.getLocation.bind(this);
 		this.getUserInfo = this.getUserInfo.bind(this);
 		this.handleLocalLogin = this.handleLocalLogin.bind(this);
 		this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
@@ -24,6 +24,7 @@ class NaviContainer extends React.Component {
 	}
 
 	componentDidMount() {
+		console.log('new new test');
 		const userInfo = localStorage.getItem('userInfo');
 		if (userInfo) {
 			this.setState({ isLogin: true });
@@ -31,9 +32,10 @@ class NaviContainer extends React.Component {
 		this.getLocation();
 	}
 
-	async getLocation() {
+	getLocation() {
 		try {
-			window.navigator.geolocation.getCurrentPosition(async position => {
+			console.log("위치요청");
+			navigator.geolocation.getCurrentPosition(async position => {
 				const x = position.coords.longitude;
 				const y = position.coords.latitude;
 				// const location = await axios.get('http://ip-api.com/json');
@@ -52,6 +54,7 @@ class NaviContainer extends React.Component {
 				this.setState({ currentLocation });
 				const url = new URL(window.location.href);
 				const authorizationCode = url.searchParams.get('code');
+				console.log(authorizationCode);
 				if (authorizationCode) {
 					if (String(url.search).includes('google')) {
 						await this.handleGoogleLogin(authorizationCode, currentLocation);
@@ -87,7 +90,7 @@ class NaviContainer extends React.Component {
 	handleLocalLogin(access_token) {
 		localStorage.setItem('accessToken', access_token);
 		this.getUserInfo(access_token);
-		window.location.href = "https://d8vvnifrux96q.cloudfront.net";
+		window.location.href = '/';
 	}
 
 	async handleGoogleLogin(authorizationCode, currentLocation) {
@@ -96,9 +99,10 @@ class NaviContainer extends React.Component {
 				authorizationCode,
 				area: currentLocation,
 			});
+			console.log("구글응답" + response);
 			if (response.data.access_token) {
 				localStorage.setItem('accessToken', response.data.access_token);
-				window.location.href = "https://d8vvnifrux96q.cloudfront.net";
+				window.location.href = '/';
 			}
 		} catch (err) {
 			throw err;
@@ -111,9 +115,10 @@ class NaviContainer extends React.Component {
 				authorizationCode,
 				area: currentLocation,
 			});
+			console.log("카카오응답" + response);
 			if (response.data.access_token) {
 				localStorage.setItem('accessToken', response.data.access_token);
-				window.location.href = "https://d8vvnifrux96q.cloudfront.net";
+				window.location.href = '/';
 			}
 		} catch (err) {
 			throw err;
@@ -122,7 +127,7 @@ class NaviContainer extends React.Component {
 
 	onKeyPress = event => {
 		if (event.key === 'Enter') {
-			this.props.history.push(`/str/${this.state.search}`)
+			window.location.href = `/${this.state.search}`;
 		}
 	};
 
@@ -142,7 +147,7 @@ class NaviContainer extends React.Component {
 			if (response.data.message === 'successfully LOGOUT!') {
 				localStorage.clear();
 				this.setState({ isLogin: false });
-				window.location.href = "https://d8vvnifrux96q.cloudfront.net";
+				window.location.href = '/';
 			}
 		} catch (err) {
 			throw err;

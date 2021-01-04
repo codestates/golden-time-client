@@ -75,7 +75,7 @@ export default class HomeContainer extends React.Component {
     }
   }
 
-  async getLocation() {
+  getLocation() {
     try {
       // const location = await axios.get('http://ip-api.com/json');
       // const x = location.data.lon;
@@ -93,7 +93,6 @@ export default class HomeContainer extends React.Component {
         );
         const currentLocation =
           result.data.documents[0].address.region_2depth_name;
-        console.log(currentLocation);
         this.setState({ currentLocation });
       });
     } catch (err) {

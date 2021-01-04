@@ -43,7 +43,6 @@ function numberWithCommas(price) {
 
 function makeTimer(closing_time) {
   let cur = new Date();
-  console.log(closing_time);
   let end = new Date(Date.parse(closing_time));
   let diff = end - cur;
   let result = '';
