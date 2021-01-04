@@ -1,0 +1,32 @@
+.swiper-container {
+	width: 25rem;
+	height: 25rem;
+}
+
+.swiper-wraper {
+	padding-inline-start: 0;
+}
+
+.swiper-pagination-bullet {
+	background: gray !important;
+}
+.swiper-pagination-bullet-active {
+	background: black !important;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after,
+.swiper-button-next:after {
+	font-family: swiper-icons;
+	font-size: var(--swiper-navigation-size);
+	text-transform: none !important;
+	letter-spacing: 0;
+	text-transform: none;
+	font-variant: initial;
+	line-height: 1;
+	color: gray;
+}
+
+.react-datepicker__day--selected {
+	background: #222 !important;
+}
