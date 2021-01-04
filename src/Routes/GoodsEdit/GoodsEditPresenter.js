@@ -216,7 +216,6 @@ const GoodsEditPresenter = ({
 						<GoodsImages>
 							<ImageUpLoadButton
 								onClick={() => {
-									console.log('awdawd');
 									ImageUpLoadButtonClick();
 								}}>
 								<FontAwesomeIcon icon={faCamera} size='3x' color='lightgray' />

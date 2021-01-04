@@ -5,7 +5,7 @@ import 'slick-carousel/slick/slick-theme.css';
 import styled from 'styled-components';
 
 const Container = styled(Slider)`
-	width: 100vw;
+	width: 100%;
 	min-width: 1300px;
 	position: relative;
 	.slick-prev {
@@ -24,33 +24,33 @@ const BannerImg = styled.img`
 `;
 
 export default function SimpleSlider() {
-  var settings = {
-    dots: true,
-    infinite: true,
-    speed: 1000,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: true,
-    arrows: true,
-    autoplaySpeed: 3000,
-  };
-  return (
-    <Container {...settings}>
-      <div>
-        <BannerImg src='/images/Notice/party.jpg' alt='party' />
-      </div>
-      <div>
-        <BannerImg src='/images/Notice/mask.jpg' alt='mask' />
-      </div>
-      <div>
-        <BannerImg src='/images/Notice/intro.jpg' alt='intro' />
-      </div>
-      <div>
-        <BannerImg src='/images/Notice/newyear.jpg' alt='newyear' />
-      </div>
-      <div>
-        <BannerImg src='/images/Notice/coffee.jpg' alt='coffee' />
-      </div>
-    </Container>
-  );
+	var settings = {
+		dots: true,
+		infinite: true,
+		speed: 1000,
+		slidesToShow: 1,
+		slidesToScroll: 1,
+		autoplay: true,
+		arrows: true,
+		autoplaySpeed: 3000,
+	};
+	return (
+		<Container {...settings}>
+			<div>
+				<BannerImg src='/images/Notice/party.jpg' alt='party' />
+			</div>
+			<div>
+				<BannerImg src='/images/Notice/mask.jpg' alt='mask' />
+			</div>
+			<div>
+				<BannerImg src='/images/Notice/intro.jpg' alt='intro' />
+			</div>
+			<div>
+				<BannerImg src='/images/Notice/newyear.jpg' alt='newyear' />
+			</div>
+			<div>
+				<BannerImg src='/images/Notice/coffee.jpg' alt='coffee' />
+			</div>
+		</Container>
+	);
 }

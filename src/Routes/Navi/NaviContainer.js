@@ -12,7 +12,6 @@ class NaviContainer extends React.Component {
 			isModal: false,
 			search: '',
 		};
-		// this.getLocation = this.getLocation.bind(this);
 		this.getUserInfo = this.getUserInfo.bind(this);
 		this.handleLocalLogin = this.handleLocalLogin.bind(this);
 		this.handleGoogleLogin = this.handleGoogleLogin.bind(this);
@@ -21,9 +20,11 @@ class NaviContainer extends React.Component {
 		this.handleInputValue = this.handleInputValue.bind(this);
 		this.handleIsModal = this.handleIsModal.bind(this);
 		this.onKeyPress = this.onKeyPress.bind(this);
+		this.onSearchClick = this.onSearchClick.bind(this);
 	}
 
 	componentDidMount() {
+		console.log('didmount');
 		const userInfo = localStorage.getItem('userInfo');
 		if (userInfo) {
 			this.setState({ isLogin: true });
@@ -36,9 +37,6 @@ class NaviContainer extends React.Component {
 			window.navigator.geolocation.getCurrentPosition(async position => {
 				const x = position.coords.longitude;
 				const y = position.coords.latitude;
-				// const location = await axios.get('http://ip-api.com/json');
-				// const x = location.data.lon;
-				// const y = location.data.lat;
 				const result = await axios.get(
 					`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}`,
 					{
@@ -71,9 +69,7 @@ class NaviContainer extends React.Component {
 
 	async getUserInfo(accessToken) {
 		try {
-
 			const userInfo = await axios.get('https://www.goldentime.ml/auth/user', {
-
 				withCredentials: true,
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
@@ -89,20 +85,22 @@ class NaviContainer extends React.Component {
 	handleLocalLogin(access_token) {
 		localStorage.setItem('accessToken', access_token);
 		this.getUserInfo(access_token);
-		window.location.href = "https://d8vvnifrux96q.cloudfront.net";
+		window.location.href = '/';
 	}
 
 	async handleGoogleLogin(authorizationCode, currentLocation) {
 		try {
-
-			const response = await axios.post('https://www.goldentime.ml/auth/google', {
-				authorizationCode,
-				area: currentLocation,
-			});
+			const response = await axios.post(
+				'https://www.goldentime.ml/auth/google',
+				{
+					authorizationCode,
+					area: currentLocation,
+				}
+			);
 
 			if (response.data.access_token) {
 				localStorage.setItem('accessToken', response.data.access_token);
-				window.location.href = "https://d8vvnifrux96q.cloudfront.net";
+				window.location.href = '/';
 			}
 		} catch (err) {
 			throw err;
@@ -111,15 +109,16 @@ class NaviContainer extends React.Component {
 
 	async handleKakaoLogin(authorizationCode, currentLocation) {
 		try {
-
-			const response = await axios.post('https://www.goldentime.ml/auth/kakao', {
-
-				authorizationCode,
-				area: currentLocation,
-			});
+			const response = await axios.post(
+				'https://www.goldentime.ml/auth/kakao',
+				{
+					authorizationCode,
+					area: currentLocation,
+				}
+			);
 			if (response.data.access_token) {
 				localStorage.setItem('accessToken', response.data.access_token);
-				window.location.href = "https://d8vvnifrux96q.cloudfront.net";
+				window.location.href = '/';
 			}
 		} catch (err) {
 			throw err;
@@ -128,17 +127,20 @@ class NaviContainer extends React.Component {
 
 	onKeyPress = event => {
 		if (event.key === 'Enter') {
-
-			this.props.history.push(`/str/${this.state.search}`)
-
+			window.location.href = `/str/${this.state.search}`;
 		}
+		this.setState({ search: '' });
+	};
+
+	onSearchClick = () => {
+		window.location.href = `/str/${this.state.search}`;
+		this.setState({ search: '' });
 	};
 
 	async handleLogout() {
 		try {
 			const accessToken = localStorage.getItem('accessToken');
 			const response = await axios.post(
-
 				'https://www.goldentime.ml/auth/signout',
 
 				{},
@@ -152,7 +154,7 @@ class NaviContainer extends React.Component {
 			if (response.data.message === 'successfully LOGOUT!') {
 				localStorage.clear();
 				this.setState({ isLogin: false });
-				window.location.href = "https://d8vvnifrux96q.cloudfront.net";
+				window.location.href = '/';
 			}
 		} catch (err) {
 			throw err;
@@ -180,6 +182,7 @@ class NaviContainer extends React.Component {
 				handleLogout={this.handleLogout}
 				handleIsModal={this.handleIsModal}
 				onKeyPress={this.onKeyPress}
+				onSearchClick={this.onSearchClick}
 			/>
 		);
 	}
