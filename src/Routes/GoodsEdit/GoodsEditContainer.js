@@ -24,9 +24,7 @@ class GoodsEditContainer extends Component {
 		const goodsId = this.props.match.params.id;
 		try {
 			const response = await axios.get(
-
 				`https://www.goldentime.ml/goods/detail/${goodsId}`
-
 			);
 
 			const { id, title, text, price, goodsImages } = response.data;
@@ -42,7 +40,6 @@ class GoodsEditContainer extends Component {
 	}
 
 	ImageUpLoadButtonClick() {
-		console.log('dwad');
 		this.fileRef.current.click();
 	}
 
@@ -93,7 +90,6 @@ class GoodsEditContainer extends Component {
 		formData.append('goodsId', this.state.goodsData.id);
 		try {
 			const response = await axios.patch(
-
 				'https://www.goldentime.ml/goods/modified',
 
 				formData,

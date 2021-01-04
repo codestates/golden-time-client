@@ -10,17 +10,17 @@ class MyGoodsContainer extends Component {
 	async componentDidMount() {
 		const accessToken = localStorage.getItem('accessToken');
 
-
-		const response = await axios.get('https://www.goldentime.ml/goods/mygoods', {
-
-			withCredentials: true,
-			headers: {
-				Authorization: `bearer ${accessToken}`,
-			},
-		});
+		const response = await axios.get(
+			'https://www.goldentime.ml/goods/mygoods',
+			{
+				withCredentials: true,
+				headers: {
+					Authorization: `bearer ${accessToken}`,
+				},
+			}
+		);
 
 		this.setState({ ...this.state, goodsList: response.data });
-		console.log('내 상품 리스트', this.state.goodsList);
 	}
 
 	numberWithCommas(price) {
@@ -44,8 +44,9 @@ class MyGoodsContainer extends Component {
 			diff -= diffHours * (1000 * 60 * 60);
 			const diffMin = Math.floor(diff / (1000 * 60));
 			diff -= diffMin * (1000 * 60);
-			return `남은시간 : ${diffDays === 0 ? '' : `${diffDays}일`} ${diffHours === 0 ? '' : `${diffHours}시간`
-				} ${diffMin}분`;
+			return `남은시간 : ${diffDays === 0 ? '' : `${diffDays}일`} ${
+				diffHours === 0 ? '' : `${diffHours}시간`
+			} ${diffMin}분`;
 		}
 	}
 

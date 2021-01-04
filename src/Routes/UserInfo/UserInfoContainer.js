@@ -19,12 +19,6 @@ class UserInfoContainer extends Component {
 
 	fileRef = React.createRef();
 
-	componentDidMount() {
-		console.log(JSON.parse(localStorage.getItem('userInfo')));
-		const userData = JSON.parse(localStorage.getItem('userInfo'));
-		console.log(typeof userData.provider);
-	}
-
 	handleNewImageButtonClick(e) {
 		e.preventDefault();
 		this.fileRef.current.click();
@@ -35,13 +29,11 @@ class UserInfoContainer extends Component {
 		const accessToken = localStorage.getItem('accessToken');
 		const formData = new FormData();
 		for (let i = 0; i < imageFile.length; i++) {
-			console.log(imageFile[i], imageFile[i].name);
 			formData.append('img', imageFile[i], imageFile[i].name);
 		}
 
 		try {
 			const response = await axios.patch(
-
 				'https://www.goldentime.ml/auth/modifieduser',
 
 				formData,
@@ -128,7 +120,6 @@ class UserInfoContainer extends Component {
 			try {
 				const accessToken = localStorage.getItem('accessToken');
 				const response = await axios.post(
-
 					'https://www.goldentime.ml/auth/modifiedpassword',
 
 					{
@@ -175,15 +166,12 @@ class UserInfoContainer extends Component {
 
 	async getUserInfo(accessToken) {
 		try {
-
 			const userInfo = await axios.get('https://www.goldentime.ml/auth/user', {
-
 				withCredentials: true,
 				headers: {
 					Authorization: `bearer ${accessToken}`,
 				},
 			});
-			console.log('유저 인d포adwddㅇ', userInfo);
 			localStorage.setItem('userInfo', JSON.stringify(userInfo.data));
 			this.setState({ nickNameInput: false });
 		} catch (err) {

@@ -1,25 +1,25 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import styled from "styled-components";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
 
 const Container = styled.div`
-  width: 1300px;
-  margin-top: 50px;
-  display: flex;
-  flex-direction: column;
-  justify-content:center;
-  min-width:1300px;
+	width: 1300px;
+	margin-top: 50px;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	min-width: 1300px;
 `;
 
 const TitleContainer = styled.div`
-  display: flex;
-  align-items:center;
-  justify-content: space-between;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 `;
 
 const Title = styled.span`
-  font-size: 20px;
-  font-weight: 800;
+	font-size: 20px;
+	font-weight: 800;
 `;
 
 const PostButton = styled.div`
@@ -33,33 +33,39 @@ const PostButton = styled.div`
 	align-items: center;
 	cursor: pointer;
 	margin-right: 50px;
-	background-color: rgb(34,34,34);
-  color:white;
+	background-color: rgb(34, 34, 34);
+	color: white;
 `;
 
 const Grid = styled.div`
-  margin-top: 25px;
-  display: grid;
-  grid-template-columns: repeat(4, 280px);
-  grid-gap: 50px;
+	margin-top: 25px;
+	display: grid;
+	grid-template-columns: repeat(4, 280px);
+	grid-gap: 50px;
 `;
 
-const userInfo = localStorage.getItem('userInfo');
-
-const Section = ({ currentLocation, search, children, handlePostGoods }) => (
-  <Container>
-    <TitleContainer>
-      <Title>
-        {currentLocation === 'no' ? search ?
-          `전국에서 '${search}' 검색 결과` : `전국에서 판매중인 상품`
-          : search ? `${currentLocation}에서 '${search}' 검색 결과` : `${currentLocation}에서 판매중인 상품`}
-      </Title>
-      <PostButton onClick={handlePostGoods}>
-        상품등록
-        </PostButton>
-    </TitleContainer>
-    <Grid>{children}</Grid>
-  </Container>
+const Section = ({
+	currentLocation,
+	search,
+	children,
+	handlePostGoods,
+	userInfo,
+}) => (
+	<Container>
+		<TitleContainer>
+			<Title>
+				{currentLocation === 'no'
+					? search
+						? `전국에서 '${search}' 검색 결과`
+						: `전국에서 판매중인 상품`
+					: search
+					? `${currentLocation}에서 '${search}' 검색 결과`
+					: `${currentLocation}에서 판매중인 상품`}
+			</Title>
+			{userInfo && <PostButton onClick={handlePostGoods}>상품등록</PostButton>}
+		</TitleContainer>
+		<Grid>{children}</Grid>
+	</Container>
 );
 
 export default Section;

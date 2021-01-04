@@ -43,9 +43,7 @@ export default class extends React.Component {
 	async getDetailData(id) {
 		try {
 			const detail = await axios.get(
-
 				`https://www.goldentime.ml/goods/detail/${id}`
-
 			);
 			this.setState({ detail: detail.data }, () => {
 				if (detail.data.bidPrice === null) {
@@ -80,7 +78,6 @@ export default class extends React.Component {
 
 	makeTimer(closing_time) {
 		let cur = new Date();
-		console.log(closing_time);
 		let end = new Date(Date.parse(closing_time));
 		let diff = end - cur;
 		let result = '';
@@ -124,7 +121,6 @@ export default class extends React.Component {
 			} else {
 				let accessToken = localStorage.getItem('accessToken');
 				const result = await axios.patch(
-
 					`https://www.goldentime.ml/goods/bid`,
 
 					{
@@ -160,7 +156,6 @@ export default class extends React.Component {
 			} else {
 				let accessToken = localStorage.getItem('accessToken');
 				const result = await axios.post(
-
 					`https://www.goldentime.ml/comments/addcomment`,
 
 					{
@@ -188,8 +183,7 @@ export default class extends React.Component {
 									nick: result.data.user.nick,
 								},
 								commentMessage: result.data.commentMessage,
-								createdAt: result.data.createdAt
-
+								createdAt: result.data.createdAt,
 							},
 						],
 					},
@@ -204,7 +198,6 @@ export default class extends React.Component {
 		try {
 			let accessToken = localStorage.getItem('accessToken');
 			const result = await axios.patch(
-
 				`https://www.goldentime.ml/comments/modifiedcomment`,
 
 				{
@@ -270,7 +263,6 @@ export default class extends React.Component {
 		try {
 			let accessToken = localStorage.getItem('accessToken');
 			const result = await axios.post(
-
 				`https://www.goldentime.ml/goods/delete`,
 
 				{
