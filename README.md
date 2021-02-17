@@ -1,4 +1,4 @@
-# 24k : GoldenTime (Server)
+# 24k : GoldenTime (Client)
 
 우리 동네에서 물건을 팔거나 구매하고 싶은 신가요? <br>
 중고거래 등 거래 약속을 잡고 일방적으로 취소 당하신 적이 있으신가요? <br>
